@@ -71,3 +71,11 @@ html{-webkit-text-size-adjust:100%}
 .catalogue-error{grid-column:1/-1;color:#aab5c2;padding:20px;border:1px solid #263544}
 @media(max-width:850px){.archive-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:620px){.archive-grid{grid-template-columns:1fr}}
+
+
+.footer-socials{display:flex;align-items:center;gap:16px;font-size:12px;font-weight:700}
+.footer-socials a{color:#aab5c1;transition:color .2s}
+.footer-socials a:hover{color:var(--accent)}
+.footer-socials a span{color:var(--accent);margin-left:3px}
+@media(max-width:850px){.footer-socials{width:100%;padding-top:4px}}
+@media(max-width:620px){.footer-socials{gap:18px;font-size:13px}}
