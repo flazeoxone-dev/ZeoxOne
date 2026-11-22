@@ -58,3 +58,32 @@ try{
   const saved = localStorage.getItem("zeoxone-lang");
   if(saved === "en") setLanguage("en");
 }catch(e){}
+
+
+// ===== Catalogue d'articles : source unique articles.json =====
+async function renderArticleCards(){
+  const containers = document.querySelectorAll("[data-articles-list], #articles[data-articles-limit]");
+  if(!containers.length) return;
+  try{
+    const response = await fetch("articles.json", {cache:"no-store"});
+    if(!response.ok) throw new Error("Catalogue indisponible");
+    const articles = await response.json();
+    containers.forEach(container=>{
+      const limit = Number(container.dataset.articlesLimit || 0);
+      const visible = limit ? articles.slice(0,limit) : articles;
+      container.innerHTML = visible.map(article=>{
+        const visualClass = article.visual === "hardware" ? "art-chip" : article.visual === "software" ? "art-code" : "art-game";
+        const artwork = article.visual === "hardware"
+          ? '<div class="chip-lines"></div><div class="chip">CPU</div>'
+          : article.visual === "software"
+            ? '<div class="code-window"><span></span><span></span><span></span><pre>&lt;/&gt;<br>010101</pre></div>'
+            : '<div class="game-ring"></div><div class="game-cross">+</div>';
+        const href = article.url;
+        return '<article class="feature-card"><a class="article-card-link" href="'+href+'"><div class="feature-art '+visualClass+'">'+artwork+'<span class="art-label">'+article.category.toUpperCase()+' / '+article.type+'</span></div><div class="article-info"><div class="article-meta"><span>'+article.category.toUpperCase()+'</span><span>•</span><span>'+article.minutes+' MIN</span></div><h3>'+article.title+'</h3><p>'+article.description+'</p><span class="article-link">'+(currentLang==="en"?"Read article":"Lire l’article")+' ↗</span></div></a></article>';
+      }).join("");
+    });
+  }catch(error){
+    containers.forEach(container=>container.innerHTML='<p class="catalogue-error">Les articles ne sont pas disponibles pour le moment. Réessaie dans quelques instants.</p>');
+  }
+}
+renderArticleCards();
