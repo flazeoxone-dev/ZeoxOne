@@ -21,22 +21,40 @@ function setLanguage(lang){
   currentLang = lang;
   document.documentElement.lang = lang;
   document.querySelectorAll("[data-i18n]").forEach(el=>{
-    const key=el.dataset.i18n;
-    if(translations[lang][key]) el.textContent=translations[lang][key];
+    const text = translations[lang][el.dataset.i18n];
+    if(!text) return;
+    const first = el.firstChild;
+    // garde les <span>↗</span> : on ne remplace que le premier noeud texte
+    if(el.children.length && first && first.nodeType === 3) first.nodeValue = text + " ";
+    else el.textContent = text;
   });
   document.querySelectorAll("[data-i18n-html]").forEach(el=>{
-    const key=el.dataset.i18nHtml;
-    if(translations[lang][key]) el.innerHTML=translations[lang][key];
+    const text = translations[lang][el.dataset.i18nHtml];
+    if(text) el.innerHTML = text;
   });
   langButton.textContent = lang === "fr" ? "EN" : "FR";
-  document.title = lang === "fr" ? "ZeoxOne — Tech, Gaming & Innovation" : "ZeoxOne — Tech, Gaming & Innovation";
+  langButton.setAttribute("aria-label", lang === "fr" ? "Switch to English" : "Passer en français");
+  try{ localStorage.setItem("zeoxone-lang", lang); }catch(e){}
 }
 langButton.addEventListener("click",()=>setLanguage(currentLang==="fr"?"en":"fr"));
-const menuToggle=document.getElementById("menuToggle");
-const nav=document.getElementById("mainNav");
-menuToggle.addEventListener("click",()=>{
-  const open=nav.classList.toggle("open");
-  menuToggle.setAttribute("aria-expanded",String(open));
+
+const menuToggle = document.getElementById("menuToggle");
+const nav = document.getElementById("mainNav");
+function setMenu(open){
+  nav.classList.toggle("open", open);
+  menuToggle.setAttribute("aria-expanded", String(open));
+  menuToggle.textContent = open ? "✕" : "☰";
+  menuToggle.setAttribute("aria-label", open ? "Fermer le menu" : "Ouvrir le menu");
+}
+menuToggle.addEventListener("click",()=>setMenu(!nav.classList.contains("open")));
+nav.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>setMenu(false)));
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") setMenu(false); });
+document.addEventListener("click",e=>{
+  if(nav.classList.contains("open") && !nav.contains(e.target) && !menuToggle.contains(e.target)) setMenu(false);
 });
-nav.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>nav.classList.remove("open")));
-document.getElementById("year").textContent=new Date().getFullYear();
+
+document.getElementById("year").textContent = new Date().getFullYear();
+try{
+  const saved = localStorage.getItem("zeoxone-lang");
+  if(saved === "en") setLanguage("en");
+}catch(e){}
