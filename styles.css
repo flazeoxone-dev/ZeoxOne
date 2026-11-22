@@ -31,3 +31,28 @@ html{-webkit-text-size-adjust:100%}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}
 
 .newsletter-coming-soon{cursor:not-allowed;opacity:.82}
+
+
+/* ===== Rubrique recommandations ===== */
+.recommendations-hero{padding-top:92px;padding-bottom:58px}
+.recommendations-hero h1{margin-bottom:20px}
+.recommendations-hero .hero-intro{max-width:720px}
+.disclosure-panel{display:flex;gap:18px;align-items:flex-start;border:1px solid #31516a;background:#101d29;padding:22px 25px;margin-bottom:25px}
+.disclosure-mark{width:30px;height:30px;flex:0 0 30px;border:1px solid var(--accent);border-radius:50%;display:grid;place-items:center;color:var(--accent);font-weight:700}
+.disclosure-panel h2{font:700 17px var(--display);margin:0 0 6px}
+.disclosure-panel p{font-size:13px;line-height:1.75;color:#aab8c6;margin:0}
+.recommendations-section{padding-top:55px;padding-bottom:65px}
+.recommendation-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.recommendation-card{border:1px solid #263544;background:linear-gradient(145deg,#151f2b,#10161e);padding:24px;min-height:245px;display:flex;flex-direction:column;align-items:flex-start}
+.recommendation-card h3{font-size:21px;margin:15px 0 8px}
+.recommendation-card p{font-size:13px;line-height:1.75;color:#9eacba;margin-bottom:22px}
+.recommendation-icon{font:30px var(--display);color:var(--accent);height:38px}
+.recommendation-tag{font-size:9px;letter-spacing:1.5px;font-weight:700;color:#7fa9c4}
+.recommendation-card .article-link{margin-top:auto}
+.recommendations-band{background:#0e141c;border-top:1px solid #1d2935;border-bottom:1px solid #1d2935}
+.recommendations-note{padding-top:75px;padding-bottom:90px}
+.recommendations-note h2{font:700 clamp(28px,4vw,40px)/1.2 var(--display);max-width:700px;margin:16px 0}
+.recommendations-note p{max-width:760px;color:#a6b2bf;font-size:14px;line-height:1.85}
+.recommendations-note .button{margin-top:12px}
+@media(max-width:850px){.recommendation-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.recommendations-hero{padding-top:58px;padding-bottom:35px}.disclosure-panel{padding:18px;gap:12px}.recommendations-section{padding-top:42px;padding-bottom:48px}.recommendation-grid{grid-template-columns:1fr}.recommendation-card{min-height:210px}.recommendations-note{padding-top:55px;padding-bottom:65px}}
