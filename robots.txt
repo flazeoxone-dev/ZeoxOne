@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://flazeoxone-dev.github.io/ZeoxOne/sitemap.xml
