@@ -75,17 +75,17 @@ a {
 .brand {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   font: 700 22px var(--display);
   letter-spacing: 2px;
-  text-decoration: none;
 }
 
 .site-logo {
-  width: 38px;
-  height: 38px;
+  width: 34px;
+  height: 34px;
   object-fit: contain;
-  border-radius: 8px;
+  border-radius: 6px;
+  flex-shrink: 0;
 }
 
 .brand-mark {
@@ -403,103 +403,4 @@ h1 span, h2 span {
 }
 
 .feature-card {
-  background: #10161f;
-  border: 1px solid #202c39;
-  min-width: 0;
-  transition: .25s;
-}
-
-.feature-card:hover {
-  transform: translateY(-4px);
-  border-color: #3c637d;
-}
-
-.feature-art {
-  height: 205px;
-  position: relative;
-  overflow: hidden;
-  background: #14202d;
-  display: grid;
-  place-items: center;
-}
-
-.art-label {
-  position: absolute;
-  top: 15px;
-  left: 16px;
-  color: #a6b7c7;
-  font: 700 9px var(--display);
-  letter-spacing: 1.5px;
-}
-
-.art-chip {
-  background: radial-gradient(circle at 50% 50%, #17476a, #101b29 65%);
-}
-
-.chip {
-  width: 100px;
-  height: 100px;
-  border: 1px solid #66c7f7;
-  display: grid;
-  place-items: center;
-  color: #aee5ff;
-  font: 700 26px var(--display);
-  box-shadow: 0 0 45px #38bdf855;
-  z-index: 1;
-  background: #10273a;
-}
-
-.chip:before, .chip:after {
-  content: "";
-  position: absolute;
-  width: 140px;
-  height: 140px;
-  border: 1px solid #38bdf84c;
-  transform: rotate(45deg);
-}
-
-.chip-lines {
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(0deg, transparent 0 20px, #4cb8ec12 21px 22px);
-}
-
-.art-code {
-  background: radial-gradient(circle at 70% 40%, #273f58, #10151f 65%);
-}
-
-.code-window {
-  width: 170px;
-  height: 125px;
-  border: 1px solid #52718a;
-  background: #0c131d;
-  padding: 10px;
-  box-shadow: 0 15px 35px #0008;
-}
-
-.code-window > span {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #38bdf8;
-  margin-right: 4px;
-}
-
-.code-window pre {
-  font: 700 24px/1.1 monospace;
-  color: #9ddfff;
-  text-align: center;
-  margin: 10px 0;
-}
-
-.art-game {
-  background: radial-gradient(circle at center, #26364a, #10151d 70%);
-}
-
-.game-ring {
-  width: 135px;
-  height: 135px;
-  border: 1px solid #38bdf8;
-  border-radius: 50%;
-  box-shadow: 0 0 0 15px #38bdf812, 0 0 0 3
+  background
