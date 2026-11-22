@@ -1,32 +1,155 @@
-# ZeoxOne — site GitHub Pages
+# ZeoxOne — site éditorial
 
-Site éditorial statique en HTML, CSS et JavaScript, avec interface français / anglais.
+ZeoxOne est un site statique consacré à l'informatique, au matériel PC, aux logiciels et au gaming. Le site est hébergé sur GitHub Pages et utilise HTML, CSS et JavaScript, avec une interface française / anglaise.
 
-## Publier sur GitHub Pages
+## Objectif éditorial
 
-1. Crée un dépôt GitHub nommé `ZeoxOne` (ou choisis un autre nom).
-2. Décompresse cette archive.
-3. Envoie **le contenu de ce dossier** à la racine du dépôt.
-4. Vérifie que `index.html` est directement visible à la racine du dépôt.
-5. Ouvre **Settings → Pages**.
-6. Dans **Build and deployment**, choisis **Deploy from a branch**.
-7. Sélectionne `main` et `/ (root)`, puis clique sur **Save**.
-8. Attends la fin du déploiement : l'adresse du site sera indiquée dans Settings → Pages.
+Publier des articles utiles, exacts, compréhensibles par les débutants et suffisamment documentés pour que les lecteurs puissent vérifier les informations. L'IA peut aider à rechercher, structurer et rédiger, mais **aucun article ne doit être publié sans vérification humaine**.
 
-## Fichiers
+La priorité est la qualité et l'utilité pour les lecteurs, pas la production massive d'articles ni la répétition de mots-clés. Voir les recommandations officielles de [Google sur le contenu utile](https://developers.google.com/search/docs/fundamentals/creating-helpful-content) et [l'utilisation de l'IA générative dans les contenus web](https://developers.google.com/search/docs/fundamentals/using-gen-ai-content).
 
-- `index.html` : accueil
-- `styles.css` : design
-- `script.js` : menu mobile et traduction français / anglais
-- `assets/favicon.svg` : icône du site
-- `articles/` : trois pages d'articles de démonstration
-- `mentions-legales.html` : mentions légales à compléter
+## Arborescence et rôle des fichiers
 
-## Avant la mise en ligne publique
+- `index.html` : page d'accueil ; affiche les articles récents depuis le catalogue.
+- `articles.html` : archives de tous les articles référencés.
+- `articles.json` : catalogue central utilisé par l'accueil et les archives.
+- `articles/` : fichiers HTML des articles.
+- `recommandations.html` : sélection de produits, logiciels et services.
+- `styles.css` : styles du site.
+- `script.js` : interactions et traductions.
+- `sitemap.xml` : URLs à proposer aux moteurs de recherche.
+- `robots.txt` : règles d'exploration.
+- `assets/` : images et ressources du site.
 
-- Les articles sont des exemples : vérifie et complète les informations avec des sources fiables.
-- Complète les mentions légales avec des informations exactes. Fais-toi accompagner par un parent ou un adulte responsable.
-- Remplace `contact@exemple.fr` par une adresse que tu contrôles, ou retire les liens de contact tant qu'elle n'existe pas.
-- La newsletter est une maquette : elle ne collecte aucune adresse e-mail.
-- GitHub Pages héberge des sites statiques : il ne fournit pas de base de données ni de traitement serveur intégré.
-- Vérifie la disponibilité du nom ZeoxOne et des marques avant tout usage commercial.
+## Procédure pour publier un nouvel article
+
+1. Choisir un sujet précis qui répond à une vraie question des lecteurs de ZeoxOne.
+2. Faire une recherche documentaire sur le Web. Ouvrir réellement les pages utilisées et vérifier leur date, leur auteur/éditeur et les informations qu'elles contiennent.
+3. Rédiger l'article avec le prompt éditorial ci-dessous. Ne jamais inventer de source, de citation, de prix, de caractéristique, de test, de mesure ou d'expérience personnelle.
+4. Créer un fichier HTML dans `articles/`, avec un nom court, descriptif, en minuscules et séparé par des tirets (ex. `choisir-un-ecran-pc.html`).
+5. Ajouter une entrée au début de `articles.json` en respectant exactement le format des entrées existantes.
+6. Ajouter l'URL absolue de l'article à `sitemap.xml`, avec la bonne date de dernière modification.
+7. Vérifier les liens, le HTML, l'affichage mobile, les chemins relatifs, le titre, la description, la langue et les sources.
+8. Relire et valider l'article avant de pousser les changements sur la branche `main`. GitHub Pages publiera ensuite les modifications.
+
+**Important :** ne pas modifier `index.html` ni `articles.html` pour une publication normale. Ces pages utilisent le catalogue `articles.json`. Ne pas supprimer ni renommer les anciens articles : leurs URLs doivent rester accessibles. Si une URL doit absolument changer, prévoir une redirection ou conserver une page à l'ancienne adresse.
+
+### Format de `articles.json`
+
+Chaque article doit avoir les champs suivants :
+
+```json
+{
+  "title": "Titre clair de l'article",
+  "description": "Résumé précis en une phrase.",
+  "category": "Matériel",
+  "type": "GUIDE",
+  "minutes": 7,
+  "url": "articles/nom-du-fichier.html",
+  "date": "2026-11-22",
+  "visual": "hardware"
+}
+```
+
+- `title` : titre visible.
+- `description` : résumé fidèle, sans promesse exagérée.
+- `category` : catégorie cohérente avec les autres articles (ex. Matériel, Logiciels, Gaming).
+- `type` : `GUIDE`, `DOSSIER` ou un type déjà pris en charge par le site.
+- `minutes` : estimation raisonnable du temps de lecture.
+- `url` : chemin relatif exact du fichier HTML.
+- `date` : date de publication au format `AAAA-MM-JJ`.
+- `visual` : valeur visuelle déjà utilisée par le site, si elle est prise en charge.
+
+Ne pas ajouter de champs au hasard : vérifier d'abord le format existant dans `articles.json`.
+
+## Prompt éditorial à copier dans une IA
+
+Copier le bloc ci-dessous, puis remplacer les champs entre crochets. Utiliser une IA qui peut effectuer des recherches Web. Si elle ne peut pas consulter le Web, elle doit le dire et demander des sources à l'utilisateur au lieu de fabriquer des références.
+
+```text
+Tu es le journaliste-rédacteur technique de ZeoxOne, un média francophone indépendant consacré à l'informatique, au matériel PC, aux logiciels et au gaming. Tu écris pour des lecteurs débutants, sans les prendre de haut.
+
+BRIEF
+- Sujet : [SUJET PRÉCIS]
+- Question principale du lecteur : [QUESTION À RÉSOUDRE]
+- Public : débutants et curieux.
+- Type : [GUIDE / DOSSIER / EXPLICATION / ACTUALITÉ]
+- Angle ou valeur ajoutée souhaitée : [ANGLE]
+- Longueur indicative : 900 à 1 400 mots pour un guide complet ; moins si le sujet est simple.
+- Date de recherche et de rédaction : utilise la date réelle du jour.
+- Nom de fichier souhaité : [nom-en-minuscules-avec-tirets.html]
+
+MISSION 1 — RECHERCHE ET VÉRIFICATION
+1. Effectue une recherche Web réelle avant de rédiger. Ouvre et lis les sources originales, pas seulement les extraits des moteurs de recherche.
+2. Utilise en priorité les sources primaires adaptées au sujet : documentation officielle des fabricants/éditeurs, pages d'assistance, fiches techniques, annonces officielles, normes ou organismes reconnus. Complète si nécessaire par au moins deux tests ou analyses indépendants, sérieux et identifiables.
+3. Pour une actualité, vérifie la date de publication et la date des faits. Pour les spécifications, prix, compatibilités, versions et disponibilités, vérifie qu'ils sont encore valables à la date de rédaction.
+4. Croise les informations importantes avec deux sources indépendantes lorsque c'est possible. Distingue clairement un fait confirmé, une annonce, une rumeur, une estimation et une opinion.
+5. N'invente JAMAIS une URL, un titre de source, un auteur, une date, une citation, un chiffre, un benchmark, un prix ou une caractéristique. N'attribue jamais à une source une information qu'elle ne dit pas.
+6. Si une information importante ne peut pas être vérifiée, retire-la ou indique explicitement qu'elle reste à confirmer. Si tu ne peux pas naviguer sur le Web, arrête la rédaction factuelle et fournis la liste des sources nécessaires.
+7. Ne copie pas les textes des sources et ne fais pas une simple paraphrase article par article. Synthétise avec tes propres mots et apporte une explication, une comparaison ou une méthode réellement utile.
+8. À la fin, fournis une liste de sources avec le titre, l'organisme ou l'éditeur, la date si disponible et l'URL exacte. Chaque source citée dans le texte doit figurer dans cette liste, et inversement.
+
+MISSION 2 — ACCROCHE ET RÉDACTION
+1. Commence par une accroche concrète de 2 à 4 phrases : pars d'un problème, d'une question fréquente, d'une situation réaliste ou d'un changement vérifié. Donne immédiatement au lecteur une raison de lire la suite.
+2. L'accroche doit être honnête : pas de sensationnalisme, de fausse urgence, de promesse spectaculaire ni de question artificielle.
+3. Après l'accroche, explique clairement ce que le lecteur saura faire ou comprendre à la fin.
+4. Organise le texte avec un seul H1, des H2 informatifs et des H3 seulement si utiles. Utilise des paragraphes courts, des listes et des tableaux uniquement lorsqu'ils facilitent réellement la compréhension.
+5. Explique les termes techniques lors de leur première apparition. Donne des exemples concrets pour débutants.
+6. Ajoute une vraie valeur éditoriale : méthode pas à pas, critères de choix, tableau comparatif justifié, erreurs à éviter, limites, cas où le conseil ne s'applique pas ou checklist.
+7. Termine par une conclusion courte qui répond directement à la question principale.
+8. N'invente jamais une expérience personnelle, un essai matériel, une mesure ou un test réalisé par ZeoxOne. Si aucun test n'a été fait, écris-le clairement et présente l'article comme une analyse documentaire.
+9. Évite le remplissage, les répétitions, les superlatifs commerciaux et le bourrage de mots-clés. Ne promets jamais une position dans Google.
+
+MISSION 3 — LIENS ET TRANSPARENCE
+1. Ajoute des liens externes vers les sources réellement consultées, directement près des affirmations qu'elles étayent, puis une section « Sources et références » en fin d'article.
+2. Vérifie chaque URL et utilise des liens descriptifs. N'utilise pas « clique ici » comme texte de lien.
+3. N'ajoute aucun lien affilié, partenariat ou recommandation commerciale qui n'a pas été fourni et vérifié. Ne prétends jamais qu'un lien est affilié s'il ne l'est pas.
+4. Si le brief contient des liens affiliés, ajoute une mention visible et compréhensible près du premier lien commercial, par exemple : « Certains liens de cet article sont affiliés : ZeoxOne peut recevoir une commission si vous effectuez un achat, sans coût supplémentaire pour vous. » Ne transforme pas un avis non testé en test produit.
+5. Indique les limites et les éventuels conflits d'intérêts connus.
+
+MISSION 4 — LIVRABLES POUR LE SITE
+Fournis dans cet ordre :
+A. Un bref dossier de recherche : faits vérifiés, points incertains et sources ouvertes.
+B. Le titre, une méta-description unique et une accroche.
+C. Le fichier HTML COMPLET, prêt à être enregistré dans `articles/[nom-du-fichier].html`.
+D. L'objet JSON exact à ajouter au début de `articles.json`.
+E. La ligne XML exacte à ajouter à `sitemap.xml`.
+F. Une checklist de vérification humaine avant publication.
+
+CONTRAINTES HTML
+- Reprends la structure et les classes du modèle existant dans `articles/choisir-composants-pc.html` : même en-tête, navigation « Tous les articles », conteneur `main.wrap.article`, pied de page et classes CSS existantes.
+- Conserve les chemins relatifs adaptés au dossier `articles/` : CSS `../styles.css`, favicon `../assets/favicon.svg`, accueil `../index.html`, archives `../articles.html`, mentions légales `../mentions-legales.html`, confidentialité `../politique-confidentialite.html`.
+- Le document doit contenir `<!doctype html>`, `<html lang="fr">`, charset UTF-8, viewport mobile, un titre SEO descriptif, une méta-description fidèle, une URL canonique absolue correcte et `<meta name="robots" content="index,follow">`.
+- Utilise le style du site et des balises HTML sémantiques. N'ajoute pas de framework, de script externe ou de CSS inline inutile.
+- Ajoute une byline exacte et honnête. N'invente pas de personne, de diplôme, d'expertise ou d'auteur. Utilise « Par ZeoxOne » si aucun auteur réel n'est fourni.
+- Ajoute une date de mise à jour uniquement si le contenu a réellement été revu à cette date.
+- Le titre, la description, la date, la catégorie, le temps de lecture et le nom de fichier doivent correspondre exactement entre le HTML et articles.json.
+- Le code doit être complet, propre, accessible et sans texte de remplacement comme [à compléter].
+
+CONTRÔLE FINAL
+Avant de répondre, vérifie la cohérence des faits et des liens, la validité du JSON et du XML, l'absence d'affirmations inventées, l'absence de faux tests, les chemins relatifs et la compatibilité avec le modèle ZeoxOne. Signale honnêtement tout élément qui nécessite une vérification humaine. Ne dis pas qu'un fichier a été publié ou modifié dans GitHub : tu fournis des fichiers prêts à être intégrés, sauf si tu disposes réellement d'un accès permettant de les modifier.
+```
+
+## Contrôle humain obligatoire avant publication
+
+- [ ] J'ai ouvert les sources et vérifié qu'elles soutiennent bien les affirmations.
+- [ ] Les dates, versions, chiffres et caractéristiques sont exacts et à jour.
+- [ ] Les liens fonctionnent et pointent vers les bonnes pages.
+- [ ] L'article apporte quelque chose de plus qu'un résumé de résultats Web.
+- [ ] Aucun test, avis personnel, auteur ou chiffre n'a été inventé.
+- [ ] Le fichier HTML s'affiche sur mobile et les liens internes fonctionnent.
+- [ ] L'entrée `articles.json` est un JSON valide et pointe vers le bon fichier.
+- [ ] L'URL a été ajoutée au sitemap.
+- [ ] Les liens commerciaux éventuels sont clairement signalés.
+
+## Référencement et qualité
+
+Le sitemap aide les moteurs de recherche à découvrir les URLs, mais ne garantit ni l'indexation ni une position dans les résultats. Conserver des URLs stables, des liens internes vers les anciens articles et des titres descriptifs. Mettre à jour un ancien article seulement lorsque cela apporte une information réellement nouvelle ; conserver son URL lorsque c'est possible.
+
+Références officielles :
+- [Google Search Central — Créer du contenu utile, fiable et conçu pour les internautes](https://developers.google.com/search/docs/fundamentals/creating-helpful-content)
+- [Google Search Central — Conseils sur le contenu généré par IA](https://developers.google.com/search/docs/fundamentals/using-gen-ai-content)
+
+## Déploiement GitHub Pages
+
+Les changements poussés sur la branche `main` sont publiés par GitHub Pages selon la configuration du dépôt. Vérifier l'onglet **Actions** et attendre la réussite du workflow avant de contrôler le site en ligne.
