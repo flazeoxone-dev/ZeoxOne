@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1254 1254" width="512" height="512">
+  <defs>
+    <radialGradient id="bgGrad" cx="55%" cy="45%" r="65%">
+      <stop offset="0%" stop-color="#111827" />
+      <stop offset="100%" stop-color="#070a0f" />
+    </radialGradient>
+
+    <linearGradient id="zTopGrad" x1="20%" y1="30%" x2="80%" y2="85%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="65%" stop-color="#eef3f8" />
+      <stop offset="100%" stop-color="#b9c6d6" />
+    </linearGradient>
+
+    <linearGradient id="zBotGrad" x1="30%" y1="75%" x2="85%" y2="55%">
+      <stop offset="0%" stop-color="#00c8ff" />
+      <stop offset="48%" stop-color="#5ce1ff" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+
+    <linearGradient id="oneGrad" x1="50%" y1="30%" x2="50%" y2="85%">
+      <stop offset="0%" stop-color="#00f2ff" />
+      <stop offset="55%" stop-color="#00c3ff" />
+      <stop offset="100%" stop-color="#0095ff" />
+    </linearGradient>
+
+    
+    <linearGradient id="arcGrad" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#0055ff" stop-opacity="0.2" />
+      <stop offset="25%" stop-color="#009dff" stop-opacity="0.9" />
+      <stop offset="60%" stop-color="#00f0ff" stop-opacity="1" />
+      <stop offset="90%" stop-color="#00c3ff" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#0055ff" stop-opacity="0" />
+    </linearGradient>
+
+    <filter id="cyanGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="12" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1254" height="1254" rx="260" fill="url(#bgGrad)" />
+
+  
+  <path d="M 985 287 A 480 480 0 1 1 230 650" fill="none" stroke="url(#arcGrad)" stroke-width="22" stroke-linecap="round" filter="url(#cyanGlow)" />
+
+  
+  <polygon points="848,359 321,360 177,503 289,452 622,450 151,855 291,854" fill="url(#zTopGrad)" />
+
+  
+  <polygon points="749,526 722,533 334,853 676,849 799,740 521,741" fill="url(#zBotGrad)" />
+
+  
+  <polygon points="1010,369 925,369 765,493 880,495 807,849 915,849" fill="url(#oneGrad)" />
+</svg>
