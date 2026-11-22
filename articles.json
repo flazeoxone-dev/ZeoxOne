@@ -1,0 +1,32 @@
+[
+  {
+    "title": "Comment choisir les composants de son premier PC ?",
+    "description": "Processeur, carte mère, RAM, carte graphique et alimentation : les bases pour choisir les composants de son premier PC.",
+    "category": "Matériel",
+    "type": "GUIDE",
+    "minutes": 6,
+    "url": "articles/choisir-composants-pc.html",
+    "date": "2026-11-22",
+    "visual": "hardware"
+  },
+  {
+    "title": "Les outils gratuits à connaître sur Windows",
+    "description": "Une sélection d'utilitaires pratiques pour améliorer son environnement de travail sous Windows.",
+    "category": "Logiciels",
+    "type": "GUIDE",
+    "minutes": 4,
+    "url": "articles/outils-windows.html",
+    "date": "2026-11-22",
+    "visual": "software"
+  },
+  {
+    "title": "Comment évoluent les performances des jeux PC ?",
+    "description": "FPS, résolution et technologies d'upscaling : comprendre ce qui change vraiment l'expérience.",
+    "category": "Gaming",
+    "type": "DOSSIER",
+    "minutes": 5,
+    "url": "articles/performances-jeux-pc.html",
+    "date": "2026-11-22",
+    "visual": "gaming"
+  }
+]
