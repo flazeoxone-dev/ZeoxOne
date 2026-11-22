@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://flazeoxone-dev.github.io/ZeoxOne/</loc></url>
+  <url><loc>https://flazeoxone-dev.github.io/ZeoxOne/articles.html</loc></url>
+  <url><loc>https://flazeoxone-dev.github.io/ZeoxOne/recommandations.html</loc></url>
   <url><loc>https://flazeoxone-dev.github.io/ZeoxOne/articles/choisir-composants-pc.html</loc></url>
   <url><loc>https://flazeoxone-dev.github.io/ZeoxOne/articles/outils-windows.html</loc></url>
   <url><loc>https://flazeoxone-dev.github.io/ZeoxOne/articles/performances-jeux-pc.html</loc></url>
