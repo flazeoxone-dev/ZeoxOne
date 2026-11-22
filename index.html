@@ -27,7 +27,7 @@
     <a class="brand" href="#main" aria-label="ZeoxOne accueil"><img src="assets/favicon.svg" alt="Logo ZeoxOne" class="site-logo" width="34" height="34"><span>ZeoxOne<span class="brand-dot">.</span></span></a>
     <button type="button" class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu" aria-controls="mainNav" aria-expanded="false">☰</button>
     <nav class="main-nav" id="mainNav">
-      <a href="#latest" data-i18n="navNews">Actualités</a>
+      <a href="articles.html" data-i18n="navNews">Actualités</a>
       <a href="#guides" data-i18n="navGuides">Guides</a>
       <a href="recommandations.html" data-i18n="navRecommendations">Recommandations</a>
       <a href="#reviews" data-i18n="navReviews">Comparatifs</a>
@@ -67,22 +67,9 @@
     <section class="ticker" aria-label="Thèmes"><div class="ticker-track"><span>TECHNOLOGY</span><b>✳</b><span>HARDWARE</span><b>✳</b><span>GAMING</span><b>✳</b><span>INNOVATION</span><b>✳</b><span>SOFTWARE</span><b>✳</b><span>TECHNOLOGY</span><b>✳</b><span>HARDWARE</span><b>✳</b><span>GAMING</span><b>✳</b><span>INNOVATION</span><b>✳</b><span>SOFTWARE</span><b>✳</b></div></section>
 
     <section class="section wrap" id="latest">
-      <div class="section-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span><span data-i18n="latestEyebrow">À LA UNE</span></div><h2 data-i18n-html="latestTitle">Le radar <span>ZeoxOne.</span></h2></div><a class="view-all" href="#articles" data-i18n="viewAll">Tous les articles ↗</a></div>
-      <div class="featured-grid" id="articles">
-        <article class="feature-card feature-main">
-          <div class="feature-art art-chip"><div class="chip-lines"></div><span class="art-label">HARDWARE / 001</span><div class="chip">CPU</div></div>
-          <div class="article-info"><div class="article-meta"><span data-i18n="categoryHardware">MATÉRIEL</span><span>•</span><span>6 MIN</span></div><h3 data-i18n="article1Title">Comment choisir les composants de son premier PC ?</h3><p data-i18n="article1Text">Processeur, carte graphique, mémoire vive : les bases pour construire une configuration cohérente.</p><a href="articles/choisir-composants-pc.html" class="article-link" data-i18n="readArticle">Lire l'article <span>↗</span></a></div>
-        </article>
-        <article class="feature-card">
-          <div class="feature-art art-code"><div class="code-window"><span></span><span></span><span></span><pre>&lt;/&gt;<br>010101<br>101010</pre></div><span class="art-label">SOFTWARE / 002</span></div>
-          <div class="article-info"><div class="article-meta"><span data-i18n="categorySoftware">LOGICIELS</span><span>•</span><span>4 MIN</span></div><h3 data-i18n="article2Title">Les outils gratuits à connaître sur Windows</h3><p data-i18n="article2Text">Une sélection d'utilitaires pratiques pour améliorer son environnement de travail.</p><a href="articles/outils-windows.html" class="article-link" data-i18n="readArticle">Lire l'article <span>↗</span></a></div>
-        </article>
-        <article class="feature-card">
-          <div class="feature-art art-game"><div class="game-ring"></div><div class="game-cross">+</div><span class="art-label">GAMING / 003</span></div>
-          <div class="article-info"><div class="article-meta"><span data-i18n="categoryGaming">CULTURE GAMING</span><span>•</span><span>5 MIN</span></div><h3 data-i18n="article3Title">Comment évoluent les performances des jeux PC ?</h3><p data-i18n="article3Text">FPS, résolution et technologies d'upscaling : comprendre ce qui change vraiment l'expérience.</p><a href="articles/performances-jeux-pc.html" class="article-link" data-i18n="readArticle">Lire l'article <span>↗</span></a></div>
-        </article>
-      </div>
-      
+      <div class="section-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span><span data-i18n="latestEyebrow">À LA UNE</span></div><h2 data-i18n-html="latestTitle">Le radar <span>ZeoxOne.</span></h2></div><a class="view-all" href="articles.html" data-i18n="viewAll">Tous les articles ↗</a></div>
+      <div class="featured-grid" id="articles" data-articles-limit="3" aria-live="polite"></div>
+     
     </section>
 
     <section class="topics-section" id="guides"><div class="wrap">
