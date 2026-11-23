@@ -7,7 +7,9 @@
     "minutes": 7,
     "url": "articles/gta-6-quelle-console-ps5-ps5-pro-xbox.html",
     "date": "2026-11-22",
-    "visual": "gaming"
+    "visual": "gaming",
+    "image": "https://www.rockstargames.com/VI/_next/static/media/Vice_City_Postcard_landscape.0v2njmlk2n-qm.jpg?akim=1&imdensity=1&imwidth=3840",
+    "imageAlt": "Visuel de Vice City pour Grand Theft Auto VI"
   },
   {
     "title": "Comment choisir les composants de son premier PC ?",
@@ -17,7 +19,9 @@
     "minutes": 6,
     "url": "articles/choisir-composants-pc.html",
     "date": "2026-11-22",
-    "visual": "hardware"
+    "visual": "hardware",
+    "image": "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=1200&q=85",
+    "imageAlt": "Ordinateur et composants informatiques"
   },
   {
     "title": "Les outils gratuits à connaître sur Windows",
@@ -27,7 +31,9 @@
     "minutes": 4,
     "url": "articles/outils-windows.html",
     "date": "2026-11-22",
-    "visual": "software"
+    "visual": "software",
+    "image": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=85",
+    "imageAlt": "Poste de travail informatique"
   },
   {
     "title": "Comment évoluent les performances des jeux PC ?",
@@ -37,6 +43,8 @@
     "minutes": 5,
     "url": "articles/performances-jeux-pc.html",
     "date": "2026-11-22",
-    "visual": "gaming"
+    "visual": "gaming",
+    "image": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=85",
+    "imageAlt": "Environnement de jeu vidéo sur PC"
   }
 ]
