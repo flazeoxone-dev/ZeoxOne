@@ -71,16 +71,23 @@ async function renderArticleCards(){
     containers.forEach(container=>{
       const searchInput = document.getElementById("articleSearch");
       const query = searchInput ? searchInput.value.trim().toLocaleLowerCase("fr") : "";
-      const params = new URLSearchParams(window.location.search);\n      const categoryFilter = (params.get("categorie") || "").toLocaleLowerCase("fr");\n      const filtered = articles.filter(article => (!categoryFilter || article.category.toLocaleLowerCase("fr") === categoryFilter) && [article.title, article.description, article.category, article.type].join(" ").toLocaleLowerCase("fr").includes(query));
+       const params = new URLSearchParams(window.location.search);
+       const categoryFilter = (params.get("categorie") || "").toLocaleLowerCase("fr");
+      const filtered = articles.filter(article => (!categoryFilter || article.category.toLocaleLowerCase("fr") === categoryFilter) && [article.title, article.description, article.category, article.type].join(" ").toLocaleLowerCase("fr").includes(query));
       const limit = Number(container.dataset.articlesLimit || 0);
       const visible = limit && !query ? filtered.slice(0,limit) : filtered;
       const status = document.getElementById("articleSearchStatus");
-      if(status) status.textContent = (categoryFilter ? "Catégorie : " + params.get("categorie") + " · " : "") + visible.length + (visible.length > 1 ? " articles trouvés" : " article trouvé");
+      if(status) status.textContent = visible.length + (visible.length > 1 ? " articles trouvés" : " article trouvé");
       container.innerHTML = visible.length ? visible.map(article=>{
+        const visualClass = article.visual === "hardware" ? "art-chip" : article.visual === "software" ? "art-code" : "art-game";
+        const artwork = article.visual === "hardware"
+          ? '<div class="chip-lines"></div><div class="chip">CPU</div>'
+          : article.visual === "software"
+            ? '<div class="code-window"><span></span><span></span><span></span><pre>&lt;/&gt;<br>010101</pre></div>'
+            : '<div class="game-ring"></div><div class="game-cross">+</div>';
         const href = article.url;
-        const image = article.image || "";
-        const imageAlt = article.imageAlt || article.title;
-        return '<article class="feature-card"><a class="article-card-link" href="'+href+'"><div class="feature-art feature-art-photo"><img src="'+image+'" alt="'+imageAlt+'" loading="lazy" decoding="async"><span class="art-label">'+article.category.toUpperCase()+' / '+article.type+'</span></div><div class="article-info"><div class="article-meta"><span>'+article.category.toUpperCase()+'</span><span>•</span><span>'+article.minutes+' MIN</span></div><h3>'+article.title+'</h3><p>'+article.description+'</p><span class="article-link">'+(currentLang==="en"?"Read article":"Lire l’article")+' ↗</span></div></a></article>';
+        const visual = article.image ? '<img class="article-cover" src="'+article.image+'" alt="'+(article.imageAlt || article.title)+'" loading="lazy">'+'<span class="art-label">'+article.category.toUpperCase()+' / '+article.type+'</span>' : artwork+'<span class="art-label">'+article.category.toUpperCase()+' / '+article.type+'</span>';
+         return '<article class="feature-card"><a class="article-card-link" href="'+href+'"><div class="feature-art '+visualClass+'">'+visual+'</div><div class="article-info"><div class="article-meta"><span>'+article.category.toUpperCase()+'</span><span>•</span><span>'+article.minutes+' MIN</span></div><h3>'+article.title+'</h3><p>'+article.description+'</p><span class="article-link">'+(currentLang==="en"?"Read article":"Lire l’article")+' ↗</span></div></a></article>';
       }).join("") : '<p class="catalogue-error">Aucun article ne correspond à cette recherche. Essaie un autre mot-clé.</p>';
     });
     const searchInput = document.getElementById("articleSearch");
