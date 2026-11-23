@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="fr">
 <head>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('zeoxone-theme')==='light'?'light':'dark'}catch(e){document.documentElement.dataset.theme='dark'}</script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="GTA 6 tourne à 30 images par seconde sur toutes les consoles. Résolution, fluidité, prix en France : quelle console choisir entre PS5, PS5 Pro et Xbox Series X|S ?">
@@ -23,11 +24,13 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"GTA 6 : quelle console choisir entre PS5, PS5 Pro et Xbox Series X|S ?","description":"GTA 6 tourne à 30 images par seconde sur toutes les consoles. Résolution, fluidité, prix en France : quelle console choisir entre PS5, PS5 Pro et Xbox Series X|S ?","datePublished":"2026-11-22","dateModified":"2026-11-22","author":{"@type":"Organization","name":"ZeoxOne"},"publisher":{"@type":"Organization","name":"ZeoxOne"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://flazeoxone-dev.github.io/ZeoxOne/articles/gta-6-quelle-console-ps5-ps5-pro-xbox.html"},"inLanguage":"fr-FR"}</script>
 </head>
 <body>
-  <header class="site-header"><a class="brand" href="../index.html"><img src="../assets/favicon.svg" alt="Logo ZeoxOne" class="site-logo" width="34" height="34"><span>ZeoxOne<span class="brand-dot">.</span></span></a><a class="header-cta" href="../articles.html">← Tous les articles</a></header>
+  <header class="site-header"><a class="brand" href="../index.html"><img src="../assets/favicon.svg" alt="Logo ZeoxOne" class="site-logo" width="34" height="34"><span>ZeoxOne<span class="brand-dot">.</span></span></a><div class="header-actions"><a class="header-cta" href="../articles.html">← Tous les articles</a><button type="button" class="theme-switch" data-theme-toggle aria-label="Activer le thème clair"><span aria-hidden="true">☼</span><span class="theme-switch-label">Clair</span></button></div></header>
   <main class="wrap article">
+    <div class="article-heading-visual" style="--article-cover: url('https://www.rockstargames.com/VI/_next/static/media/Vice_City_Postcard_landscape.0v2njmlk2n-qm.jpg?akim=1&imdensity=1&imwidth=3840')">
     <div class="eyebrow"><span class="eyebrow-line"></span>GUIDE · GAMING</div>
     <h1>GTA 6 : quelle console choisir entre PS5, PS5 Pro et Xbox Series X|S ?</h1>
     <p class="byline">Par ZeoxOne · Mis à jour le 22 novembre 2026</p>
+    </div>
     <p class="lead">GTA 6 est sorti le 19 novembre 2026 et tu hésites peut-être sur la console à acheter pour y jouer. La bonne nouvelle : les quatre consoles compatibles font tourner le jeu. La moins bonne : les prix ont fortement monté en 2026 et les différences entre consoles ne sont pas celles que l'on imagine. Voici de quoi choisir sans te tromper.</p>
 
     <div class="callout"><p><strong>En bref :</strong> la PS5 Pro offre la meilleure version du jeu, mais elle coûte 899,99 € et reste difficile à trouver au prix officiel. La PS5 est le choix le plus équilibré. La Xbox Series X est aujourd'hui plus chère que la PS5 pour une expérience comparable. La Xbox Series S est la version la plus limitée. Si tu possèdes déjà une PS5 ou une Series X, rien ne justifie de changer de console juste pour GTA 6.</p></div>
@@ -118,5 +121,8 @@
     <a class="button button-primary" href="../index.html">Retour à ZeoxOne ↗</a>
   </main>
   <footer class="site-footer"><div class="wrap footer-bottom"><span>© ZeoxOne. Tous droits réservés.</span><span class="footer-links"><a href="../mentions-legales.html">Mentions légales</a><a href="../politique-confidentialite.html">Politique de confidentialité</a></span></div></footer>
+<script>
+(function(){const r=document.documentElement,k='zeoxone-theme';let t='dark';try{t=localStorage.getItem(k)==='light'?'light':'dark'}catch(e){}r.dataset.theme=t;r.style.colorScheme=t;function paint(){document.querySelectorAll('[data-theme-toggle]').forEach(b=>{const l=r.dataset.theme==='light';b.setAttribute('aria-label',l?'Activer le thème sombre':'Activer le thème clair');b.setAttribute('aria-pressed',String(l));const i=b.querySelector('span:first-child'),s=b.querySelector('.theme-switch-label');if(i)i.textContent=l?'◐':'☼';if(s)s.textContent=l?'Sombre':'Clair'})}document.addEventListener('click',e=>{if(!e.target.closest('[data-theme-toggle]'))return;r.dataset.theme=r.dataset.theme==='light'?'dark':'light';r.style.colorScheme=r.dataset.theme;try{localStorage.setItem(k,r.dataset.theme)}catch(e){}paint()});paint()})();
+</script>
 </body>
 </html>

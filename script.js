@@ -125,3 +125,12 @@ renderArticleCards();
   link.setAttribute("aria-label","Donner un avis sur ZeoxOne");
   document.body.appendChild(link);
 })();
+
+/* Persistent dark/light theme */
+(function(){
+ const root=document.documentElement,key="zeoxone-theme";
+ let theme="dark";try{theme=localStorage.getItem(key)==="light"?"light":"dark"}catch(e){}
+ root.dataset.theme=theme;root.style.colorScheme=theme;
+ function paint(){document.querySelectorAll("[data-theme-toggle]").forEach(b=>{const light=root.dataset.theme==="light";b.setAttribute("aria-label",light?"Activer le thème sombre":"Activer le thème clair");b.setAttribute("aria-pressed",String(light));const i=b.querySelector("span:first-child"),l=b.querySelector(".theme-switch-label");if(i)i.textContent=light?"◐":"☼";if(l)l.textContent=light?"Sombre":"Clair"})}
+ document.addEventListener("click",e=>{const b=e.target.closest("[data-theme-toggle]");if(!b)return;root.dataset.theme=root.dataset.theme==="light"?"dark":"light";root.style.colorScheme=root.dataset.theme;try{localStorage.setItem(key,root.dataset.theme)}catch(e){}paint()});paint();
+})();

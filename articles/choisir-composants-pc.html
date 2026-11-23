@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="fr">
 <head>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('zeoxone-theme')==='light'?'light':'dark'}catch(e){document.documentElement.dataset.theme='dark'}</script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="Processeur, carte mère, RAM, carte graphique, alimentation : le guide simple pour choisir les composants de ton premier PC sans te tromper.">
@@ -23,11 +24,13 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Comment choisir les composants de son premier PC ?","description":"Processeur, carte mère, RAM, carte graphique, alimentation : le guide simple pour choisir les composants de ton premier PC sans te tromper.","datePublished":"2026-11-22","dateModified":"2026-11-22","author":{"@type":"Organization","name":"ZeoxOne"},"publisher":{"@type":"Organization","name":"ZeoxOne"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://flazeoxone-dev.github.io/ZeoxOne/articles/choisir-composants-pc.html"},"inLanguage":"fr-FR"}</script>
 </head>
 <body>
-  <header class="site-header"><a class="brand" href="../index.html"><img src="../assets/favicon.svg" alt="Logo ZeoxOne" class="site-logo" width="34" height="34"><span>ZeoxOne<span class="brand-dot">.</span></span></a><a class="header-cta" href="../articles.html">← Tous les articles</a></header>
+  <header class="site-header"><a class="brand" href="../index.html"><img src="../assets/favicon.svg" alt="Logo ZeoxOne" class="site-logo" width="34" height="34"><span>ZeoxOne<span class="brand-dot">.</span></span></a><div class="header-actions"><a class="header-cta" href="../articles.html">← Tous les articles</a><button type="button" class="theme-switch" data-theme-toggle aria-label="Activer le thème clair"><span aria-hidden="true">☼</span><span class="theme-switch-label">Clair</span></button></div></header>
   <main class="wrap article">
+    <div class="article-heading-visual" style="--article-cover: url('https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=1200&q=85')">
     <div class="eyebrow"><span class="eyebrow-line"></span>GUIDE · MATÉRIEL</div>
     <h1>Comment choisir les composants de son premier PC ?</h1>
     <p class="byline">Par ZeoxOne · Mis à jour le 22 novembre 2026</p>
+    </div>
     <p class="lead">Monter son PC a l'air réservé aux experts. En réalité, c'est un jeu de construction : une poignée de pièces, quelques règles de compatibilité et un ordre de réflexion à respecter. Voici la méthode pour ne pas gaspiller ton budget.</p>
 
     <h2>1. Commence par l'usage, pas par les pièces</h2>
@@ -40,6 +43,7 @@
       <tr><td>Programmation</td><td>RAM et SSD</td><td>Un bon écran</td></tr>
     </table></div>
 
+<figure class="article-visual"><img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&w=1400&q=85" alt="Composants d'un ordinateur de bureau" loading="lazy"><figcaption>Les composants doivent être choisis comme un ensemble compatible.</figcaption></figure>
     <h2>2. Les pièces en un coup d'œil</h2>
     <ul>
       <li><strong>Processeur (CPU)</strong> : le cerveau, qui exécute les calculs.</li>
@@ -87,5 +91,8 @@
     <a class="button button-primary" href="../index.html">Retour à ZeoxOne ↗</a>
   </main>
   <footer class="site-footer"><div class="wrap footer-bottom"><span>© ZeoxOne. Tous droits réservés.</span><span class="footer-links"><a href="../mentions-legales.html">Mentions légales</a><a href="../politique-confidentialite.html">Politique de confidentialité</a></span></div></footer>
+<script>
+(function(){const r=document.documentElement,k='zeoxone-theme';let t='dark';try{t=localStorage.getItem(k)==='light'?'light':'dark'}catch(e){}r.dataset.theme=t;r.style.colorScheme=t;function paint(){document.querySelectorAll('[data-theme-toggle]').forEach(b=>{const l=r.dataset.theme==='light';b.setAttribute('aria-label',l?'Activer le thème sombre':'Activer le thème clair');b.setAttribute('aria-pressed',String(l));const i=b.querySelector('span:first-child'),s=b.querySelector('.theme-switch-label');if(i)i.textContent=l?'◐':'☼';if(s)s.textContent=l?'Sombre':'Clair'})}document.addEventListener('click',e=>{if(!e.target.closest('[data-theme-toggle]'))return;r.dataset.theme=r.dataset.theme==='light'?'dark':'light';r.style.colorScheme=r.dataset.theme;try{localStorage.setItem(k,r.dataset.theme)}catch(e){}paint()});paint()})();
+</script>
 </body>
 </html>

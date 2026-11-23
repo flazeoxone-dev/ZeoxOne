@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="fr">
 <head>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('zeoxone-theme')==='light'?'light':'dark'}catch(e){document.documentElement.dataset.theme='dark'}</script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="Une sélection d'outils gratuits et fiables pour Windows : recherche instantanée, compression, captures, mots de passe et diagnostic.">
@@ -23,11 +24,13 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Les outils gratuits à connaître sur Windows","description":"Une sélection d'outils gratuits et fiables pour Windows : recherche instantanée, compression, captures, mots de passe et diagnostic.","datePublished":"2026-11-22","dateModified":"2026-11-22","author":{"@type":"Organization","name":"ZeoxOne"},"publisher":{"@type":"Organization","name":"ZeoxOne"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://flazeoxone-dev.github.io/ZeoxOne/articles/outils-windows.html"},"inLanguage":"fr-FR"}</script>
 </head>
 <body>
-  <header class="site-header"><a class="brand" href="../index.html"><img src="../assets/favicon.svg" alt="Logo ZeoxOne" class="site-logo" width="34" height="34"><span>ZeoxOne<span class="brand-dot">.</span></span></a><a class="header-cta" href="../articles.html">← Tous les articles</a></header>
+  <header class="site-header"><a class="brand" href="../index.html"><img src="../assets/favicon.svg" alt="Logo ZeoxOne" class="site-logo" width="34" height="34"><span>ZeoxOne<span class="brand-dot">.</span></span></a><div class="header-actions"><a class="header-cta" href="../articles.html">← Tous les articles</a><button type="button" class="theme-switch" data-theme-toggle aria-label="Activer le thème clair"><span aria-hidden="true">☼</span><span class="theme-switch-label">Clair</span></button></div></header>
   <main class="wrap article">
+    <div class="article-heading-visual" style="--article-cover: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=85')">
     <div class="eyebrow"><span class="eyebrow-line"></span>GUIDE · LOGICIELS</div>
     <h1>Les outils gratuits à connaître sur Windows</h1>
     <p class="byline">Par ZeoxOne · Mis à jour le 22 novembre 2026</p>
+    </div>
     <p class="lead">Windows fait déjà beaucoup, mais quelques logiciels gratuits peuvent te faire gagner un temps fou : retrouver un fichier en une seconde, ouvrir n'importe quelle archive, capturer l'écran ou sécuriser tes mots de passe. Voici ceux qui valent le détour.</p>
 
     <div class="callout"><p><strong>Règle d'or :</strong> télécharge toujours un logiciel depuis le <strong>site officiel</strong> de son éditeur. Les sites de « téléchargement gratuit » ajoutent parfois des programmes indésirables dans l'installeur. Ici, aucun lien affilié.</p></div>
@@ -44,6 +47,7 @@
     <h3>7-Zip</h3>
     <p>Il ouvre et crée la plupart des formats d'archives (ZIP, 7z, RAR en lecture…). Il est gratuit, léger et sans publicité.</p>
     <h3>VLC</h3>
+<figure class="article-visual"><img src="https://images.videolan.org/images/VLC-IconSmall.png" alt="Logo du lecteur multimédia VLC" loading="lazy"><figcaption>VLC media player — le cône orange reconnaissable du lecteur multimédia.</figcaption></figure>
     <p>Le lecteur multimédia qui lit presque tous les formats audio et vidéo sans installer de codecs en plus.</p>
     <h3>Rufus</h3>
     <p>Il crée une clé USB bootable pour installer ou réparer un système. <strong>Attention :</strong> récupère l'image Windows directement sur le site de Microsoft et vérifie ce que tu écris sur la clé, car elle sera effacée.</p>
@@ -72,5 +76,8 @@
     <a class="button button-primary" href="../index.html">Retour à ZeoxOne ↗</a>
   </main>
   <footer class="site-footer"><div class="wrap footer-bottom"><span>© ZeoxOne. Tous droits réservés.</span><span class="footer-links"><a href="../mentions-legales.html">Mentions légales</a><a href="../politique-confidentialite.html">Politique de confidentialité</a></span></div></footer>
+<script>
+(function(){const r=document.documentElement,k='zeoxone-theme';let t='dark';try{t=localStorage.getItem(k)==='light'?'light':'dark'}catch(e){}r.dataset.theme=t;r.style.colorScheme=t;function paint(){document.querySelectorAll('[data-theme-toggle]').forEach(b=>{const l=r.dataset.theme==='light';b.setAttribute('aria-label',l?'Activer le thème sombre':'Activer le thème clair');b.setAttribute('aria-pressed',String(l));const i=b.querySelector('span:first-child'),s=b.querySelector('.theme-switch-label');if(i)i.textContent=l?'◐':'☼';if(s)s.textContent=l?'Sombre':'Clair'})}document.addEventListener('click',e=>{if(!e.target.closest('[data-theme-toggle]'))return;r.dataset.theme=r.dataset.theme==='light'?'dark':'light';r.style.colorScheme=r.dataset.theme;try{localStorage.setItem(k,r.dataset.theme)}catch(e){}paint()});paint()})();
+</script>
 </body>
 </html>
