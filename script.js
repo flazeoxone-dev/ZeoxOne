@@ -62,12 +62,18 @@ try{
 
 // ===== Catalogue d'articles : source unique articles.json =====
 async function renderArticleCards(){
-  const containers = document.querySelectorAll("[data-articles-list], #articles[data-articles-limit]");
+  const containers = document.querySelectorAll("[data-articles-list], #articles[data-articles-home], #articles[data-articles-limit]");
   if(!containers.length) return;
   try{
     const response = await fetch("articles.json", {cache:"no-store"});
     if(!response.ok) throw new Error("Catalogue indisponible");
     const articles = await response.json();
+    // Compteur dynamique des articles par catégorie sur les cartes de l'accueil.
+    document.querySelectorAll("[data-category-count]").forEach(counter=>{
+      const category = (counter.dataset.categoryCount || "").toLocaleLowerCase("fr");
+      const count = articles.filter(article => (article.category || "").toLocaleLowerCase("fr") === category).length;
+      counter.textContent = count + (count > 1 ? " articles" : " article");
+    });
     containers.forEach(container=>{
       const searchInput = document.getElementById("articleSearch");
       const query = searchInput ? searchInput.value.trim().toLocaleLowerCase("fr") : "";
@@ -78,13 +84,8 @@ async function renderArticleCards(){
       const limit = Number(container.dataset.articlesLimit || 0);
       let visible = filtered;
       if(isHome){
-        const seenCategories = new Set();
-        visible = filtered.slice().sort((a,b) => (b.date || "").localeCompare(a.date || "")).filter(article => {
-          const category = (article.category || "").toLocaleLowerCase("fr");
-          if(!category || seenCategories.has(category)) return false;
-          seenCategories.add(category);
-          return true;
-        });
+        // Accueil : les trois articles les plus récents, toutes catégories confondues.
+        visible = filtered.slice().sort((a,b) => (b.date || "").localeCompare(a.date || "")).slice(0,3);
       } else if(limit && !query) {
         visible = filtered.slice(0,limit);
       }

@@ -134,3 +134,7 @@ img,svg,video,iframe{max-width:100%}
 .topic-card-copy p{font-size:13px;color:#d0d9e2;max-width:250px;margin:0}
 .topic-card-photo .topic-arrow{z-index:2}
 @media(max-width:620px){.feature-art-photo,.feature-art-photo img{min-height:190px}.topic-grid-visual .topic-card-photo{min-height:205px}.topic-card-copy{left:16px;right:16px;bottom:17px}}
+
+
+/* Nombre d'articles affiché sur chaque carte de catégorie */
+.topic-count{display:inline-block;margin-top:10px;color:#a9c9dc;font-size:11px;font-weight:700;letter-spacing:.3px}.topic-card-photo .topic-count{position:relative;z-index:2}
