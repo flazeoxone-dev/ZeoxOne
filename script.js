@@ -74,8 +74,20 @@ async function renderArticleCards(){
        const params = new URLSearchParams(window.location.search);
        const categoryFilter = (params.get("categorie") || "").toLocaleLowerCase("fr");
       const filtered = articles.filter(article => (!categoryFilter || article.category.toLocaleLowerCase("fr") === categoryFilter) && [article.title, article.description, article.category, article.type].join(" ").toLocaleLowerCase("fr").includes(query));
+      const isHome = container.hasAttribute("data-articles-home");
       const limit = Number(container.dataset.articlesLimit || 0);
-      const visible = limit && !query ? filtered.slice(0,limit) : filtered;
+      let visible = filtered;
+      if(isHome){
+        const seenCategories = new Set();
+        visible = filtered.slice().sort((a,b) => (b.date || "").localeCompare(a.date || "")).filter(article => {
+          const category = (article.category || "").toLocaleLowerCase("fr");
+          if(!category || seenCategories.has(category)) return false;
+          seenCategories.add(category);
+          return true;
+        });
+      } else if(limit && !query) {
+        visible = filtered.slice(0,limit);
+      }
       const status = document.getElementById("articleSearchStatus");
       if(status) status.textContent = visible.length + (visible.length > 1 ? " articles trouvés" : " article trouvé");
       container.innerHTML = visible.length ? visible.map(article=>{
