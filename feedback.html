@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Envoyer un avis, signaler une erreur ou proposer un sujet à ZeoxOne.">
+<meta name="robots" content="noindex,follow"><meta name="theme-color" content="#0b0e13">
+<title>Donner un avis — ZeoxOne</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site-header"><a class="brand" href="index.html"><img src="assets/favicon.svg" alt="Logo ZeoxOne" class="site-logo" width="34" height="34"><span>ZeoxOne<span class="brand-dot">.</span></span></a></header>
+<main class="wrap feedback-page">
+<div class="eyebrow"><span class="eyebrow-line"></span>VOTRE RETOUR COMPTE</div>
+<h1>Donner un <span>avis.</span></h1>
+<p class="hero-intro">Une remarque, une erreur à corriger ou une idée d'article ? Ce formulaire permet de transmettre un message à ZeoxOne.</p>
+<form class="feedback-form" action="https://formsubmit.co/Zeoxonesupport@gmail.com" method="POST">
+<input type="hidden" name="_subject" value="Nouveau retour — ZeoxOne"><input type="hidden" name="_template" value="table">
+<input type="text" name="_honey" class="form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+<label for="feedbackType">Type de retour</label>
+<select id="feedbackType" name="Catégorie" required><option value="">Choisir une catégorie</option><option>Suggestion générale</option><option>Idée d'article</option><option>Correction / information inexacte</option><option>Lien cassé</option><option>Problème d'affichage</option><option>Autre</option></select>
+<label for="feedbackRating">Note du site (facultatif)</label>
+<select id="feedbackRating" name="Note"><option value="">Ne pas noter</option><option value="1/5">1/5</option><option value="2/5">2/5</option><option value="3/5">3/5</option><option value="4/5">4/5</option><option value="5/5">5/5</option></select>
+<label for="feedbackMessage">Votre message</label>
+<textarea id="feedbackMessage" name="Message" rows="7" maxlength="4000" required placeholder="Décrivez votre remarque ou votre suggestion…"></textarea>
+<label class="feedback-consent"><input type="checkbox" required> <span>J'ai lu la <a href="politique-confidentialite.html">politique de confidentialité</a> et je n'inclus pas de données personnelles sensibles.</span></label>
+<button class="button button-primary" type="submit">Envoyer le retour ↗</button>
+</form>
+<p class="feedback-note">Ce formulaire utilise FormSubmit, un service externe. L'adresse de réception est visible dans le code de cette page. Lors du premier envoi, le service peut demander une confirmation d'activation. N'envoyez aucune information confidentielle.</p>
+<p><a class="article-link" href="index.html">← Retour à l'accueil</a></p>
+</main>
+<footer class="site-footer"><div class="wrap footer-bottom"><span>© ZeoxOne. Tous droits réservés.</span><span class="footer-links"><a href="mentions-legales.html">Mentions légales</a> · <a href="politique-confidentialite.html">Confidentialité</a></span></div></footer>
+</body></html>
