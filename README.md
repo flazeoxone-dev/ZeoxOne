@@ -13,10 +13,11 @@ La priorité est la qualité et l'utilité pour les lecteurs, pas la production 
 - `index.html` : page d'accueil ; affiche les articles récents depuis le catalogue.
 - `articles.html` : archives de tous les articles référencés.
 - `articles.json` : catalogue central utilisé par l'accueil et les archives.
+- `feedback.html` : formulaire d'avis (page volontairement exclue de l'indexation des moteurs de recherche).
 - `articles/` : fichiers HTML des articles.
 - `recommandations.html` : sélection de produits, logiciels et services.
 - `styles.css` : styles du site.
-- `script.js` : interactions et traductions.
+- `script.js` : interactions, traductions, filtre de recherche des archives et raccourci vers le formulaire d'avis.
 - `sitemap.xml` : URLs à proposer aux moteurs de recherche.
 - `robots.txt` : règles d'exploration.
 - `assets/` : images et ressources du site.
@@ -27,7 +28,7 @@ La priorité est la qualité et l'utilité pour les lecteurs, pas la production 
 2. Faire une recherche documentaire sur le Web. Ouvrir réellement les pages utilisées et vérifier leur date, leur auteur/éditeur et les informations qu'elles contiennent.
 3. Rédiger l'article avec le prompt éditorial ci-dessous. Ne jamais inventer de source, de citation, de prix, de caractéristique, de test, de mesure ou d'expérience personnelle.
 4. Créer un fichier HTML dans `articles/`, avec un nom court, descriptif, en minuscules et séparé par des tirets (ex. `choisir-un-ecran-pc.html`).
-5. Ajouter une entrée au début de `articles.json` en respectant exactement le format des entrées existantes.
+5. Ajouter une entrée au début de `articles.json` en respectant exactement le format des entrées existantes. La page `articles.html` récupère automatiquement le catalogue ; son champ de recherche filtre les titres, descriptions et catégories.
 6. Ajouter l'URL absolue de l'article à `sitemap.xml`, avec la bonne date de dernière modification.
 7. Vérifier les liens, le HTML, l'affichage mobile, les chemins relatifs, le titre, la description, la langue et les sources.
 8. Relire et valider l'article avant de pousser les changements sur la branche `main`. GitHub Pages publiera ensuite les modifications.
