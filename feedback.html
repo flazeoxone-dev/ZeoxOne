@@ -13,8 +13,9 @@
 <div class="eyebrow"><span class="eyebrow-line"></span>VOTRE RETOUR COMPTE</div>
 <h1>Donner un <span>avis.</span></h1>
 <p class="hero-intro">Une remarque, une erreur à corriger ou une idée d'article ? Ce formulaire permet de transmettre un message à ZeoxOne.</p>
-<form class="feedback-form" action="https://formsubmit.co/Zeoxonesupport@gmail.com" method="POST">
+<form class="feedback-form" id="feedbackForm" action="https://formsubmit.co/ajax/Zeoxonesupport@gmail.com" method="POST">
 <input type="hidden" name="_subject" value="Nouveau retour — ZeoxOne"><input type="hidden" name="_template" value="table">
+<input type="hidden" name="_url" value="https://flazeoxone-dev.github.io/ZeoxOne/feedback.html">
 <input type="text" name="_honey" class="form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
 <label for="feedbackType">Type de retour</label>
 <select id="feedbackType" name="Catégorie" required><option value="">Choisir une catégorie</option><option>Suggestion générale</option><option>Idée d'article</option><option>Correction / information inexacte</option><option>Lien cassé</option><option>Problème d'affichage</option><option>Autre</option></select>
@@ -23,9 +24,62 @@
 <label for="feedbackMessage">Votre message</label>
 <textarea id="feedbackMessage" name="Message" rows="7" maxlength="4000" required placeholder="Décrivez votre remarque ou votre suggestion…"></textarea>
 <label class="feedback-consent"><input type="checkbox" required> <span>J'ai lu la <a href="politique-confidentialite.html">politique de confidentialité</a> et je n'inclus pas de données personnelles sensibles.</span></label>
-<button class="button button-primary" type="submit">Envoyer le retour ↗</button>
+<button class="button button-primary" id="feedbackSubmit" type="submit">Envoyer le retour ↗</button>
+<p class="feedback-status" id="feedbackStatus" role="status" aria-live="polite"></p>
 </form>
-<p class="feedback-note">Ce formulaire utilise FormSubmit, un service externe. L'adresse de réception est visible dans le code de cette page. Lors du premier envoi, le service peut demander une confirmation d'activation. N'envoyez aucune information confidentielle.</p>
+<script>
+(function(){
+  const form=document.getElementById("feedbackForm");
+  if(!form) return;
+  const button=document.getElementById("feedbackSubmit");
+  const status=document.getElementById("feedbackStatus");
+  form.addEventListener("submit",async function(event){
+    event.preventDefault();
+    if(!form.reportValidity()) return;
+    if(form.querySelector('[name="_honey"]').value) return;
+    const original=button.textContent;
+    button.disabled=true;
+    button.textContent="Envoi en cours…";
+    status.textContent="Transmission du message. Cela peut prendre quelques secondes.";
+    status.className="feedback-status is-pending";
+    const controller=new AbortController();
+    const timeout=setTimeout(()=>controller.abort(),15000);
+    try{
+      const response=await fetch(form.action,{
+        method:"POST",
+        headers:{"Accept":"application/json"},
+        body:new FormData(form),
+        signal:controller.signal
+      });
+      let data={};
+      try{data=await response.json();}catch(_){}
+      const accepted=data.success===true||data.success==="true"||data.ok===true;
+      if(!response.ok||!accepted) throw new Error(data.message||"Le service n'a pas confirmé la réception.");
+      status.textContent="Message transmis au service. Si c'est votre premier envoi, vérifiez la boîte de réception de ZeoxOne pour confirmer l'activation du formulaire.";
+      status.className="feedback-status is-success";
+      form.reset();
+    }catch(error){
+      const category=form.querySelector('[name="Catégorie"]').value;
+      const rating=form.querySelector('[name="Note"]').value;
+      const message=form.querySelector('[name="Message"]').value;
+      const subject=encodeURIComponent("Retour ZeoxOne — "+category);
+      const body=encodeURIComponent("Catégorie : "+category+"\nNote : "+(rating||"Non renseignée")+"\n\n"+message);
+      const mailLink="mailto:Zeoxonesupport@gmail.com?subject="+subject+"&body="+body;
+      status.className="feedback-status is-error";
+      status.textContent=error.name==="AbortError"?"Le service met trop de temps à répondre. Votre message n'a pas été confirmé. ":"L'envoi automatique a échoué. Votre message n'a pas été confirmé. ";
+      const link=document.createElement("a");
+      link.href=mailLink;
+      link.textContent="Ouvrir un e-mail pour envoyer votre retour";
+      status.appendChild(link);
+    }finally{
+      clearTimeout(timeout);
+      button.disabled=false;
+      button.textContent=original;
+    }
+  });
+})();
+</script>
+<p class="feedback-note">Ce formulaire transmet votre retour à un service externe. L'adresse de réception est visible dans le code de cette page. Le premier envoi peut nécessiter une confirmation d'activation par e-mail. N'indiquez aucune information confidentielle.</p>
 <p><a class="article-link" href="index.html">← Retour à l'accueil</a></p>
 </main>
 <footer class="site-footer"><div class="wrap footer-bottom"><span>© ZeoxOne. Tous droits réservés.</span><span class="footer-links"><a href="mentions-legales.html">Mentions légales</a> · <a href="politique-confidentialite.html">Confidentialité</a></span></div></footer>
