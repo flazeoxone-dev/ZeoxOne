@@ -209,7 +209,7 @@ html[data-theme="light"] .theme-switch{color:#172331;background:linear-gradient(
 .article-top-button.is-visible{opacity:1;visibility:visible;transform:translateY(0)}
 .article-top-button:hover{border-color:var(--accent);color:var(--accent)}
 .core-symbol{gap:7px;letter-spacing:-8px}
-.core-symbol sup{top:-.68em;margin-left:0;font-size:.30em;transform:translateY(-1px);text-shadow:0 0 14px #38bdf866}
+.core-symbol sup{top:-.92em;margin-left:0;font-size:.30em;transform:translateY(-2px);text-shadow:0 0 14px #38bdf866}
 html[data-theme="light"]{--bg:#f5f7f9;--panel:#ffffff;--panel2:#edf1f4;--line:#cbd5df;--text:#182635;--muted:#526477;--accent:#087da8}
 html[data-theme="light"] .site-header{background:rgba(247,249,251,.96);border-color:#d5dde5}
 html[data-theme="light"] .hero-intro,html[data-theme="light"] .article p,html[data-theme="light"] .article li,html[data-theme="light"] .split-callout p,html[data-theme="light"] .newsletter-inner p{color:#405366}
