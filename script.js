@@ -69,9 +69,14 @@ async function renderArticleCards(){
     if(!response.ok) throw new Error("Catalogue indisponible");
     const articles = await response.json();
     containers.forEach(container=>{
+      const searchInput = document.getElementById("articleSearch");
+      const query = searchInput ? searchInput.value.trim().toLocaleLowerCase("fr") : "";
+      const filtered = articles.filter(article => [article.title, article.description, article.category, article.type].join(" ").toLocaleLowerCase("fr").includes(query));
       const limit = Number(container.dataset.articlesLimit || 0);
-      const visible = limit ? articles.slice(0,limit) : articles;
-      container.innerHTML = visible.map(article=>{
+      const visible = limit && !query ? filtered.slice(0,limit) : filtered;
+      const status = document.getElementById("articleSearchStatus");
+      if(status) status.textContent = visible.length + (visible.length > 1 ? " articles trouvés" : " article trouvé");
+      container.innerHTML = visible.length ? visible.map(article=>{
         const visualClass = article.visual === "hardware" ? "art-chip" : article.visual === "software" ? "art-code" : "art-game";
         const artwork = article.visual === "hardware"
           ? '<div class="chip-lines"></div><div class="chip">CPU</div>'
@@ -80,10 +85,27 @@ async function renderArticleCards(){
             : '<div class="game-ring"></div><div class="game-cross">+</div>';
         const href = article.url;
         return '<article class="feature-card"><a class="article-card-link" href="'+href+'"><div class="feature-art '+visualClass+'">'+artwork+'<span class="art-label">'+article.category.toUpperCase()+' / '+article.type+'</span></div><div class="article-info"><div class="article-meta"><span>'+article.category.toUpperCase()+'</span><span>•</span><span>'+article.minutes+' MIN</span></div><h3>'+article.title+'</h3><p>'+article.description+'</p><span class="article-link">'+(currentLang==="en"?"Read article":"Lire l’article")+' ↗</span></div></a></article>';
-      }).join("");
+      }).join("") : '<p class="catalogue-error">Aucun article ne correspond à cette recherche. Essaie un autre mot-clé.</p>';
     });
+    const searchInput = document.getElementById("articleSearch");
+    if(searchInput && !searchInput.dataset.bound){
+      searchInput.dataset.bound = "true";
+      searchInput.addEventListener("input", () => renderArticleCards());
+    }
   }catch(error){
     containers.forEach(container=>container.innerHTML='<p class="catalogue-error">Les articles ne sont pas disponibles pour le moment. Réessaie dans quelques instants.</p>');
   }
 }
 renderArticleCards();
+
+
+// Raccourci vers le formulaire d'avis sur les pages qui chargent ce script.
+(function addFeedbackShortcut(){
+  if(document.querySelector(".feedback-float") || location.pathname.endsWith("/feedback.html")) return;
+  const link=document.createElement("a");
+  link.className="feedback-float";
+  link.href="feedback.html";
+  link.textContent="Donner un avis";
+  link.setAttribute("aria-label","Donner un avis sur ZeoxOne");
+  document.body.appendChild(link);
+})();
