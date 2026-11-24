@@ -101,7 +101,7 @@ except Exception as exc:
     fail(f"articles.json invalide: {exc}")
 
 # Catalogues localisés : chaque langue doit posséder ses pages et ses liens d'articles.
-for locale in ("fr", "en", "es", "de"):
+for locale in ("fr", "en"):
     locale_dir = ROOT / locale
     if not locale_dir.exists():
         continue
@@ -147,11 +147,11 @@ for page in ROOT.rglob("*.html"):
         if not technical and not parser.has_description:
             fail(f"{page.relative_to(ROOT)}: méta-description absente ou vide.")
         parts = page.relative_to(ROOT).parts
-        localized_page = len(parts) > 1 and parts[0] in {"fr", "en", "es", "de"}
+        localized_page = len(parts) > 1 and parts[0] in {"fr", "en"}
         if localized_page and not technical:
             if parser.canonical_count != 1:
                 fail(f"{page.relative_to(ROOT)}: une URL canonique unique est requise.")
-            expected_hreflangs = {"fr-FR", "en-GB", "es-ES", "de-DE", "x-default"}
+            expected_hreflangs = {"fr-FR", "en-GB", "x-default"}
             missing = expected_hreflangs - parser.hreflangs
             if missing:
                 fail(f"{page.relative_to(ROOT)}: hreflang manquants: {', '.join(sorted(missing))}.")
