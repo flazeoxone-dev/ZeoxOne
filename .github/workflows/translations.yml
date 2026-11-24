@@ -1,0 +1,54 @@
+name: Générer les traductions ZeoxOne
+
+on:
+  push:
+    branches: ["feat/**"]
+    paths:
+      - "*.html"
+      - "articles/*.html"
+      - "articles.json"
+      - ".github/scripts/generate_locales.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  translate:
+    if: github.actor != 'github-actions[bot]'
+    name: Générer et publier les versions linguistiques
+    runs-on: ubuntu-latest
+    env:
+      DEEPL_AUTH_KEY: ${{ secrets.DEEPL_AUTH_KEY }}
+    steps:
+      - name: Récupérer la branche sélectionnée
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Préparer Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Signaler le secret manquant
+        if: env.DEEPL_AUTH_KEY == ''
+        run: echo "::notice::Ajoute le secret DEEPL_AUTH_KEY pour activer la génération des traductions."
+      - name: Générer les versions française et anglaise
+        if: env.DEEPL_AUTH_KEY != ''
+        run: python .github/scripts/generate_locales.py
+      - name: Vérifier les fichiers générés
+        if: env.DEEPL_AUTH_KEY != ''
+        run: |
+          python -m py_compile .github/scripts/generate_locales.py
+          python .github/scripts/validate_site.py
+      - name: Enregistrer les versions traduites sur la branche sélectionnée
+        if: env.DEEPL_AUTH_KEY != ''
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add *.html articles/*.html fr en sitemap.xml
+          if git diff --cached --quiet; then
+            echo "Aucune modification à enregistrer."
+          else
+            git commit -m "i18n: générer les versions FR et EN"
+            git push
+          fi

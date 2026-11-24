@@ -171,3 +171,33 @@ Références officielles :
 ## Déploiement GitHub Pages
 
 Les changements poussés sur la branche `main` sont publiés par GitHub Pages selon la configuration du dépôt. Vérifier l'onglet **Actions** et attendre la réussite du workflow avant de contrôler le site en ligne.
+
+
+## Réglages d'accessibilité et contrôle qualité
+
+- Le curseur « Contraste » propose quatre niveaux. Le réglage reste temporaire par défaut.
+- Une demande discrète permet d'accepter ou de refuser la mémorisation du contraste sur l'appareil. Aucun réglage n'est mémorisé avant acceptation.
+- Les animations sont réduites lorsque le système signale `prefers-reduced-motion`.
+- Le workflow GitHub Actions `.github/workflows/quality.yml` contrôle la syntaxe JavaScript, le catalogue JSON, le sitemap XML, les métadonnées HTML minimales et les liens locaux avant intégration.
+- Le validateur est un contrôle statique : il ne remplace pas les tests visuels sur mobile, les tests clavier/lecteur d'écran, ni une vérification humaine des traductions.
+
+
+## Langues du site : français et anglais
+
+Le français est la langue principale et la version éditoriale de référence de ZeoxOne. L'anglais est la seule langue secondaire prise en charge pour le moment. L'espagnol et l'allemand sont hors périmètre : aucun sélecteur, générateur ou contrôle qualité ne doit les proposer.
+
+Les pages françaises conservent leurs adresses actuelles. Les versions anglaises sont générées en pages statiques dans `/en/`, avant publication. Aucune traduction n'est appelée depuis le navigateur et aucune clé API n'est exposée aux visiteurs. Le sélecteur de langue reste constitué de liens HTML ordinaires et fonctionne sans JavaScript.
+
+### Générer la version anglaise
+
+1. Utiliser DeepL API Free si une génération automatique est nécessaire.
+2. Enregistrer la clé dans GitHub : **Settings → Secrets and variables → Actions → New repository secret**.
+3. Nom du secret : `DEEPL_AUTH_KEY`. Ne jamais placer la clé dans un fichier du dépôt, dans le HTML ou dans `script.js`.
+4. Le workflow `.github/workflows/translations.yml` génère uniquement les pages anglaises, leurs catalogues et les métadonnées SEO associées.
+5. Relire les pages anglaises avant toute fusion ou publication. La traduction automatique ne remplace pas une vérification éditoriale.
+
+La version française reste canonique pour les pages françaises. Les pages anglaises possèdent leurs propres URL canoniques et les balises `hreflang` se limitent à `fr-FR`, `en-GB` et `x-default`. Les notes de marché précisent lorsque les prix ou disponibilités cités concernent la France.
+
+### Contrôles
+
+Le workflow qualité vérifie les pages françaises et anglaises, les catalogues JSON, les articles référencés, les liens locaux, les métadonnées HTML, les URL canoniques et les balises `hreflang`. Il ne remplace pas la relecture humaine ni les tests visuels, clavier et mobile.
