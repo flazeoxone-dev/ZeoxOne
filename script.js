@@ -15,28 +15,8 @@ article1Title:"How to choose components for your first PC",article1Text:"CPU, gr
 topicsEyebrow:"OUR UNIVERSES",topicsTitle:'Technology, from <span>every angle.</span>',topic1:"Computing",topic1Text:"PCs, components, systems and software.",topic2:"Gaming",topic2Text:"Games, trends, industry and culture.",topic3:"Hardware",topic3Text:"Peripherals, tests and comparisons.",topic4:"Innovation",topic4Text:"AI, emerging technology and tomorrow.",
 reviewsEyebrow:"MAKE THE RIGHT CHOICE",reviewsTitle:'Less noise.<br><span>More clarity.</span>',reviewsText:"Buying hardware or choosing software shouldn't be complicated. Our goal: explain what matters, compare with care and make technology more accessible.",reviewsButton:"View recommendations ↗",newsletterEyebrow:"STAY CONNECTED",newsletterTitle:'The signal, not the <span>noise.</span>',newsletterText:"The ZeoxOne newsletter is not available yet. No form collects your email address at this time.",newsletterButton:"Coming soon",footerLine:"Explore. Understand. Move forward.",contact:"GitHub project",legal:"Legal notice",privacy:"Privacy policy",rights:"All rights reserved.",recEyebrow:"ZEOXONE PICKS",recTitle:'Useful tools.<br><span>Better choices.</span>',recIntro:"Explore hardware, software and services worth considering for computing and gaming.",recTransparencyTitle:"Transparency first",recTransparencyText:"The links currently shown lead to official websites and are not affiliate links. If ZeoxOne adds compensated links in the future, they will be clearly labelled nearby. Any potential commission does not change the reader's price.",recHardwareEyebrow:"EQUIPMENT",recHardwareTitle:'Computer <span>hardware.</span>',recHardwareTag:"PC COMPONENTS",recCpuTitle:"Processors",recCpuText:"Understand product ranges and check specifications directly with the manufacturer.",recGpuTitle:"Graphics cards",recGpuText:"Compare graphics card families and consult the manufacturer's information.",recGamingTag:"GAMING PERIPHERALS",recMouseTitle:"Gaming mice",recMouseText:"Explore shapes, features and mouse ranges from the manufacturer.",recOfficialLink:"Visit the official website ↗",recSoftwareEyebrow:"DIGITAL TOOLS",recSoftwareTitle:'Software <span>and services.</span>',recSoftwareTag:"DIGITAL TOOLS",recObsText:"Free, open-source software for screen recording and live streaming.",recVlcText:"A free, open-source multimedia player available for multiple systems.",recFirefoxText:"A web browser with privacy and customization features to explore.",recMethodEyebrow:"OUR APPROACH",recMethodTitle:"Informed choices, never pressured purchases.",recMethodText:"This section will grow alongside our articles and comparisons. Before adding a recommendation, ZeoxOne should check its usefulness, specifications, publisher or manufacturer, and any service conditions. Compare prices and your needs before making a purchase.",recArticlesButton:"Read ZeoxOne articles ↗"
 }};
-let currentLang = "fr";
-const langButton = document.getElementById("langSwitch");
-function setLanguage(lang){
-  currentLang = lang;
-  document.documentElement.lang = lang;
-  document.querySelectorAll("[data-i18n]").forEach(el=>{
-    const text = translations[lang][el.dataset.i18n];
-    if(!text) return;
-    const first = el.firstChild;
-    // garde les <span>↗</span> : on ne remplace que le premier noeud texte
-    if(el.children.length && first && first.nodeType === 3) first.nodeValue = text + " ";
-    else el.textContent = text;
-  });
-  document.querySelectorAll("[data-i18n-html]").forEach(el=>{
-    const text = translations[lang][el.dataset.i18nHtml];
-    if(text) el.innerHTML = text;
-  });
-  langButton.textContent = lang === "fr" ? "EN" : "FR";
-  langButton.setAttribute("aria-label", lang === "fr" ? "Switch to English" : "Passer en français");
-  try{ localStorage.setItem("zeoxone-lang", lang); }catch(e){}
-}
-langButton.addEventListener("click",()=>setLanguage(currentLang==="fr"?"en":"fr"));
+const localeMatch = window.location.pathname.match(/^\\/ZeoxOne\\/(fr|en|es|de)(?:\\/|$)/);
+let currentLang = localeMatch ? localeMatch[1] : "fr";
 
 const menuToggle = document.getElementById("menuToggle");
 const nav = document.getElementById("mainNav");
@@ -46,18 +26,17 @@ function setMenu(open){
   menuToggle.textContent = open ? "✕" : "☰";
   menuToggle.setAttribute("aria-label", open ? "Fermer le menu" : "Ouvrir le menu");
 }
-menuToggle.addEventListener("click",()=>setMenu(!nav.classList.contains("open")));
-nav.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>setMenu(false)));
+if(menuToggle && nav){
+  menuToggle.addEventListener("click",()=>setMenu(!nav.classList.contains("open")));
+  nav.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>setMenu(false)));
+}
 document.addEventListener("keydown",e=>{ if(e.key==="Escape") setMenu(false); });
 document.addEventListener("click",e=>{
-  if(nav.classList.contains("open") && !nav.contains(e.target) && !menuToggle.contains(e.target)) setMenu(false);
+  if(nav && menuToggle && nav.classList.contains("open") && !nav.contains(e.target) && !menuToggle.contains(e.target)) setMenu(false);
 });
 
-document.getElementById("year").textContent = new Date().getFullYear();
-try{
-  const saved = localStorage.getItem("zeoxone-lang");
-  if(saved === "en") setLanguage("en");
-}catch(e){}
+const yearNode=document.getElementById("year");
+if(yearNode) yearNode.textContent = new Date().getFullYear();
 
 
 // ===== Catalogue d'articles : source unique articles.json =====
@@ -72,14 +51,15 @@ async function renderArticleCards(){
     document.querySelectorAll("[data-category-count]").forEach(counter=>{
       const category = (counter.dataset.categoryCount || "").toLocaleLowerCase("fr");
       const count = articles.filter(article => (article.category || "").toLocaleLowerCase("fr") === category).length;
-      counter.textContent = count + (count > 1 ? " articles" : " article");
+      const units = {fr:["article","articles"],en:["article","articles"],es:["artículo","artículos"],de:["Artikel","Artikel"]}[currentLang] || ["article","articles"];
+      counter.textContent = count + " " + (count === 1 ? units[0] : units[1]);
     });
     containers.forEach(container=>{
       const searchInput = document.getElementById("articleSearch");
-      const query = searchInput ? searchInput.value.trim().toLocaleLowerCase("fr") : "";
+      const query = searchInput ? searchInput.value.trim().toLocaleLowerCase(currentLang) : "";
        const params = new URLSearchParams(window.location.search);
        const categoryFilter = (params.get("categorie") || "").toLocaleLowerCase("fr");
-      const filtered = articles.filter(article => (!categoryFilter || article.category.toLocaleLowerCase("fr") === categoryFilter) && [article.title, article.description, article.category, article.type].join(" ").toLocaleLowerCase("fr").includes(query));
+      const filtered = articles.filter(article => (!categoryFilter || article.category.toLocaleLowerCase("fr") === categoryFilter) && [article.title, article.description, article.category, article.type].join(" ").toLocaleLowerCase(currentLang).includes(query));
       const isHome = container.hasAttribute("data-articles-home");
       const limit = Number(container.dataset.articlesLimit || 0);
       let visible = filtered;
@@ -90,7 +70,10 @@ async function renderArticleCards(){
         visible = filtered.slice(0,limit);
       }
       const status = document.getElementById("articleSearchStatus");
-      if(status) status.textContent = visible.length + (visible.length > 1 ? " articles trouvés" : " article trouvé");
+      if(status){
+        const found={fr:["article trouvé","articles trouvés"],en:["article found","articles found"],es:["artículo encontrado","artículos encontrados"],de:["Artikel gefunden","Artikel gefunden"]}[currentLang] || ["article found","articles found"];
+        status.textContent = visible.length + " " + (visible.length === 1 ? found[0] : found[1]);
+      }
       container.innerHTML = visible.length ? visible.map(article=>{
         const visualClass = article.visual === "hardware" ? "art-chip" : article.visual === "software" ? "art-code" : "art-game";
         const artwork = article.visual === "hardware"
@@ -99,9 +82,11 @@ async function renderArticleCards(){
             ? '<div class="code-window"><span></span><span></span><span></span><pre>&lt;/&gt;<br>010101</pre></div>'
             : '<div class="game-ring"></div><div class="game-cross">+</div>';
         const href = article.url;
-        const visual = article.image ? '<img class="article-cover" src="'+article.image+'" alt="'+(article.imageAlt || article.title)+'" loading="lazy">'+'<span class="art-label">'+article.category.toUpperCase()+' / '+article.type+'</span>' : artwork+'<span class="art-label">'+article.category.toUpperCase()+' / '+article.type+'</span>';
+        const categoryLabels={fr:{"Matériel":"MATÉRIEL","Logiciels":"LOGICIELS","Gaming":"GAMING","Informatique":"INFORMATIQUE"},en:{"Matériel":"HARDWARE","Logiciels":"SOFTWARE","Gaming":"GAMING","Informatique":"COMPUTING"},es:{"Matériel":"HARDWARE","Logiciels":"SOFTWARE","Gaming":"VIDEOJUEGOS","Informatique":"INFORMÁTICA"},de:{"Matériel":"HARDWARE","Logiciels":"SOFTWARE","Gaming":"GAMING","Informatique":"INFORMATIK"}};
+        const categoryLabel=(categoryLabels[currentLang]||categoryLabels.fr)[article.category]||article.category;
+        const visual = article.image ? '<img class="article-cover" src="'+article.image+'" alt="'+(article.imageAlt || article.title)+'" loading="lazy">'+'<span class="art-label">'+categoryLabel+' / '+article.type+'</span>' : artwork+'<span class="art-label">'+categoryLabel+' / '+article.type+'</span>';
          return '<article class="feature-card"><a class="article-card-link" href="'+href+'"><div class="feature-art '+visualClass+'">'+visual+'</div><div class="article-info"><div class="article-meta"><span>'+article.category.toUpperCase()+'</span><span>•</span><span>'+article.minutes+' MIN</span></div><h3>'+article.title+'</h3><p>'+article.description+'</p><span class="article-link">'+(currentLang==="en"?"Read article":"Lire l’article")+' ↗</span></div></a></article>';
-      }).join("") : '<p class="catalogue-error">Aucun article ne correspond à cette recherche. Essaie un autre mot-clé.</p>';
+      }).join("") : '<p class="catalogue-error">'+({fr:"Aucun article ne correspond à cette recherche. Essaie un autre mot-clé.",en:"No articles match this search. Try another keyword.",es:"Ningún artículo coincide con esta búsqueda. Prueba otra palabra clave.",de:"Keine Artikel entsprechen dieser Suche. Versuche ein anderes Stichwort."}[currentLang]||"Aucun article ne correspond à cette recherche.")+'</p>';
     });
     const searchInput = document.getElementById("articleSearch");
     if(searchInput && !searchInput.dataset.bound){
@@ -109,7 +94,7 @@ async function renderArticleCards(){
       searchInput.addEventListener("input", () => renderArticleCards());
     }
   }catch(error){
-    containers.forEach(container=>container.innerHTML='<p class="catalogue-error">Les articles ne sont pas disponibles pour le moment. Réessaie dans quelques instants.</p>');
+    containers.forEach(container=>container.innerHTML='<p class="catalogue-error">'+({fr:"Les articles ne sont pas disponibles pour le moment. Réessaie dans quelques instants.",en:"Articles are temporarily unavailable. Please try again shortly.",es:"Los artículos no están disponibles por el momento. Inténtalo de nuevo en unos instantes.",de:"Die Artikel sind derzeit nicht verfügbar. Bitte versuche es gleich noch einmal."}[currentLang]||"Articles indisponibles.")+'</p>');
   }
 }
 renderArticleCards();
@@ -121,8 +106,8 @@ renderArticleCards();
   const link=document.createElement("a");
   link.className="feedback-float";
   link.href="feedback.html";
-  link.textContent="Donner un avis";
-  link.setAttribute("aria-label","Donner un avis sur ZeoxOne");
+  link.textContent=({fr:"Donner un avis",en:"Send feedback",es:"Enviar comentarios",de:"Feedback geben"}[currentLang]||"Donner un avis");
+  link.setAttribute("aria-label",link.textContent+" ZeoxOne");
   document.body.appendChild(link);
 })();
 
@@ -146,7 +131,8 @@ renderArticleCards();
   try{consent=localStorage.getItem(consentKey)||"no";if(consent==="yes")level=Number(localStorage.getItem(key)||0)}catch(e){}
   const wrap=document.createElement("label");
   wrap.className="contrast-control";
-  wrap.innerHTML='<span>Contraste</span><input type="range" min="0" max="3" step="1" value="'+(Number.isFinite(level)?level:0)+'" aria-label="Niveau de contraste" title="Régler le contraste">';
+  const contrastLabel={fr:"Contraste",en:"Contrast",es:"Contraste",de:"Kontrast"}[currentLang]||"Contraste";
+  wrap.innerHTML='<span>'+contrastLabel+'</span><input type="range" min="0" max="3" step="1" value="'+(Number.isFinite(level)?level:0)+'" aria-label="'+contrastLabel+'" title="'+contrastLabel+'">';
   const range=wrap.querySelector("input");
   function apply(value){
     const n=Math.max(0,Math.min(3,Number(value)||0));
@@ -161,8 +147,14 @@ renderArticleCards();
     const note=document.createElement("div");
     note.className="preference-consent";
     note.setAttribute("role","group");
-    note.setAttribute("aria-label","Autorisation de mémorisation des préférences");
-    note.innerHTML='<span>Mémoriser tes réglages de contraste sur cet appareil ?</span><button type="button" data-consent="yes">Accepter</button><button type="button" data-consent="no">Refuser</button>';
+    const consentCopy={
+      fr:["Mémoriser tes réglages de contraste sur cet appareil ?","Accepter","Refuser"],
+      en:["Remember your contrast settings on this device?","Accept","Decline"],
+      es:["¿Recordar tus ajustes de contraste en este dispositivo?","Aceptar","Rechazar"],
+      de:["Kontrasteinstellungen auf diesem Gerät speichern?","Akzeptieren","Ablehnen"]
+    }[currentLang]||["Mémoriser tes réglages de contraste sur cet appareil ?","Accepter","Refuser"];
+    note.setAttribute("aria-label",consentCopy[0]);
+    note.innerHTML='<span>'+consentCopy[0]+'</span><button type="button" data-consent="yes">'+consentCopy[1]+'</button><button type="button" data-consent="no">'+consentCopy[2]+'</button>';
     document.body.appendChild(note);
     note.addEventListener("click",event=>{
       const button=event.target.closest("[data-consent]");
