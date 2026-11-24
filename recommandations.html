@@ -38,7 +38,10 @@
       <a href="a-propos.html" data-i18n="navAbout">À propos</a>
     </nav>
     <div class="header-actions">
-      <button type="button" class="lang-switch" id="langSwitch" aria-label="Switch language">EN</button><button type="button" class="theme-switch" data-theme-toggle aria-label="Activer le thème clair"><span aria-hidden="true">☼</span><span class="theme-switch-label">Clair</span></button>
+      <div class="locale-switcher" role="group" aria-label="Choisir la langue">
+        <button type="button" data-set-lang="fr" aria-label="Français" aria-pressed="true"><span aria-hidden="true">🇫🇷</span> FR</button>
+        <button type="button" data-set-lang="en" aria-label="English" aria-pressed="false"><span aria-hidden="true">🇬🇧</span> EN</button>
+      </div><button type="button" class="theme-switch" data-theme-toggle aria-label="Activer le thème clair"><span aria-hidden="true">☼</span><span class="theme-switch-label">Clair</span></button>
       <a class="header-cta" href="index.html#newsletter" data-i18n="navFollow">Newsletter <span>↗</span></a>
     </div>
   </header>
