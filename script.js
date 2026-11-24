@@ -111,6 +111,19 @@ renderArticleCards();
   document.body.appendChild(link);
 })();
 
+
+/* Ne mémoriser la langue choisie que si le consentement a été donné. */
+document.addEventListener("click",event=>{
+  const link=event.target.closest(".locale-switcher a");
+  if(!link)return;
+  try{
+    if(localStorage.getItem("zeoxone-preferences-consent")==="yes"){
+      const selected=(link.textContent||"").trim().toLowerCase();
+      if(["fr","en","es","de"].includes(selected))localStorage.setItem("zeoxone-lang",selected);
+    }
+  }catch(e){}
+});
+
 /* Persistent dark/light theme */
 (function(){
  const root=document.documentElement,key="zeoxone-theme";
@@ -148,10 +161,10 @@ renderArticleCards();
     note.className="preference-consent";
     note.setAttribute("role","group");
     const consentCopy={
-      fr:["Mémoriser tes réglages de contraste sur cet appareil ?","Accepter","Refuser"],
-      en:["Remember your contrast settings on this device?","Accept","Decline"],
-      es:["¿Recordar tus ajustes de contraste en este dispositivo?","Aceptar","Rechazar"],
-      de:["Kontrasteinstellungen auf diesem Gerät speichern?","Akzeptieren","Ablehnen"]
+      fr:["Mémoriser tes réglages de contraste et de langue sur cet appareil ?","Accepter","Refuser"],
+      en:["Remember your contrast and language settings on this device?","Accept","Decline"],
+      es:["¿Recordar tus ajustes de contraste e idioma en este dispositivo?","Aceptar","Rechazar"],
+      de:["Kontrast- und Spracheinstellungen auf diesem Gerät speichern?","Akzeptieren","Ablehnen"]
     }[currentLang]||["Mémoriser tes réglages de contraste sur cet appareil ?","Accepter","Refuser"];
     note.setAttribute("aria-label",consentCopy[0]);
     note.innerHTML='<span>'+consentCopy[0]+'</span><button type="button" data-consent="yes">'+consentCopy[1]+'</button><button type="button" data-consent="no">'+consentCopy[2]+'</button>';
