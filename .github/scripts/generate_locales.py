@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Génère les versions FR/EN/ES/DE de ZeoxOne avec DeepL API Free.
+"""Génère les versions françaises et anglaises de ZeoxOne avec DeepL API Free.
 
 Les sources françaises restent la référence éditoriale. Les traductions sont
 créées avant publication, conservées dans des répertoires statiques et contrôlées
@@ -25,8 +25,6 @@ BASE = "https://flazeoxone-dev.github.io/ZeoxOne"
 DEEPL_URL = "https://api-free.deepl.com/v2/translate"
 LOCALES = {
     "en": {"target": "EN-GB", "hreflang": "en-GB", "market": "Market note: prices and availability mentioned in this guide refer to France unless stated otherwise. Check official local retailers before buying."},
-    "es": {"target": "ES", "hreflang": "es-ES", "market": "Nota de mercado: salvo que se indique lo contrario, los precios y la disponibilidad de esta guía corresponden a Francia. Comprueba las tiendas oficiales de tu país antes de comprar."},
-    "de": {"target": "DE", "hreflang": "de-DE", "market": "Markthinweis: Sofern nicht anders angegeben, beziehen sich Preise und Verfügbarkeit in diesem Ratgeber auf Frankreich. Prüfe vor dem Kauf die offiziellen Händler in deinem Land."},
 }
 FR_MARKET = "Note de marché : les prix et disponibilités mentionnés dans ce guide correspondent au marché français, sauf indication contraire."
 SKIP = {"404.html", "google9787bf245aba8089.html"}
@@ -42,8 +40,6 @@ HTML_FILES = [
 LOCALE_TEXT = {
     "fr": {"language":"Langue","suggest":"La langue de ton navigateur semble différente. Souhaites-tu consulter cette page dans cette langue ?","market_legal":"Cette traduction est fournie à titre informatif. En cas de différence, la version française fait foi jusqu'à une relecture juridique locale.","market":FR_MARKET,"fallback":"Certaines parties restent en français, car leur traduction automatique n'a pas pu être vérifiée.","close":"Fermer"},
     "en": {"language":"Language","suggest":"Your browser language seems to be different. Would you like to view this page in that language?","market_legal":"This translation is provided for information. If anything differs, the French version remains authoritative until a local legal review.","market":LOCALES["en"]["market"],"fallback":"Some sections remain in French because their automatic translation could not be verified.","close":"Close"},
-    "es": {"language":"Idioma","suggest":"El idioma de tu navegador parece ser diferente. ¿Quieres consultar esta página en ese idioma?","market_legal":"Esta traducción se ofrece a título informativo. Si existe alguna diferencia, prevalece la versión francesa hasta que se realice una revisión jurídica local.","market":LOCALES["es"]["market"],"fallback":"Algunas secciones permanecen en francés porque no se pudo verificar su traducción automática.","close":"Cerrar"},
-    "de": {"language":"Sprache","suggest":"Die Sprache deines Browsers scheint eine andere zu sein. Möchtest du diese Seite in dieser Sprache ansehen?","market_legal":"Diese Übersetzung dient nur zu Informationszwecken. Bei Abweichungen ist bis zu einer lokalen rechtlichen Prüfung die französische Fassung maßgeblich.","market":LOCALES["de"]["market"],"fallback":"Einige Abschnitte bleiben auf Französisch, da ihre automatische Übersetzung nicht überprüft werden konnte.","close":"Schließen"},
 }
 
 def deepl_translate(text: str, target: str, key: str) -> str:
@@ -100,7 +96,7 @@ def rewrite_local_paths(html: str, locale: str, nested: bool) -> str:
 
 def language_switcher(locale: str, source_path: str) -> str:
     links = []
-    for code, label in (("fr","FR"),("en","EN"),("es","ES"),("de","DE")):
+    for code, label in (("fr","FR"),("en","EN")):
         suffix = "" if source_path == "index.html" else source_path
         href = f"/ZeoxOne/{code}/" + suffix
         current = ' aria-current="page"' if code == locale else ""
@@ -129,7 +125,7 @@ def inject_language_ui(html: str, locale: str, source_path: str) -> str:
   </aside>
   <script>
   (function(){{
-    var supported=["fr","en","es","de"], current="{locale}";
+    var supported=["fr","en"], current="{locale}";
     var browser=(navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||""]).map(function(x){{return (x||"").slice(0,2).toLowerCase()}});
     var stored=null;
     try{{if(localStorage.getItem("zeoxone-preferences-consent")==="yes")stored=localStorage.getItem("zeoxone-lang")}}catch(e){{}}
@@ -356,7 +352,7 @@ def main():
     for locale in ("fr", *LOCALES.keys()):
         build_catalogue(locale, key)
     build_sitemap()
-    print("Génération terminée : FR / EN / ES / DE.")
+    print("Génération terminée : français / anglais.")
     return 0
 
 if __name__ == "__main__":
