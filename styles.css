@@ -247,3 +247,16 @@ html[data-contrast="3"]{filter:contrast(1.3)}
 
 .translation-fallback{padding:0 0 0 12px;border-left:2px solid var(--line)}
 .translation-fallback-notice{margin:0 0 16px;color:var(--muted);font-size:12px}
+
+
+/* SEO éditorial : fil d'Ariane et liens contextuels */
+.article-breadcrumbs{margin:0 0 18px;color:var(--muted);font-size:12px}
+.article-breadcrumbs ol{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:0}
+.article-breadcrumbs li+li:before{content:"/";margin-right:8px;color:var(--muted)}
+.article-breadcrumbs a{color:var(--muted);text-decoration:underline;text-decoration-color:transparent;text-underline-offset:3px}
+.article-breadcrumbs a:hover{color:var(--accent);text-decoration-color:currentColor}
+.article-breadcrumbs [aria-current="page"]{color:var(--text)}
+.related-articles{margin-top:46px;padding:22px 24px;border:1px solid var(--line);border-radius:8px;background:var(--panel)}
+.article .related-articles h2{font-size:20px;margin:0 0 12px}
+.related-articles ul{margin:0;padding-left:20px}
+.related-articles li{margin:7px 0}
