@@ -218,3 +218,16 @@ html[data-theme="light"] .article-top-button:hover,html[data-theme="light"] .art
 html[data-theme="light"] .theme-switch{box-shadow:0 2px 9px #24384b12}
 @media(max-width:620px){.article-home-link{margin-left:8px;padding:7px 8px;font-size:10px}.article-top-button{right:14px;bottom:14px;padding:10px 12px;font-size:11px}}
 @media(prefers-reduced-motion:reduce){.article-top-button,.article-home-link{transition:none}}
+
+
+/* Réglage de contraste et consentement discret */
+.contrast-control{display:inline-flex;align-items:center;gap:7px;color:var(--muted);font-size:11px;white-space:nowrap}
+.contrast-control input{width:76px;accent-color:var(--accent);cursor:pointer}
+.preference-consent{position:fixed;left:16px;bottom:16px;z-index:30;display:flex;align-items:center;gap:9px;max-width:min(560px,calc(100% - 32px));padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--text);font-size:11px;box-shadow:0 8px 28px #0002}
+.preference-consent button{border:1px solid var(--line);border-radius:5px;padding:5px 8px;background:transparent;color:var(--text);font:600 11px var(--font);cursor:pointer}
+.preference-consent button:hover{border-color:var(--accent)}
+html[data-contrast="1"]{filter:contrast(1.08)}
+html[data-contrast="2"]{filter:contrast(1.18)}
+html[data-contrast="3"]{filter:contrast(1.3)}
+@media(max-width:760px){.contrast-control span{display:none}.contrast-control input{width:58px}.preference-consent{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
