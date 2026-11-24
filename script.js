@@ -102,7 +102,7 @@ async function renderArticleCards(){
       let visible = filtered;
       if(isHome){
         // Accueil : les trois articles les plus récents, toutes catégories confondues.
-        visible = filtered.slice().sort((a,b) => (b.date || "").localeCompare(a.date || "")).slice(0,3);
+        visible = filtered.slice().sort((a,b) => { const dateOrder=(b.date || "").localeCompare(a.date || ""); if(dateOrder) return dateOrder; const priority=["anthropic-claude-entree-en-bourse.html","choisir-ecran-pc.html","gta-6-quelle-console-ps5-ps5-pro-xbox.html"]; const ai=priority.indexOf(a.url), bi=priority.indexOf(b.url); return (ai<0?99:ai)-(bi<0?99:bi); }).slice(0,3);
       } else if(limit && !query) {
         visible = filtered.slice(0,limit);
       }
@@ -122,7 +122,8 @@ async function renderArticleCards(){
         const categoryLabels={fr:{"Informatique":"INFORMATIQUE","Gaming":"GAMING","IA & Actualité":"IA & ACTUALITÉ","Matériel & PC":"MATÉRIEL & PC","Tuto & Guide":"TUTO & GUIDE"},en:{"Informatique":"COMPUTING","Gaming":"GAMING","IA & Actualité":"AI & NEWS","Matériel & PC":"HARDWARE & PC","Tuto & Guide":"TUTORIALS & GUIDES"}};
         const categoryLabel=(categoryLabels[currentLang]||categoryLabels.fr)[article.category]||article.category;
         const visual = article.image ? '<img class="article-cover" src="'+article.image+'" alt="'+(article.imageAlt || article.title)+'" loading="lazy">'+'<span class="art-label">'+categoryLabel+' / '+article.type+'</span>' : artwork+'<span class="art-label">'+categoryLabel+' / '+article.type+'</span>';
-         return '<article class="feature-card"><a class="article-card-link" href="'+href+'"><div class="feature-art '+visualClass+'">'+visual+'</div><div class="article-info"><div class="article-meta"><span>'+categoryLabel+'</span><span>•</span><span>'+article.minutes+' MIN</span></div><h3>'+article.title+'</h3><p>'+article.description+'</p><span class="article-link">'+(currentLang==="en"?"Read article":"Lire l’article")+' ↗</span></div></a></article>';
+         const highlightClass=(href.includes('gta-6-quelle-console')||href.includes('anthropic-claude'))?' is-highlighted':'';
+        return '<article class="feature-card'+highlightClass+'"><a class="article-card-link" href="'+href+'"><div class="feature-art '+visualClass+'">'+visual+'</div><div class="article-info"><div class="article-meta"><span>'+categoryLabel+'</span><span>•</span><span>'+article.minutes+' MIN</span></div><h3>'+article.title+'</h3><p>'+article.description+'</p><span class="article-link">'+(currentLang==="en"?"Read article":"Lire l’article")+' ↗</span></div></a></article>';
       }).join("") : '<p class="catalogue-error">'+({fr:"Aucun article ne correspond à cette recherche. Essaie un autre mot-clé.",en:"No articles match this search. Try another keyword.",es:"Ningún artículo coincide con esta búsqueda. Prueba otra palabra clave.",de:"Keine Artikel entsprechen dieser Suche. Versuche ein anderes Stichwort."}[currentLang]||"Aucun article ne correspond à cette recherche.")+'</p>';
     });
     const searchInput = document.getElementById("articleSearch");
