@@ -16,6 +16,8 @@ import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
 from pathlib import Path
+from html.parser import HTMLParser
+from urllib.error import HTTPError, URLError
 
 ROOT = Path(__file__).resolve().parents[2]
 BASE = "https://flazeoxone-dev.github.io/ZeoxOne"
@@ -37,10 +39,10 @@ HTML_FILES = [
     "articles/performances-jeux-pc.html",
 ]
 LOCALE_TEXT = {
-    "fr": {"language":"Langue","suggest":"La langue de ton navigateur semble différente. Souhaites-tu consulter cette page dans cette langue ?","market_legal":"Cette traduction est fournie à titre informatif. En cas de différence, la version française fait foi jusqu'à une relecture juridique locale.","market":FR_MARKET},
-    "en": {"language":"Language","suggest":"Your browser language seems to be different. Would you like to view this page in that language?","market_legal":"This translation is provided for information. If anything differs, the French version remains authoritative until a local legal review.","market":LOCALES["en"]["market"]},
-    "es": {"language":"Idioma","suggest":"El idioma de tu navegador parece ser diferente. ¿Quieres consultar esta página en ese idioma?","market_legal":"Esta traducción se ofrece a título informativo. Si existe alguna diferencia, prevalece la versión francesa hasta que se realice una revisión jurídica local.","market":LOCALES["es"]["market"]},
-    "de": {"language":"Sprache","suggest":"Die Sprache deines Browsers scheint eine andere zu sein. Möchtest du diese Seite in dieser Sprache ansehen?","market_legal":"Diese Übersetzung dient nur zu Informationszwecken. Bei Abweichungen ist bis zu einer lokalen rechtlichen Prüfung die französische Fassung maßgeblich.","market":LOCALES["de"]["market"]},
+    "fr": {"language":"Langue","suggest":"La langue de ton navigateur semble différente. Souhaites-tu consulter cette page dans cette langue ?","market_legal":"Cette traduction est fournie à titre informatif. En cas de différence, la version française fait foi jusqu'à une relecture juridique locale.","market":FR_MARKET,"fallback":"Certaines parties restent en français, car leur traduction automatique n'a pas pu être vérifiée."},
+    "en": {"language":"Language","suggest":"Your browser language seems to be different. Would you like to view this page in that language?","market_legal":"This translation is provided for information. If anything differs, the French version remains authoritative until a local legal review.","market":LOCALES["en"]["market"],"fallback":"Some sections remain in French because their automatic translation could not be verified."},
+    "es": {"language":"Idioma","suggest":"El idioma de tu navegador parece ser diferente. ¿Quieres consultar esta página en ese idioma?","market_legal":"Esta traducción se ofrece a título informativo. Si existe alguna diferencia, prevalece la versión francesa hasta que se realice una revisión jurídica local.","market":LOCALES["es"]["market"],"fallback":"Algunas secciones permanecen en francés porque no se pudo verificar su traducción automática."},
+    "de": {"language":"Sprache","suggest":"Die Sprache deines Browsers scheint eine andere zu sein. Möchtest du diese Seite in dieser Sprache ansehen?","market_legal":"Diese Übersetzung dient nur zu Informationszwecken. Bei Abweichungen ist bis zu einer lokalen rechtlichen Prüfung die französische Fassung maßgeblich.","market":LOCALES["de"]["market"],"fallback":"Einige Abschnitte bleiben auf Französisch, da ihre automatische Übersetzung nicht überprüft werden konnte."},
 }
 
 def deepl_translate(text: str, target: str, key: str) -> str:
@@ -142,12 +144,114 @@ def inject_language_ui(html: str, locale: str, source_path: str) -> str:
     html = re.sub(r"</body>", suggestion + "\n</body>", html, count=1, flags=re.I)
     return html
 
+class DirectChildSplitter(HTMLParser):
+    """Découpe le contenu d'un main en éléments HTML de premier niveau."""
+    VOID = {"area","base","br","col","embed","hr","img","input","link","meta","param","source","track","wbr"}
+    def __init__(self):
+        super().__init__(convert_charrefs=False)
+        self.stack = []
+        self.current = ""
+        self.chunks = []
+    def _append(self, value):
+        if self.stack:
+            self.current += value
+        elif value.strip():
+            self.chunks.append(value)
+    def handle_starttag(self, tag, attrs):
+        raw = self.get_starttag_text()
+        if not self.stack:
+            self.current = raw
+        else:
+            self.current += raw
+        if tag not in self.VOID:
+            self.stack.append(tag)
+        elif not self.stack:
+            self.chunks.append(self.current)
+            self.current = ""
+    def handle_startendtag(self, tag, attrs):
+        raw = self.get_starttag_text()
+        if self.stack:
+            self.current += raw
+        else:
+            self.chunks.append(raw)
+    def handle_endtag(self, tag):
+        if self.stack:
+            self.current += f"</{tag}>"
+            if tag in self.stack:
+                index = len(self.stack) - 1 - self.stack[::-1].index(tag)
+                self.stack = self.stack[:index]
+                if not self.stack:
+                    self.chunks.append(self.current)
+                    self.current = ""
+    def handle_data(self, data):
+        self._append(data)
+    def handle_entityref(self, name):
+        self._append(f"&{name};")
+    def handle_charref(self, name):
+        self._append(f"&#{name};")
+    def handle_comment(self, data):
+        self._append(f"<!--{data}-->")
+    def handle_decl(self, decl):
+        self._append(f"<!{decl}>")
+
+def translate_main_sections(inner: str, target: str, key: str, locale: str):
+    splitter = DirectChildSplitter()
+    splitter.feed(inner)
+    if splitter.stack and splitter.current:
+        splitter.chunks.append(splitter.current)
+    chunks = splitter.chunks or [inner]
+    groups, current = [], []
+    for chunk in chunks:
+        is_boundary = bool(re.match(r"\\s*<(?:section|h2)\\b", chunk, re.I))
+        if is_boundary and current:
+            groups.append("".join(current))
+            current = []
+        current.append(chunk)
+    if current:
+        groups.append("".join(current))
+    translated, fallback_count = [], 0
+    for group in groups:
+        try:
+            translated.append(deepl_translate(group, target, key))
+            time.sleep(0.12)
+        except HTTPError as exc:
+            if exc.code in (401, 403, 456):
+                raise
+            fallback_count += 1
+            translated.append('<div class="translation-fallback" lang="fr">' + group + "</div>")
+        except (URLError, TimeoutError):
+            fallback_count += 1
+            translated.append('<div class="translation-fallback" lang="fr">' + group + "</div>")
+    if fallback_count:
+        notice = LOCALE_TEXT[locale]["fallback"]
+        translated.insert(0, '<p class="translation-fallback-notice" role="note">' + notice + "</p>")
+    return "".join(translated), fallback_count
+
+def translate_document(source: str, target: str, key: str, locale: str):
+    match = re.search(r"(<main\\b[^>]*>)([\\s\\S]*?)(</main>)", source, re.I)
+    if not match:
+        return deepl_translate(source, target, key), 0
+    main_open, main_inner, main_close = match.groups()
+    placeholder = '<span id="ZEOXONE_MAIN_PLACEHOLDER" translate="no">ZEOXONE_MAIN_PLACEHOLDER</span>'
+    outer = source[:match.start()] + main_open + placeholder + main_close + source[match.end():]
+    translated_outer = deepl_translate(outer, target, key)
+    translated_main, fallback_count = translate_main_sections(main_inner, target, key, locale)
+    translated_outer, count = re.subn(
+        r'<span[^>]*id=["\\']ZEOXONE_MAIN_PLACEHOLDER["\\'][^>]*>.*?</span>',
+        lambda _: translated_main, translated_outer, count=1, flags=re.I|re.S
+    )
+    if not count:
+        raise RuntimeError("Le repère de traduction du contenu principal a été perdu.")
+    return translated_outer, fallback_count
+
 def prepare_page(source: str, source_path: str, locale: str, key: str | None) -> str:
     html = clean_language_ui(source)
     if locale != "fr":
         if not key:
             raise RuntimeError("La variable DEEPL_AUTH_KEY est absente.")
-        html = deepl_translate(html, LOCALES[locale]["target"], key)
+        html, fallback_count = translate_document(html, LOCALES[locale]["target"], key, locale)
+        if fallback_count:
+            print(f"Fallback français : {fallback_count} bloc(s) dans {locale}/{source_path}")
         time.sleep(0.15)
         # The French legal copy remains the authoritative reference pending local review.
         if source_path in {"mentions-legales.html", "politique-confidentialite.html"}:
