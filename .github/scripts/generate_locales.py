@@ -202,7 +202,7 @@ def translate_main_sections(inner: str, target: str, key: str, locale: str):
     chunks = splitter.chunks or [inner]
     groups, current = [], []
     for chunk in chunks:
-        is_boundary = bool(re.match(r"\\s*<(?:section|h2)\\b", chunk, re.I))
+        is_boundary = bool(re.match(r"\s*<(?:section|h2)\b", chunk, re.I))
         if is_boundary and current:
             groups.append("".join(current))
             current = []
@@ -228,7 +228,7 @@ def translate_main_sections(inner: str, target: str, key: str, locale: str):
     return "".join(translated), fallback_count
 
 def translate_document(source: str, target: str, key: str, locale: str):
-    match = re.search(r"(<main\\b[^>]*>)([\\s\\S]*?)(</main>)", source, re.I)
+    match = re.search(r"(<main\b[^>]*>)([\s\S]*?)(</main>)", source, re.I)
     if not match:
         return deepl_translate(source, target, key), 0
     main_open, main_inner, main_close = match.groups()
@@ -237,7 +237,7 @@ def translate_document(source: str, target: str, key: str, locale: str):
     translated_outer = deepl_translate(outer, target, key)
     translated_main, fallback_count = translate_main_sections(main_inner, target, key, locale)
     translated_outer, count = re.subn(
-        r'<span[^>]*id=["\\']ZEOXONE_MAIN_PLACEHOLDER["\\'][^>]*>.*?</span>',
+        r"<span[^>]*id=['\"]ZEOXONE_MAIN_PLACEHOLDER['\"][^>]*>.*?</span>",
         lambda _: translated_main, translated_outer, count=1, flags=re.I|re.S
     )
     if not count:
