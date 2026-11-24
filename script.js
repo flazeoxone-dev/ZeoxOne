@@ -118,7 +118,7 @@ async function renderArticleCards(){
             ? '<div class="code-window"><span></span><span></span><span></span><pre>&lt;/&gt;<br>010101</pre></div>'
             : '<div class="game-ring"></div><div class="game-cross">+</div>';
         const href = article.url;
-        const categoryLabels={fr:{"Matériel":"MATÉRIEL","Logiciels":"LOGICIELS","Gaming":"GAMING","Informatique":"INFORMATIQUE"},en:{"Matériel":"HARDWARE","Logiciels":"SOFTWARE","Gaming":"GAMING","Informatique":"COMPUTING"}};
+        const categoryLabels={fr:{"Informatique":"INFORMATIQUE","Gaming":"GAMING","IA & Actualité":"IA & ACTUALITÉ"},en:{"Informatique":"COMPUTING","Gaming":"GAMING","IA & Actualité":"AI & NEWS"}};
         const categoryLabel=(categoryLabels[currentLang]||categoryLabels.fr)[article.category]||article.category;
         const visual = article.image ? '<img class="article-cover" src="'+article.image+'" alt="'+(article.imageAlt || article.title)+'" loading="lazy">'+'<span class="art-label">'+categoryLabel+' / '+article.type+'</span>' : artwork+'<span class="art-label">'+categoryLabel+' / '+article.type+'</span>';
          return '<article class="feature-card"><a class="article-card-link" href="'+href+'"><div class="feature-art '+visualClass+'">'+visual+'</div><div class="article-info"><div class="article-meta"><span>'+article.category.toUpperCase()+'</span><span>•</span><span>'+article.minutes+' MIN</span></div><h3>'+article.title+'</h3><p>'+article.description+'</p><span class="article-link">'+(currentLang==="en"?"Read article":"Lire l’article")+' ↗</span></div></a></article>';
