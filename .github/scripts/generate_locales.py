@@ -83,8 +83,11 @@ def rewrite_local_paths(html: str, locale: str, nested: bool) -> str:
     # Shared assets and scripts live at the repository root.
     for attr in ("href", "src"):
         html = re.sub(rf'({attr}=["\'])assets/', rf'\g<1>{depth}assets/', html)
+        html = re.sub(rf'({attr}=["\'])\.\./assets/', rf'\g<1>{depth}assets/', html)
         html = re.sub(rf'({attr}=["\'])styles\.css', rf'\g<1>{depth}styles.css', html)
+        html = re.sub(rf'({attr}=["\'])\.\./styles\.css', rf'\g<1>{depth}styles.css', html)
         html = re.sub(rf'({attr}=["\'])script\.js', rf'\g<1>{depth}script.js', html)
+        html = re.sub(rf'({attr}=["\'])\.\./script\.js', rf'\g<1>{depth}script.js', html)
     # Site-absolute internal links are routed into the selected language.
     html = html.replace(BASE + "/", BASE + "/" + locale + "/")
     html = html.replace('href="/ZeoxOne/', f'href="/ZeoxOne/{locale}/')
@@ -150,9 +153,9 @@ def prepare_page(source: str, source_path: str, locale: str, key: str | None) ->
         canonical = BASE + ("/" if locale == "fr" else f"/{locale}/")
     else:
         canonical = BASE + ("/" if locale == "fr" else f"/{locale}/") + source_path
+    html = rewrite_local_paths(html, locale, source_path.startswith("articles/"))
     html = re.sub(r"</head>", f'<link rel="canonical" href="{canonical}"></head>', html, count=1, flags=re.I)
     html = add_hreflang(html, source_path)
-    html = rewrite_local_paths(html, locale, source_path.startswith("articles/"))
     html = inject_language_ui(html, locale, source_path)
     return html
 
@@ -202,6 +205,14 @@ def main():
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_text(prepare_page(source, path, locale, key), encoding="utf-8")
         print("Pages traduites :", path)
+    # Les pages françaises historiques restent accessibles et deviennent la référence
+    # canonique. Elles proposent aussi des liens directs vers les versions localisées.
+    for path in HTML_FILES:
+        source_path = ROOT / path
+        source = source_path.read_text(encoding="utf-8")
+        source = add_hreflang(source, path)
+        source = inject_language_ui(source, "fr", path)
+        source_path.write_text(source, encoding="utf-8")
     for locale in ("fr", *LOCALES.keys()):
         build_catalogue(locale, key)
     build_sitemap()
