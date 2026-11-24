@@ -1,0 +1,40 @@
+name: Générer les traductions ZeoxOne
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  translate:
+    name: Générer et publier les versions linguistiques
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer la branche sélectionnée
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Préparer Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Générer FR, EN, ES et DE
+        env:
+          DEEPL_AUTH_KEY: \${{ secrets.DEEPL_AUTH_KEY }}
+        run: python .github/scripts/generate_locales.py
+      - name: Vérifier les fichiers générés
+        run: |
+          python -m py_compile .github/scripts/generate_locales.py
+          python .github/scripts/validate_site.py
+      - name: Enregistrer les versions traduites sur la branche sélectionnée
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add fr en es de sitemap.xml
+          if git diff --cached --quiet; then
+            echo "Aucune modification à enregistrer."
+          else
+            git commit -m "i18n: générer les versions FR EN ES DE"
+            git push
+          fi
