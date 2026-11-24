@@ -17,6 +17,7 @@ import urllib.request
 import xml.etree.ElementTree as ET
 from pathlib import Path
 from html.parser import HTMLParser
+from html import escape as html_escape, unescape as html_unescape
 from urllib.error import HTTPError, URLError
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -246,12 +247,33 @@ def translate_document(source: str, target: str, key: str, locale: str):
         raise RuntimeError("Le repère de traduction du contenu principal a été perdu.")
     return translated_outer, fallback_count
 
+def translate_meta_attributes(source: str, translated: str, target: str, key: str) -> str:
+    """Traduit explicitement les champs SEO qui sont des attributs HTML."""
+    for attr, value in (("name", "description"), ("property", "og:title"), ("property", "og:description")):
+        selector = re.compile(r'<meta\\b(?=[^>]*\\b' + attr + r'=["\\']' + re.escape(value) + r'["\\'])[^>]*>', re.I)
+        source_match = selector.search(source)
+        target_match = selector.search(translated)
+        if not source_match or not target_match:
+            continue
+        content = re.search(r'content=(["\\'])(.*?)\\1', source_match.group(0), re.I)
+        if not content:
+            continue
+        translated_value = deepl_translate(html_unescape(content.group(2)), target, key)
+        new_tag = re.sub(
+            r'content=(["\\']).*?\\1',
+            lambda m: "content=" + m.group(1) + html_escape(translated_value, quote=True) + m.group(1),
+            target_match.group(0), count=1, flags=re.I|re.S
+        )
+        translated = translated[:target_match.start()] + new_tag + translated[target_match.end():]
+    return translated
+
 def prepare_page(source: str, source_path: str, locale: str, key: str | None) -> str:
     html = clean_language_ui(source)
     if locale != "fr":
         if not key:
             raise RuntimeError("La variable DEEPL_AUTH_KEY est absente.")
         html, fallback_count = translate_document(html, LOCALES[locale]["target"], key, locale)
+        html = translate_meta_attributes(source, html, LOCALES[locale]["target"], key)
         if fallback_count:
             print(f"Fallback français : {fallback_count} bloc(s) dans {locale}/{source_path}")
         time.sleep(0.15)
