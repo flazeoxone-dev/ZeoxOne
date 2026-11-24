@@ -30,7 +30,7 @@
     <a class="brand" href="index.html"><img src="assets/favicon.svg" alt="Logo ZeoxOne" class="site-logo" width="34" height="34"><span>ZeoxOne<span class="brand-dot">.</span></span></a>
     <button type="button" class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu" aria-controls="mainNav" aria-expanded="false">☰</button>
     <nav class="main-nav" id="mainNav">
-      <a href="articles.html" aria-current="page">Actualités</a><a href="index.html#guides">Guides</a><a href="recommandations.html">Recommandations</a><a href="index.html#reviews">Comparatifs</a><a href="a-propos.html">À propos</a>
+      <a href="articles.html" aria-current="page" data-locale-fr="Actualités" data-locale-en="News">Actualités</a><a href="index.html#guides" data-locale-fr="Guides" data-locale-en="Guides">Guides</a><a href="recommandations.html" data-locale-fr="Recommandations" data-locale-en="Recommendations">Recommandations</a><a href="index.html#reviews" data-locale-fr="Comparatifs" data-locale-en="Reviews">Comparatifs</a><a href="a-propos.html" data-locale-fr="À propos" data-locale-en="About">À propos</a>
     </nav>
     <div class="header-actions"><div class="locale-switcher" role="group" aria-label="Choisir la langue">
         <button type="button" data-set-lang="fr" aria-label="Français" aria-pressed="true"><span aria-hidden="true">🇫🇷</span> FR</button>
@@ -39,17 +39,17 @@
   </header>
   <main id="main">
     <section class="recommendations-hero wrap">
-      <div class="eyebrow"><span class="eyebrow-line"></span>ARCHIVES ZEOXONE</div>
-      <h1>Tous les <span>articles.</span></h1>
-      <p class="hero-intro">Les nouveaux articles, les guides et les dossiers précédents réunis au même endroit. Les archives restent accessibles même lorsque de nouveaux contenus sont publiés.</p>
+      <div class="eyebrow"><span class="eyebrow-line"></span><span data-locale-fr="ARCHIVES ZEOXONE" data-locale-en="ZEOXONE ARCHIVE">ARCHIVES ZEOXONE</span></div>
+      <h1><span data-locale-fr="Tous les" data-locale-en="All">Tous les</span> <span data-locale-fr="articles." data-locale-en="articles.">articles.</span></h1>
+      <p class="hero-intro"><span data-locale-fr="Les nouveaux articles, les guides et les dossiers précédents réunis au même endroit. Les archives restent accessibles même lorsque de nouveaux contenus sont publiés." data-locale-en="New articles, guides and previous features, all in one place. The archive remains accessible as new content is published.">Les nouveaux articles, les guides et les dossiers précédents réunis au même endroit. Les archives restent accessibles même lorsque de nouveaux contenus sont publiés.</span></p>
     </section>
     <section class="wrap recommendations-section">
-      <div class="section-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span>LA BIBLIOTHÈQUE</div><h2>Explorer les <span>publications.</span></h2></div></div>
-      <label class="archive-search-label" for="articleSearch">Rechercher dans les articles</label>
-      <input class="archive-search" id="articleSearch" type="search" placeholder="Ex. : PC, Windows, GTA..." autocomplete="off">
-      <p class="archive-search-status" id="articleSearchStatus" aria-live="polite">Tous les articles</p>
+      <div class="section-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span><span data-locale-fr="LA BIBLIOTHÈQUE" data-locale-en="THE LIBRARY">LA BIBLIOTHÈQUE</span></div><h2><span data-locale-fr="Explorer les" data-locale-en="Explore the">Explorer les</span> <span data-locale-fr="publications." data-locale-en="publications.">publications.</span></h2></div></div>
+      <label class="archive-search-label" for="articleSearch" data-locale-fr="Rechercher dans les articles" data-locale-en="Search articles">Rechercher dans les articles</label>
+      <input class="archive-search" id="articleSearch" type="search" placeholder="Ex. : PC, Windows, GTA..." data-placeholder-fr="Ex. : PC, Windows, GTA..." data-placeholder-en="e.g. PC, Windows, GTA..." autocomplete="off">
+      <p class="archive-search-status" id="articleSearchStatus" aria-live="polite" data-locale-fr="Tous les articles" data-locale-en="All articles">Tous les articles</p>
       <nav class="article-discovery" data-static-article-links aria-label="Accès direct aux articles">
-        <h3>Accès direct aux guides</h3>
+        <h3 data-locale-fr="Accès direct aux guides" data-locale-en="Direct links to guides">Accès direct aux guides</h3>
         <ul>
         <li><a href="https://flazeoxone-dev.github.io/ZeoxOne/articles/choisir-composants-pc.html">Comment choisir les composants de son premier PC ?</a></li>
         <li><a href="https://flazeoxone-dev.github.io/ZeoxOne/articles/outils-windows.html">Les outils gratuits à connaître sur Windows</a></li>
