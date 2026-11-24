@@ -151,6 +151,23 @@ Références officielles :
 - [Google Search Central — Créer du contenu utile, fiable et conçu pour les internautes](https://developers.google.com/search/docs/fundamentals/creating-helpful-content)
 - [Google Search Central — Conseils sur le contenu généré par IA](https://developers.google.com/search/docs/fundamentals/using-gen-ai-content)
 
+## SEO technique et indexation
+
+- La propriété Search Console doit correspondre exactement à l'URL publiée : `https://flazeoxone-dev.github.io/ZeoxOne/`.
+- Le sitemap public est `https://flazeoxone-dev.github.io/ZeoxOne/sitemap.xml`. Il doit contenir uniquement des URL canoniques accessibles, indexables et utiles. Ne pas y ajouter les pages avec `noindex`, les redirections ou les pages d'erreur.
+- `robots.txt` autorise l'exploration et déclare l'URL absolue du sitemap. Ne pas utiliser robots.txt pour tenter de forcer l'indexation.
+- Chaque page publique doit avoir un titre, une méta-description et une URL canonique cohérents et uniques. Les pages d'articles doivent conserver un balisage JSON-LD `Article` dont les dates et l'auteur correspondent au contenu réel.
+- Les pages de présentation et de méthodologie doivent être reliées depuis la navigation ou le pied de page afin d'être faciles à découvrir.
+- Après une publication, vérifier que le déploiement GitHub Pages a réussi, ouvrir l'URL publique, contrôler le sitemap puis demander une indexation dans Search Console si nécessaire. Cette demande ne garantit pas l'indexation.
+- Si Search Console indique « Explorée, actuellement non indexée », vérifier en priorité la qualité et l'originalité de la page, son accessibilité, ses liens internes, sa canonical et l'absence de contenu dupliqué. Un sitemap valide ne suffit pas à rendre une page indexable.
+- Les pages qui reçoivent des avis ou des retours personnels doivent respecter la confidentialité. Ne pas afficher publiquement un message envoyé via le formulaire sans consentement explicite et sans dispositif de modération.
+
+## Pages de transparence
+
+- `a-propos.html` présente le projet et ses objectifs sans inventer d'équipe, de qualifications ou de résultats.
+- `methodologie-editoriale.html` explique la recherche, la vérification des sources, l'usage de l'IA, les limites des tests et la gestion des corrections.
+- Les informations légales et de confidentialité doivent être relues et complétées par le responsable du site avant toute utilisation commerciale. Ne jamais publier de données personnelles non nécessaires.
+
 ## Déploiement GitHub Pages
 
 Les changements poussés sur la branche `main` sont publiés par GitHub Pages selon la configuration du dépôt. Vérifier l'onglet **Actions** et attendre la réussite du workflow avant de contrôler le site en ligne.
