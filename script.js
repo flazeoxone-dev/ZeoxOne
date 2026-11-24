@@ -134,3 +134,42 @@ renderArticleCards();
  function paint(){document.querySelectorAll("[data-theme-toggle]").forEach(b=>{const light=root.dataset.theme==="light";b.setAttribute("aria-label",light?"Activer le thème sombre":"Activer le thème clair");b.setAttribute("aria-pressed",String(light));const i=b.querySelector("span:first-child"),l=b.querySelector(".theme-switch-label");if(i)i.textContent=light?"◐":"☼";if(l)l.textContent=light?"Sombre":"Clair"})}
  document.addEventListener("click",e=>{const b=e.target.closest("[data-theme-toggle]");if(!b)return;root.dataset.theme=root.dataset.theme==="light"?"dark":"light";root.style.colorScheme=root.dataset.theme;try{localStorage.setItem(key,root.dataset.theme)}catch(e){}paint()});paint();
 })();
+
+
+/* Accessibilité : curseur de contraste avec mémorisation sur consentement explicite. */
+(function initContrastControl(){
+  if(document.querySelector(".contrast-control")) return;
+  const header=document.querySelector(".header-actions") || document.querySelector(".site-header");
+  if(!header) return;
+  const key="zeoxone-contrast", consentKey="zeoxone-preferences-consent";
+  let level=0, consent="no";
+  try{consent=localStorage.getItem(consentKey)||"no";if(consent==="yes")level=Number(localStorage.getItem(key)||0)}catch(e){}
+  const wrap=document.createElement("label");
+  wrap.className="contrast-control";
+  wrap.innerHTML='<span>Contraste</span><input type="range" min="0" max="3" step="1" value="'+(Number.isFinite(level)?level:0)+'" aria-label="Niveau de contraste" title="Régler le contraste">';
+  const range=wrap.querySelector("input");
+  function apply(value){
+    const n=Math.max(0,Math.min(3,Number(value)||0));
+    document.documentElement.dataset.contrast=String(n);
+    range.value=String(n);
+    if(consent==="yes"){try{localStorage.setItem(key,String(n))}catch(e){}}
+  }
+  range.addEventListener("input",()=>apply(range.value));
+  header.appendChild(wrap);
+  apply(level);
+  if(consent==="no" && !document.querySelector(".preference-consent")){
+    const note=document.createElement("div");
+    note.className="preference-consent";
+    note.setAttribute("role","group");
+    note.setAttribute("aria-label","Autorisation de mémorisation des préférences");
+    note.innerHTML='<span>Mémoriser tes réglages de contraste sur cet appareil ?</span><button type="button" data-consent="yes">Accepter</button><button type="button" data-consent="no">Refuser</button>';
+    document.body.appendChild(note);
+    note.addEventListener("click",event=>{
+      const button=event.target.closest("[data-consent]");
+      if(!button)return;
+      consent=button.dataset.consent;
+      if(consent==="yes"){try{localStorage.setItem(consentKey,"yes");localStorage.setItem(key,range.value)}catch(e){}}
+      note.remove();
+    });
+  }
+})();
