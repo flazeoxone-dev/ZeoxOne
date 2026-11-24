@@ -231,3 +231,16 @@ html[data-contrast="2"]{filter:contrast(1.18)}
 html[data-contrast="3"]{filter:contrast(1.3)}
 @media(max-width:760px){.contrast-control span{display:none}.contrast-control input{width:58px}.preference-consent{flex-wrap:wrap}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+
+/* Navigation linguistique : liens statiques, utilisables sans JavaScript. */
+.locale-switcher{display:inline-flex;align-items:center;gap:5px;margin-inline:8px}
+.locale-switcher a{display:inline-flex;align-items:center;justify-content:center;min-width:27px;min-height:27px;padding:3px 5px;border:1px solid var(--line);border-radius:5px;color:var(--muted);font:600 10px var(--font);text-decoration:none;transition:color .18s ease,border-color .18s ease,background .18s ease}
+.locale-switcher a:hover,.locale-switcher a[aria-current="page"]{color:var(--text);border-color:var(--accent);background:var(--surface)}
+.language-suggestion{position:fixed;z-index:50;right:16px;bottom:16px;display:flex;align-items:center;gap:10px;max-width:min(480px,calc(100% - 32px));padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--text);font-size:12px;box-shadow:0 8px 28px #0002}
+.language-suggestion[hidden]{display:none}
+.language-suggestion-link{flex:0 0 auto;color:var(--text);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.language-suggestion button{border:0;background:transparent;color:var(--muted);font-size:18px;cursor:pointer}
+.market-notice,.translation-notice{margin:0 0 22px;padding:12px 14px;border-left:2px solid var(--accent);background:var(--panel);color:var(--muted);font-size:13px;line-height:1.65}
+@media(max-width:760px){.locale-switcher{gap:3px;margin-inline:3px}.locale-switcher a{min-width:24px;min-height:25px;padding:2px 4px;font-size:9px}.language-suggestion{left:12px;right:12px;bottom:12px;max-width:none;flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){.locale-switcher a{transition:none}}
