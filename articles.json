@@ -1,5 +1,29 @@
 [
   {
+    "title": "Comment choisir son écran PC : le guide simple pour ne pas se tromper",
+    "description": "Taille, résolution, dalle IPS ou OLED, fréquence, VRR et connectique : les critères essentiels pour choisir un écran PC adapté à ton usage.",
+    "category": "Matériel",
+    "type": "GUIDE",
+    "minutes": 7,
+    "url": "articles/choisir-ecran-pc.html",
+    "date": "2026-11-24",
+    "visual": "hardware",
+    "image": "https://images.unsplash.com/photo-1527443224154-c4a3942d3aced?auto=format&fit=crop&w=1200&q=85",
+    "imageAlt": "Écran d'ordinateur sur un bureau"
+  },
+  {
+    "title": "Claude en Bourse : pourquoi l'entreprise derrière l'IA Anthropic fait autant parler d'elle ?",
+    "description": "Anthropic, l'entreprise derrière Claude, est entrée au Nasdaq en novembre 2026. IPO, symbole ANT, montants levés et premières fluctuations expliqués simplement.",
+    "category": "Innovation",
+    "type": "ACTUALITÉ",
+    "minutes": 6,
+    "url": "articles/anthropic-claude-entree-en-bourse.html",
+    "date": "2026-11-24",
+    "visual": "software",
+    "image": "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1200&q=85",
+    "imageAlt": "Graphique financier sur un écran"
+  },
+  {
     "title": "GTA 6 : quelle console choisir entre PS5, PS5 Pro et Xbox Series X|S ?",
     "description": "GTA 6 tourne à 30 images par seconde sur toutes les consoles. Résolution, fluidité, prix en France : quelle console choisir entre PS5, PS5 Pro et Xbox Series X|S ?",
     "category": "Gaming",
