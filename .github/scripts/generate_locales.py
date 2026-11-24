@@ -96,11 +96,12 @@ def rewrite_local_paths(html: str, locale: str, nested: bool) -> str:
 
 def language_switcher(locale: str, source_path: str) -> str:
     links = []
-    for code, label in (("fr","FR"),("en","EN")):
+    for code, label in (("fr","🇫🇷"),("en","🇬🇧")):
         suffix = "" if source_path == "index.html" else source_path
         href = f"/ZeoxOne/{code}/" + suffix
         current = ' aria-current="page"' if code == locale else ""
-        links.append(f'<a href="{href}" lang="{LOCALE_TEXT[code].get("hreflang", code)}"{current}>{label}</a>')
+        language_name = "Français" if code == "fr" else "English"
+        links.append(f'<a href="{href}" lang="{code}" aria-label="{language_name}" title="{language_name}"{current}>{label}</a>')
     return '<nav class="locale-switcher" aria-label="' + LOCALE_TEXT[locale]["language"] + '">' + "".join(links) + "</nav>"
 
 def clean_language_ui(html: str) -> str:
