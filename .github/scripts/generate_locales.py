@@ -250,17 +250,17 @@ def translate_document(source: str, target: str, key: str, locale: str):
 def translate_meta_attributes(source: str, translated: str, target: str, key: str) -> str:
     """Traduit explicitement les champs SEO qui sont des attributs HTML."""
     for attr, value in (("name", "description"), ("property", "og:title"), ("property", "og:description")):
-        selector = re.compile(r'<meta\\b(?=[^>]*\\b' + attr + r'=["\\']' + re.escape(value) + r'["\\'])[^>]*>', re.I)
+        selector = re.compile(r"<meta\\b(?=[^>]*\\b" + attr + r"=['\\\"]" + re.escape(value) + r"['\\\"])[^>]*>", re.I)
         source_match = selector.search(source)
         target_match = selector.search(translated)
         if not source_match or not target_match:
             continue
-        content = re.search(r'content=(["\\'])(.*?)\\1', source_match.group(0), re.I)
+        content = re.search(r"content=(['\\\"])(.*?)\\1", source_match.group(0), re.I)
         if not content:
             continue
         translated_value = deepl_translate(html_unescape(content.group(2)), target, key)
         new_tag = re.sub(
-            r'content=(["\\']).*?\\1',
+            r"content=(['\\\"]).*?\\1",
             lambda m: "content=" + m.group(1) + html_escape(translated_value, quote=True) + m.group(1),
             target_match.group(0), count=1, flags=re.I|re.S
         )
