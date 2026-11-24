@@ -2,7 +2,7 @@
   {
     "title": "Comment choisir son écran PC : le guide simple pour ne pas se tromper",
     "description": "Taille, résolution, dalle IPS ou OLED, fréquence, VRR et connectique : les critères essentiels pour choisir un écran PC adapté à ton usage.",
-    "category": "Informatique",
+    "category": "Matériel & PC",
     "type": "GUIDE",
     "minutes": 7,
     "url": "articles/choisir-ecran-pc.html",
@@ -38,7 +38,7 @@
   {
     "title": "Comment choisir les composants de son premier PC ?",
     "description": "Processeur, carte mère, RAM, carte graphique et alimentation : les bases pour choisir les composants de son premier PC.",
-    "category": "Informatique",
+    "category": "Matériel & PC",
     "type": "GUIDE",
     "minutes": 6,
     "url": "articles/choisir-composants-pc.html",
