@@ -32,7 +32,7 @@ jobs:
       - name: Signaler le secret manquant
         if: env.DEEPL_AUTH_KEY == ''
         run: echo "::notice::Ajoute le secret DEEPL_AUTH_KEY pour activer la génération des traductions."
-      - name: Générer FR, EN, ES et DE
+      - name: Générer les versions française et anglaise
         if: env.DEEPL_AUTH_KEY != ''
         run: python .github/scripts/generate_locales.py
       - name: Vérifier les fichiers générés
@@ -45,10 +45,10 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add *.html articles/*.html fr en es de sitemap.xml
+          git add *.html articles/*.html fr en sitemap.xml
           if git diff --cached --quiet; then
             echo "Aucune modification à enregistrer."
           else
-            git commit -m "i18n: générer les versions FR EN ES DE"
+            git commit -m "i18n: générer les versions FR et EN"
             git push
           fi
