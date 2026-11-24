@@ -67,10 +67,11 @@ def page_rel(path: str) -> str:
     return path
 
 def add_hreflang(html: str, source_path: str) -> str:
-    canonical = BASE + "/" + source_path
+    canonical = BASE + ("/" if source_path == "index.html" else "/" + source_path)
+    localized = lambda code: BASE + "/" + code + ("/" if source_path == "index.html" else "/" + source_path)
     tags = [
         f'<link rel="alternate" hreflang="fr-FR" href="{canonical}">',
-        *[f'<link rel="alternate" hreflang="{v["hreflang"]}" href="{BASE}/{k}/{source_path}">' for k,v in LOCALES.items()],
+        *[f'<link rel="alternate" hreflang="{v["hreflang"]}" href="{localized(k)}">' for k,v in LOCALES.items()],
         f'<link rel="alternate" hreflang="x-default" href="{canonical}">',
     ]
     block = "\n  " + "\n  ".join(tags) + "\n"
@@ -97,15 +98,24 @@ def rewrite_local_paths(html: str, locale: str, nested: bool) -> str:
 def language_switcher(locale: str, source_path: str) -> str:
     links = []
     for code, label in (("fr","FR"),("en","EN"),("es","ES"),("de","DE")):
-        href = f"/ZeoxOne/{code}/{source_path}"
+        suffix = "" if source_path == "index.html" else source_path
+        href = f"/ZeoxOne/{code}/" + suffix
         current = ' aria-current="page"' if code == locale else ""
         links.append(f'<a href="{href}" lang="{LOCALE_TEXT[code].get("hreflang", code)}"{current}>{label}</a>')
     return '<nav class="locale-switcher" aria-label="' + LOCALE_TEXT[locale]["language"] + '">' + "".join(links) + "</nav>"
 
+def clean_language_ui(html: str) -> str:
+    html = re.sub(r'<nav class=["\']locale-switcher["\'][^>]*>.*?</nav>', "", html, flags=re.I|re.S)
+    html = re.sub(r'<!-- ZEOXONE_LANGUAGE_SUGGESTION_START -->.*?<!-- ZEOXONE_LANGUAGE_SUGGESTION_END -->', "", html, flags=re.I|re.S)
+    html = re.sub(r'\s*<link rel=["\']alternate["\']\s+hreflang=["\'][^>]+>', "", html, flags=re.I)
+    return html
+
 def inject_language_ui(html: str, locale: str, source_path: str) -> str:
     switch = language_switcher(locale, source_path)
-    # Replace the old two-state switch, or add the selector to the page header.
-    html, count = re.subn(r'<button[^>]*id=["\']langSwitch["\'][^>]*>.*?</button>', switch, html, count=1, flags=re.I|re.S)
+    # Replace the old two-state switch or an existing selector.
+    html, count = re.subn(r'<nav class=["\']locale-switcher["\'][^>]*>.*?</nav>', switch, html, count=1, flags=re.I|re.S)
+    if not count:
+        html, count = re.subn(r'<button[^>]*id=["\']langSwitch["\'][^>]*>.*?</button>', switch, html, count=1, flags=re.I|re.S)
     if not count:
         html = re.sub(r"</header>", switch + "</header>", html, count=1, flags=re.I)
     suggestion = f'''
@@ -128,11 +138,12 @@ def inject_language_ui(html: str, locale: str, source_path: str) -> str:
   }})();
   </script>
 '''
+    suggestion = "<!-- ZEOXONE_LANGUAGE_SUGGESTION_START -->" + suggestion + "<!-- ZEOXONE_LANGUAGE_SUGGESTION_END -->"
     html = re.sub(r"</body>", suggestion + "\n</body>", html, count=1, flags=re.I)
     return html
 
 def prepare_page(source: str, source_path: str, locale: str, key: str | None) -> str:
-    html = source
+    html = clean_language_ui(source)
     if locale != "fr":
         if not key:
             raise RuntimeError("La variable DEEPL_AUTH_KEY est absente.")
@@ -209,7 +220,7 @@ def main():
     # canonique. Elles proposent aussi des liens directs vers les versions localisées.
     for path in HTML_FILES:
         source_path = ROOT / path
-        source = source_path.read_text(encoding="utf-8")
+        source = clean_language_ui(source_path.read_text(encoding="utf-8"))
         source = add_hreflang(source, path)
         source = inject_language_ui(source, "fr", path)
         source_path.write_text(source, encoding="utf-8")
