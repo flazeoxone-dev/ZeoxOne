@@ -2,7 +2,7 @@
   {
     "title": "Comment choisir son écran PC : le guide simple pour ne pas se tromper",
     "description": "Taille, résolution, dalle IPS ou OLED, fréquence, VRR et connectique : les critères essentiels pour choisir un écran PC adapté à ton usage.",
-    "category": "Matériel",
+    "category": "Informatique",
     "type": "GUIDE",
     "minutes": 7,
     "url": "articles/choisir-ecran-pc.html",
@@ -14,7 +14,7 @@
   {
     "title": "Claude en Bourse : pourquoi l'entreprise derrière l'IA Anthropic fait autant parler d'elle ?",
     "description": "Anthropic, l'entreprise derrière Claude, est entrée au Nasdaq en novembre 2026. IPO, symbole ANT, montants levés et premières fluctuations expliqués simplement.",
-    "category": "Innovation",
+    "category": "IA & Actualité",
     "type": "ACTUALITÉ",
     "minutes": 6,
     "url": "articles/anthropic-claude-entree-en-bourse.html",
@@ -38,7 +38,7 @@
   {
     "title": "Comment choisir les composants de son premier PC ?",
     "description": "Processeur, carte mère, RAM, carte graphique et alimentation : les bases pour choisir les composants de son premier PC.",
-    "category": "Matériel",
+    "category": "Informatique",
     "type": "GUIDE",
     "minutes": 6,
     "url": "articles/choisir-composants-pc.html",
@@ -50,7 +50,7 @@
   {
     "title": "Les outils gratuits à connaître sur Windows",
     "description": "Une sélection d'utilitaires pratiques pour améliorer son environnement de travail sous Windows.",
-    "category": "Logiciels",
+    "category": "Informatique",
     "type": "GUIDE",
     "minutes": 4,
     "url": "articles/outils-windows.html",
