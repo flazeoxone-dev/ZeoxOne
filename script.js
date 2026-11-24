@@ -18,6 +18,7 @@ reviewsEyebrow:"MAKE THE RIGHT CHOICE",reviewsTitle:'Less noise.<br><span>More c
 const localeMatch = window.location.pathname.match(/^\/ZeoxOne\/(fr|en)(?:\/|$)/);
 
 let currentLang = localeMatch ? localeMatch[1] : "fr";
+try{if(!localeMatch && localStorage.getItem("zeoxone-preferences-consent")==="yes" && ["fr","en"].includes(localStorage.getItem("zeoxone-lang"))) currentLang=localStorage.getItem("zeoxone-lang");}catch(e){}
 function applyLanguage(lang){
   if(!translations[lang]) return;
   currentLang=lang;
@@ -26,6 +27,7 @@ function applyLanguage(lang){
     const value=translations[lang][node.dataset.i18n];
     if(value!==undefined) node.textContent=value;
   });
+  document.querySelectorAll("[data-locale-fr][data-locale-en]").forEach(node=>{node.textContent=node.getAttribute("data-locale-"+lang);});
   document.querySelectorAll("[data-i18n-html]").forEach(node=>{
     const value=translations[lang][node.dataset.i18nHtml];
     if(value!==undefined) node.innerHTML=value;
