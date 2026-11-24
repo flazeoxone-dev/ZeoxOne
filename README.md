@@ -180,3 +180,33 @@ Les changements poussés sur la branche `main` sont publiés par GitHub Pages se
 - Les animations sont réduites lorsque le système signale `prefers-reduced-motion`.
 - Le workflow GitHub Actions `.github/workflows/quality.yml` contrôle la syntaxe JavaScript, le catalogue JSON, le sitemap XML, les métadonnées HTML minimales et les liens locaux avant intégration.
 - Le validateur est un contrôle statique : il ne remplace pas les tests visuels sur mobile, les tests clavier/lecteur d'écran, ni une vérification humaine des traductions.
+
+
+## Internationalisation FR / EN / ES / DE
+
+Les pages françaises existantes restent la source éditoriale de référence. Le générateur crée des copies statiques dans `/fr/`, `/en/`, `/es/` et `/de/`. Les versions anglaise, espagnole et allemande sont générées avant publication : aucune traduction n'est appelée depuis le navigateur et aucune clé API n'est exposée aux visiteurs.
+
+### Générer les traductions
+
+1. Utiliser un compte DeepL API Free autorisé à gérer le dépôt. Le générateur utilise l'endpoint API Free ; il ne souscrit à aucune offre payante.
+2. Dans GitHub, ouvrir **Settings → Secrets and variables → Actions → New repository secret**.
+3. Nom du secret : `DEEPL_AUTH_KEY`. Valeur : la clé API DeepL. Ne jamais la placer dans un fichier du dépôt, dans le HTML ou dans `script.js`.
+4. Ouvrir **Actions → Générer les traductions ZeoxOne → Run workflow**.
+5. Sélectionner la branche `feat/accessibilite-i18n-seo` tant que les modifications ne sont pas fusionnées. Vérifier le résultat du workflow et les pages avant toute fusion.
+6. Le workflow crée les versions localisées, met à jour le sitemap avec les alternates `hreflang`, puis enregistre les fichiers sur la branche sélectionnée.
+
+Le générateur conserve les pages françaises historiques et crée aussi leurs routes localisées. Les URL françaises historiques restent canoniques ; les copies `/fr/` sont des alias canoniques. Les URL EN / ES / DE possèdent chacune leur canonical local.
+
+### Comportement linguistique
+
+- Le sélecteur FR / EN / ES / DE est constitué de liens HTML ordinaires : il fonctionne sans JavaScript.
+- La langue du navigateur peut déclencher une suggestion discrète, jamais une redirection automatique.
+- Une traduction non disponible ne doit jamais empêcher l'accès à la page française.
+- Les contenus générés sont statiques et doivent être relus avant fusion. La traduction automatique ne constitue pas une validation éditoriale.
+- Les articles GTA et les autres contenus contenant des prix ou disponibilités français affichent une note indiquant que ces données concernent le marché français. Elles ne doivent pas être présentées comme des prix locaux vérifiés dans les autres pays.
+- Les pages juridiques traduites portent une note précisant que la version française reste la référence jusqu'à une relecture juridique locale.
+- Les recommandations renvoient aux sites officiels ; la disponibilité et les conditions peuvent varier selon le pays.
+
+### Contrôles
+
+Le workflow qualité vérifie la syntaxe JavaScript et Python, les catalogues JSON, les articles référencés, les liens locaux, les métadonnées HTML, les URL canoniques et les balises `hreflang` des versions générées. Il ne remplace pas la relecture humaine, les tests clavier et mobile, ni la vérification locale des prix, lois et services.
