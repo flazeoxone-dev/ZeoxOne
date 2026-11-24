@@ -39,10 +39,10 @@ HTML_FILES = [
     "articles/performances-jeux-pc.html",
 ]
 LOCALE_TEXT = {
-    "fr": {"language":"Langue","suggest":"La langue de ton navigateur semble différente. Souhaites-tu consulter cette page dans cette langue ?","market_legal":"Cette traduction est fournie à titre informatif. En cas de différence, la version française fait foi jusqu'à une relecture juridique locale.","market":FR_MARKET,"fallback":"Certaines parties restent en français, car leur traduction automatique n'a pas pu être vérifiée."},
-    "en": {"language":"Language","suggest":"Your browser language seems to be different. Would you like to view this page in that language?","market_legal":"This translation is provided for information. If anything differs, the French version remains authoritative until a local legal review.","market":LOCALES["en"]["market"],"fallback":"Some sections remain in French because their automatic translation could not be verified."},
-    "es": {"language":"Idioma","suggest":"El idioma de tu navegador parece ser diferente. ¿Quieres consultar esta página en ese idioma?","market_legal":"Esta traducción se ofrece a título informativo. Si existe alguna diferencia, prevalece la versión francesa hasta que se realice una revisión jurídica local.","market":LOCALES["es"]["market"],"fallback":"Algunas secciones permanecen en francés porque no se pudo verificar su traducción automática."},
-    "de": {"language":"Sprache","suggest":"Die Sprache deines Browsers scheint eine andere zu sein. Möchtest du diese Seite in dieser Sprache ansehen?","market_legal":"Diese Übersetzung dient nur zu Informationszwecken. Bei Abweichungen ist bis zu einer lokalen rechtlichen Prüfung die französische Fassung maßgeblich.","market":LOCALES["de"]["market"],"fallback":"Einige Abschnitte bleiben auf Französisch, da ihre automatische Übersetzung nicht überprüft werden konnte."},
+    "fr": {"language":"Langue","suggest":"La langue de ton navigateur semble différente. Souhaites-tu consulter cette page dans cette langue ?","market_legal":"Cette traduction est fournie à titre informatif. En cas de différence, la version française fait foi jusqu'à une relecture juridique locale.","market":FR_MARKET,"fallback":"Certaines parties restent en français, car leur traduction automatique n'a pas pu être vérifiée.","close":"Fermer"},
+    "en": {"language":"Language","suggest":"Your browser language seems to be different. Would you like to view this page in that language?","market_legal":"This translation is provided for information. If anything differs, the French version remains authoritative until a local legal review.","market":LOCALES["en"]["market"],"fallback":"Some sections remain in French because their automatic translation could not be verified.","close":"Close"},
+    "es": {"language":"Idioma","suggest":"El idioma de tu navegador parece ser diferente. ¿Quieres consultar esta página en ese idioma?","market_legal":"Esta traducción se ofrece a título informativo. Si existe alguna diferencia, prevalece la versión francesa hasta que se realice una revisión jurídica local.","market":LOCALES["es"]["market"],"fallback":"Algunas secciones permanecen en francés porque no se pudo verificar su traducción automática.","close":"Cerrar"},
+    "de": {"language":"Sprache","suggest":"Die Sprache deines Browsers scheint eine andere zu sein. Möchtest du diese Seite in dieser Sprache ansehen?","market_legal":"Diese Übersetzung dient nur zu Informationszwecken. Bei Abweichungen ist bis zu einer lokalen rechtlichen Prüfung die französische Fassung maßgeblich.","market":LOCALES["de"]["market"],"fallback":"Einige Abschnitte bleiben auf Französisch, da ihre automatische Übersetzung nicht überprüft werden konnte.","close":"Schließen"},
 }
 
 def deepl_translate(text: str, target: str, key: str) -> str:
@@ -124,13 +124,15 @@ def inject_language_ui(html: str, locale: str, source_path: str) -> str:
   <aside class="language-suggestion" id="languageSuggestion" hidden aria-live="polite">
     <span>{LOCALE_TEXT[locale]["suggest"]}</span>
     <span id="languageSuggestionLinks"></span>
-    <button type="button" id="dismissLanguageSuggestion" aria-label="Close">×</button>
+    <button type="button" id="dismissLanguageSuggestion" aria-label="{LOCALE_TEXT[locale]["close"]}">×</button>
   </aside>
   <script>
   (function(){{
     var supported=["fr","en","es","de"], current="{locale}";
     var browser=(navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||""]).map(function(x){{return (x||"").slice(0,2).toLowerCase()}});
-    var wanted=browser.find(function(x){{return supported.indexOf(x)>=0}});
+    var stored=null;
+    try{{if(localStorage.getItem("zeoxone-preferences-consent")==="yes")stored=localStorage.getItem("zeoxone-lang")}}catch(e){{}}
+    var wanted=(stored&&supported.indexOf(stored)>=0)?stored:browser.find(function(x){{return supported.indexOf(x)>=0}});
     if(wanted&&wanted!==current){{
       var box=document.getElementById("languageSuggestion"),slot=document.getElementById("languageSuggestionLinks");
       var a=document.createElement("a");a.href="/ZeoxOne/"+wanted+"/{source_path}";a.textContent=wanted.toUpperCase();a.className="language-suggestion-link";
