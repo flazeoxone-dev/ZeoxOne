@@ -2,7 +2,7 @@ name: Générer les traductions ZeoxOne
 
 on:
   push:
-    branches: ["feat/**"]
+    branches: ["main", "feat/**"]
     paths:
       - "*.html"
       - "articles/*.html"
