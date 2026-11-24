@@ -183,12 +183,13 @@ def build_catalogue(locale: str, key: str | None):
     out.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 def build_sitemap():
+    sitemap_files = [path for path in HTML_FILES if path != "feedback.html"]
     ns = "http://www.sitemaps.org/schemas/sitemap/0.9"
     xhtml = "http://www.w3.org/1999/xhtml"
     ET.register_namespace("", ns)
     ET.register_namespace("xhtml", xhtml)
     root = ET.Element(f"{{{ns}}}urlset")
-    for path in HTML_FILES:
+    for path in sitemap_files:
         if path in SKIP:
             continue
         loc = BASE + ("/" if path == "index.html" else "/" + path)
