@@ -105,7 +105,7 @@ renderArticleCards();
   if(document.querySelector(".feedback-float") || location.pathname.endsWith("/feedback.html")) return;
   const link=document.createElement("a");
   link.className="feedback-float";
-  link.href="feedback.html";
+  link.href="/ZeoxOne/"+currentLang+"/feedback.html";
   link.textContent=({fr:"Donner un avis",en:"Send feedback",es:"Enviar comentarios",de:"Feedback geben"}[currentLang]||"Donner un avis");
   link.setAttribute("aria-label",link.textContent+" ZeoxOne");
   document.body.appendChild(link);
@@ -127,8 +127,8 @@ renderArticleCards();
   const header=document.querySelector(".header-actions") || document.querySelector(".site-header");
   if(!header) return;
   const key="zeoxone-contrast", consentKey="zeoxone-preferences-consent";
-  let level=0, consent="no";
-  try{consent=localStorage.getItem(consentKey)||"no";if(consent==="yes")level=Number(localStorage.getItem(key)||0)}catch(e){}
+  let level=0, consent=null;
+  try{consent=localStorage.getItem(consentKey);if(consent==="yes")level=Number(localStorage.getItem(key)||0)}catch(e){}
   const wrap=document.createElement("label");
   wrap.className="contrast-control";
   const contrastLabel={fr:"Contraste",en:"Contrast",es:"Contraste",de:"Kontrast"}[currentLang]||"Contraste";
@@ -143,7 +143,7 @@ renderArticleCards();
   range.addEventListener("input",()=>apply(range.value));
   header.appendChild(wrap);
   apply(level);
-  if(consent==="no" && !document.querySelector(".preference-consent")){
+  if(consent===null && !document.querySelector(".preference-consent")){
     const note=document.createElement("div");
     note.className="preference-consent";
     note.setAttribute("role","group");
@@ -160,7 +160,8 @@ renderArticleCards();
       const button=event.target.closest("[data-consent]");
       if(!button)return;
       consent=button.dataset.consent;
-      if(consent==="yes"){try{localStorage.setItem(consentKey,"yes");localStorage.setItem(key,range.value)}catch(e){}}
+      try{localStorage.setItem(consentKey,consent)}catch(e){}
+      if(consent==="yes"){try{localStorage.setItem(key,range.value)}catch(e){}}
       note.remove();
     });
   }
