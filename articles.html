@@ -32,7 +32,10 @@
     <nav class="main-nav" id="mainNav">
       <a href="articles.html" aria-current="page">Actualités</a><a href="index.html#guides">Guides</a><a href="recommandations.html">Recommandations</a><a href="index.html#reviews">Comparatifs</a><a href="a-propos.html">À propos</a>
     </nav>
-    <div class="header-actions"><button type="button" class="lang-switch" id="langSwitch" aria-label="Switch language">EN</button><button type="button" class="theme-switch" data-theme-toggle aria-label="Activer le thème clair"><span aria-hidden="true">☼</span><span class="theme-switch-label">Clair</span></button></div>
+    <div class="header-actions"><div class="locale-switcher" role="group" aria-label="Choisir la langue">
+        <button type="button" data-set-lang="fr" aria-label="Français" aria-pressed="true"><span aria-hidden="true">🇫🇷</span> FR</button>
+        <button type="button" data-set-lang="en" aria-label="English" aria-pressed="false"><span aria-hidden="true">🇬🇧</span> EN</button>
+      </div><button type="button" class="theme-switch" data-theme-toggle aria-label="Activer le thème clair"><span aria-hidden="true">☼</span><span class="theme-switch-label">Clair</span></button></div>
   </header>
   <main id="main">
     <section class="recommendations-hero wrap">
