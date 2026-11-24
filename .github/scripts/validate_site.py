@@ -59,7 +59,11 @@ def check_local_target(page, raw):
         prefix = "/ZeoxOne/"
         if not raw_path.startswith(prefix):
             return
-        target = ROOT / raw_path[len(prefix):]
+        target = (ROOT / raw_path[len(prefix):]).resolve()
+    elif parsed.path.startswith("/ZeoxOne/"):
+        target = (ROOT / parsed.path[len("/ZeoxOne/"):]).resolve()
+    elif parsed.path.startswith("/"):
+        return
     else:
         target = (page.parent / parsed.path).resolve()
     if not parsed.path:
@@ -109,11 +113,13 @@ for page in ROOT.rglob("*.html"):
     try:
         parser = PageInspector(page)
         parser.feed(page.read_text(encoding="utf-8"))
-        if not parser.lang:
+        # Pages techniques d'authentification et page 404 : contrôles SEO adaptés.
+        technical = page.name in {"404.html", "google9787bf245aba8089.html"}
+        if not technical and not parser.lang:
             fail(f"{page.relative_to(ROOT)}: attribut lang manquant sur <html>.")
-        if not parser.title_text.strip():
+        if not technical and not parser.title_text.strip():
             fail(f"{page.relative_to(ROOT)}: titre <title> absent ou vide.")
-        if not parser.has_description:
+        if not technical and not parser.has_description:
             fail(f"{page.relative_to(ROOT)}: méta-description absente ou vide.")
         for link in parser.links:
             check_local_target(page, link)
