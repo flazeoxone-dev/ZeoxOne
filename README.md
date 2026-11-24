@@ -171,3 +171,12 @@ Références officielles :
 ## Déploiement GitHub Pages
 
 Les changements poussés sur la branche `main` sont publiés par GitHub Pages selon la configuration du dépôt. Vérifier l'onglet **Actions** et attendre la réussite du workflow avant de contrôler le site en ligne.
+
+
+## Réglages d'accessibilité et contrôle qualité
+
+- Le curseur « Contraste » propose quatre niveaux. Le réglage reste temporaire par défaut.
+- Une demande discrète permet d'accepter ou de refuser la mémorisation du contraste sur l'appareil. Aucun réglage n'est mémorisé avant acceptation.
+- Les animations sont réduites lorsque le système signale `prefers-reduced-motion`.
+- Le workflow GitHub Actions `.github/workflows/quality.yml` contrôle la syntaxe JavaScript, le catalogue JSON, le sitemap XML, les métadonnées HTML minimales et les liens locaux avant intégration.
+- Le validateur est un contrôle statique : il ne remplace pas les tests visuels sur mobile, les tests clavier/lecteur d'écran, ni une vérification humaine des traductions.
