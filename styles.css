@@ -244,3 +244,6 @@ html[data-contrast="3"]{filter:contrast(1.3)}
 .market-notice,.translation-notice{margin:0 0 22px;padding:12px 14px;border-left:2px solid var(--accent);background:var(--panel);color:var(--muted);font-size:13px;line-height:1.65}
 @media(max-width:760px){.locale-switcher{gap:3px;margin-inline:3px}.locale-switcher a{min-width:24px;min-height:25px;padding:2px 4px;font-size:9px}.language-suggestion{left:12px;right:12px;bottom:12px;max-width:none;flex-wrap:wrap}}
 @media(prefers-reduced-motion:reduce){.locale-switcher a{transition:none}}
+
+.translation-fallback{padding:0 0 0 12px;border-left:2px solid var(--line)}
+.translation-fallback-notice{margin:0 0 16px;color:var(--muted);font-size:12px}
