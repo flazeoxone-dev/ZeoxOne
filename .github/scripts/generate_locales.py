@@ -36,6 +36,8 @@ HTML_FILES = [
     "articles/gta-6-quelle-console-ps5-ps5-pro-xbox.html",
     "articles/outils-windows.html",
     "articles/performances-jeux-pc.html",
+    "articles/choisir-ecran-pc.html",
+    "articles/anthropic-claude-entree-en-bourse.html",
 ]
 LOCALE_TEXT = {
     "fr": {"language":"Langue","suggest":"La langue de ton navigateur semble différente. Souhaites-tu consulter cette page dans cette langue ?","market_legal":"Cette traduction est fournie à titre informatif. En cas de différence, la version française fait foi jusqu'à une relecture juridique locale.","market":FR_MARKET,"fallback":"Certaines parties restent en français, car leur traduction automatique n'a pas pu être vérifiée.","close":"Fermer"},
