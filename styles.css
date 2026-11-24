@@ -340,3 +340,12 @@ html[data-theme="light"] .article-heading-visual .eyebrow{color:#35495c}
 html[data-theme="light"] .article-heading-visual h1{color:#172331;text-shadow:0 1px 0 #fff8}
 html[data-theme="light"] .article-heading-visual .byline{color:#526477}
 @media(max-width:680px){.article-heading-visual{padding:24px 16px 20px;min-height:230px}.article-brand-mark{right:14px;top:16px;transform:none;padding:8px 10px;gap:7px;opacity:.96}.article-brand-mark img{width:28px;height:28px}.claude-brand span{font-size:21px}.article-brand-mark small{font-size:7px}.monitor-brand strong{font-size:17px}.article-heading-visual h1{max-width:100%;padding-top:64px}}
+
+
+/* Sélecteur de langue FR / EN avec drapeaux et état actif visible. */
+.locale-switcher{display:inline-flex;align-items:center;gap:5px;flex:0 0 auto}
+.locale-switcher button{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-width:52px;min-height:36px;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--muted);font:700 11px var(--font);cursor:pointer;transition:background .18s ease,color .18s ease,border-color .18s ease}
+.locale-switcher button span{font-size:14px;line-height:1}
+.locale-switcher button:hover,.locale-switcher button.is-active{border-color:var(--accent);background:var(--panel2);color:var(--text)}
+.locale-switcher button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media(max-width:760px){.header-actions{gap:8px}.locale-switcher{gap:3px}.locale-switcher button{min-width:43px;min-height:34px;padding:5px 6px;font-size:10px}}
