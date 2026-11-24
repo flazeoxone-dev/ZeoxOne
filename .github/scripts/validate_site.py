@@ -24,6 +24,8 @@ class PageInspector(HTMLParser):
         self.has_description = False
         self.ids = set()
         self.links = []
+        self.hreflangs = set()
+        self.canonical_count = 0
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
         if tag == "html":
@@ -32,6 +34,10 @@ class PageInspector(HTMLParser):
             self.title_open = True
         if tag == "meta" and attrs.get("name", "").lower() == "description":
             self.has_description = bool(attrs.get("content", "").strip())
+        if tag == "link" and attrs.get("rel", "").lower() == "alternate" and attrs.get("hreflang"):
+            self.hreflangs.add(attrs["hreflang"])
+        if tag == "link" and attrs.get("rel", "").lower() == "canonical":
+            self.canonical_count += 1
         if attrs.get("id"):
             ident = attrs["id"]
             if ident in self.ids:
@@ -94,6 +100,25 @@ except Exception as exc:
     articles = []
     fail(f"articles.json invalide: {exc}")
 
+# Catalogues localisés : chaque langue doit posséder ses pages et ses liens d'articles.
+for locale in ("fr", "en", "es", "de"):
+    locale_dir = ROOT / locale
+    if not locale_dir.exists():
+        continue
+    try:
+        localized = json.loads((locale_dir / "articles.json").read_text(encoding="utf-8"))
+        if not isinstance(localized, list):
+            fail(f"{locale}/articles.json doit contenir une liste.")
+        for article in localized:
+            url = article.get("url", "")
+            if not url or not (locale_dir / url).is_file():
+                fail(f"{locale}/articles.json: article localisé introuvable: {url}")
+        for required in ("index.html", "articles.html", "recommandations.html"):
+            if not (locale_dir / required).is_file():
+                fail(f"{locale}: page obligatoire absente: {required}")
+    except Exception as exc:
+        fail(f"{locale}/articles.json invalide: {exc}")
+
 # Sitemap XML
 try:
     sitemap = ET.parse(ROOT / "sitemap.xml").getroot()
@@ -121,6 +146,15 @@ for page in ROOT.rglob("*.html"):
             fail(f"{page.relative_to(ROOT)}: titre <title> absent ou vide.")
         if not technical and not parser.has_description:
             fail(f"{page.relative_to(ROOT)}: méta-description absente ou vide.")
+        parts = page.relative_to(ROOT).parts
+        localized_page = len(parts) > 1 and parts[0] in {"fr", "en", "es", "de"}
+        if localized_page and not technical:
+            if parser.canonical_count != 1:
+                fail(f"{page.relative_to(ROOT)}: une URL canonique unique est requise.")
+            expected_hreflangs = {"fr-FR", "en-GB", "es-ES", "de-DE", "x-default"}
+            missing = expected_hreflangs - parser.hreflangs
+            if missing:
+                fail(f"{page.relative_to(ROOT)}: hreflang manquants: {', '.join(sorted(missing))}.")
         for link in parser.links:
             check_local_target(page, link)
     except Exception as exc:
