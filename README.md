@@ -182,31 +182,22 @@ Les changements poussés sur la branche `main` sont publiés par GitHub Pages se
 - Le validateur est un contrôle statique : il ne remplace pas les tests visuels sur mobile, les tests clavier/lecteur d'écran, ni une vérification humaine des traductions.
 
 
-## Internationalisation FR / EN / ES / DE
+## Langues du site : français et anglais
 
-Les pages françaises existantes restent la source éditoriale de référence. Le générateur crée des copies statiques dans `/fr/`, `/en/`, `/es/` et `/de/`. Les versions anglaise, espagnole et allemande sont générées avant publication : aucune traduction n'est appelée depuis le navigateur et aucune clé API n'est exposée aux visiteurs.
+Le français est la langue principale et la version éditoriale de référence de ZeoxOne. L'anglais est la seule langue secondaire prise en charge pour le moment. L'espagnol et l'allemand sont hors périmètre : aucun sélecteur, générateur ou contrôle qualité ne doit les proposer.
 
-### Générer les traductions
+Les pages françaises conservent leurs adresses actuelles. Les versions anglaises sont générées en pages statiques dans `/en/`, avant publication. Aucune traduction n'est appelée depuis le navigateur et aucune clé API n'est exposée aux visiteurs. Le sélecteur de langue reste constitué de liens HTML ordinaires et fonctionne sans JavaScript.
 
-1. Utiliser un compte DeepL API Free autorisé à gérer le dépôt. Le générateur utilise l'endpoint API Free ; il ne souscrit à aucune offre payante.
-2. Dans GitHub, ouvrir **Settings → Secrets and variables → Actions → New repository secret**.
-3. Nom du secret : `DEEPL_AUTH_KEY`. Valeur : la clé API DeepL. Ne jamais la placer dans un fichier du dépôt, dans le HTML ou dans `script.js`.
-4. Ouvrir **Actions → Générer les traductions ZeoxOne → Run workflow**.
-5. Sélectionner la branche `feat/accessibilite-i18n-seo` tant que les modifications ne sont pas fusionnées. Vérifier le résultat du workflow et les pages avant toute fusion.
-6. Le workflow crée les versions localisées, met à jour le sitemap avec les alternates `hreflang`, puis enregistre les fichiers sur la branche sélectionnée.
+### Générer la version anglaise
 
-Le générateur conserve les pages françaises historiques et crée aussi leurs routes localisées. Les URL françaises historiques restent canoniques ; les copies `/fr/` sont des alias canoniques. Les URL EN / ES / DE possèdent chacune leur canonical local.
+1. Utiliser DeepL API Free si une génération automatique est nécessaire.
+2. Enregistrer la clé dans GitHub : **Settings → Secrets and variables → Actions → New repository secret**.
+3. Nom du secret : `DEEPL_AUTH_KEY`. Ne jamais placer la clé dans un fichier du dépôt, dans le HTML ou dans `script.js`.
+4. Le workflow `.github/workflows/translations.yml` génère uniquement les pages anglaises, leurs catalogues et les métadonnées SEO associées.
+5. Relire les pages anglaises avant toute fusion ou publication. La traduction automatique ne remplace pas une vérification éditoriale.
 
-### Comportement linguistique
-
-- Le sélecteur FR / EN / ES / DE est constitué de liens HTML ordinaires : il fonctionne sans JavaScript.
-- La langue du navigateur peut déclencher une suggestion discrète, jamais une redirection automatique.
-- Une traduction non disponible ne doit jamais empêcher l'accès à la page française.
-- Les contenus générés sont statiques et doivent être relus avant fusion. La traduction automatique ne constitue pas une validation éditoriale.
-- Les articles GTA et les autres contenus contenant des prix ou disponibilités français affichent une note indiquant que ces données concernent le marché français. Elles ne doivent pas être présentées comme des prix locaux vérifiés dans les autres pays.
-- Les pages juridiques traduites portent une note précisant que la version française reste la référence jusqu'à une relecture juridique locale.
-- Les recommandations renvoient aux sites officiels ; la disponibilité et les conditions peuvent varier selon le pays.
+La version française reste canonique pour les pages françaises. Les pages anglaises possèdent leurs propres URL canoniques et les balises `hreflang` se limitent à `fr-FR`, `en-GB` et `x-default`. Les notes de marché précisent lorsque les prix ou disponibilités cités concernent la France.
 
 ### Contrôles
 
-Le workflow qualité vérifie la syntaxe JavaScript et Python, les catalogues JSON, les articles référencés, les liens locaux, les métadonnées HTML, les URL canoniques et les balises `hreflang` des versions générées. Il ne remplace pas la relecture humaine, les tests clavier et mobile, ni la vérification locale des prix, lois et services.
+Le workflow qualité vérifie les pages françaises et anglaises, les catalogues JSON, les articles référencés, les liens locaux, les métadonnées HTML, les URL canoniques et les balises `hreflang`. Il ne remplace pas la relecture humaine ni les tests visuels, clavier et mobile.
