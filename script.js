@@ -42,8 +42,6 @@ function applyLanguage(lang){
   });
   try{localStorage.setItem("zeoxone-lang",lang);}catch(e){}
   if(typeof renderArticleCards==="function") renderArticleCards();
-  const feedback=document.querySelector(".feedback-float");
-  if(feedback){feedback.textContent=lang==="en"?"Send feedback":"Donner un avis";feedback.setAttribute("aria-label",feedback.textContent+" ZeoxOne");}
 }
 document.addEventListener("click",event=>{
   const button=event.target.closest("[data-set-lang]");
@@ -151,15 +149,24 @@ async function renderArticleCards(){
 renderArticleCards();
 
 
-// Raccourci vers le formulaire d'avis sur les pages qui chargent ce script.
-(function addFeedbackShortcut(){
-  if(document.querySelector(".feedback-float") || location.pathname.endsWith("/feedback.html")) return;
+// Le lien d'avis est intégré au pied de page, avec les mentions légales.
+(function addFooterFeedbackLink(){
+  if(location.pathname.endsWith("/feedback.html")) return;
+  const footer=document.querySelector(".site-footer");
+  if(!footer || footer.querySelector('a[href*="feedback.html"]')) return;
+  let links=footer.querySelector(".footer-links");
+  if(!links){
+    links=document.createElement("div");
+    links.className="footer-links";
+    const bottom=footer.querySelector(".footer-bottom");
+    (bottom||footer).appendChild(links);
+  }
   const link=document.createElement("a");
-  link.className="feedback-float";
   link.href="/ZeoxOne/feedback.html?lang="+currentLang;
-  link.textContent=({fr:"Donner un avis",en:"Send feedback"}[currentLang]||"Donner un avis");
-  link.setAttribute("aria-label",link.textContent+" ZeoxOne");
-  document.body.appendChild(link);
+  link.setAttribute("data-locale-fr","Donner un avis");
+  link.setAttribute("data-locale-en","Send feedback");
+  link.textContent=currentLang==="en"?"Send feedback":"Donner un avis";
+  links.appendChild(link);
 })();
 
 
