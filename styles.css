@@ -427,3 +427,19 @@ h1,h2,h3,p,a,button{overflow-wrap:break-word}
   .floating-tag{font-size:7px;letter-spacing:.8px;padding:6px}
   .footer-links{column-gap:10px;font-size:12px}
 }
+
+
+/* Correctifs images, page Découvrir et sélecteur FR/EN global */
+.feature-art{position:relative;min-height:190px}
+.feature-art .article-cover{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;display:block}
+.feature-art:has(.article-cover):after{content:"";position:absolute;inset:55% 0 0;background:linear-gradient(transparent,rgba(5,9,14,.62));pointer-events:none}
+.locale-switcher{z-index:2}
+.header-actions{min-width:0;flex-wrap:wrap}
+.decouvrir-hero{padding-top:70px;padding-bottom:70px}
+.decouvrir-hero .hero-visual{min-width:0}
+.decouvrir-topics .topic-card-photo{min-height:280px}
+.decouvrir-topics .topic-card-photo>img{display:block}
+.decouvrir-topics .topic-card-copy{left:22px;right:22px;bottom:22px}
+.decouvrir-bottom{margin-top:0}
+@media(max-width:850px){.site-header{gap:12px}.header-actions{gap:10px}.main-nav{flex-wrap:wrap}}
+@media(max-width:620px){.header-actions{gap:7px}.locale-switcher button{min-width:44px;min-height:34px;padding:5px 6px}.decouvrir-hero{padding-top:45px;padding-bottom:48px}.decouvrir-topics .topic-card-photo{min-height:220px}}
