@@ -93,8 +93,7 @@ async function renderArticleCards(){
     const response = await fetch("articles.json", {cache:"no-store"});
     if(!response.ok) throw new Error("Catalogue indisponible");
     const articles = await response.json();
-    // Les liens HTML statiques servent de fallback SEO, puis laissent place au catalogue dynamique.
-    document.querySelectorAll("[data-static-article-links]").forEach(node=>node.remove());
+    // Les liens HTML statiques restent visibles : ils assurent une découverte des articles sans JavaScript.
     // Compteur dynamique des articles par catégorie sur les cartes de l'accueil.
     document.querySelectorAll("[data-category-count]").forEach(counter=>{
       const category = (counter.dataset.categoryCount || "").toLocaleLowerCase("fr");
