@@ -17,7 +17,7 @@ La priorité est la qualité et l'utilité pour les lecteurs, pas la production 
 - `articles/` : fichiers HTML des articles.
 - `recommandations.html` : sélection de produits, logiciels et services.
 - `styles.css` : styles du site.
-- `script.js` : interactions, traductions, filtre de recherche des archives et raccourci vers le formulaire d'avis.
+- `script.js` : interactions, traductions FR/EN, sélecteur de langue global, filtre de recherche des archives et lien « Donner un avis » dans le pied de page.
 - `sitemap.xml` : URLs à proposer aux moteurs de recherche.
 - `robots.txt` : règles d'exploration.
 - `assets/` : images et ressources du site.
@@ -54,7 +54,7 @@ Chaque article doit avoir les champs suivants :
 
 - `title` : titre visible.
 - `description` : résumé fidèle, sans promesse exagérée.
-- `category` : catégorie cohérente avec les autres articles (ex. Matériel, Logiciels, Gaming).
+- `category` : utiliser l'une des catégories du site : `IA & Actualité`, `Gaming`, `Matériel & PC`, `Informatique` ou `Tuto & Guide`.
 - `type` : `GUIDE`, `DOSSIER` ou un type déjà pris en charge par le site.
 - `minutes` : estimation raisonnable du temps de lecture.
 - `url` : chemin relatif exact du fichier HTML.
@@ -201,3 +201,39 @@ La version française reste canonique pour les pages françaises. Les pages angl
 ### Contrôles
 
 Le workflow qualité vérifie les pages françaises et anglaises, les catalogues JSON, les articles référencés, les liens locaux, les métadonnées HTML, les URL canoniques et les balises `hreflang`. Il ne remplace pas la relecture humaine ni les tests visuels, clavier et mobile.
+
+
+## Règles obligatoires pour le bilingue FR / EN
+
+Le sélecteur 🇫🇷 FR / 🇬🇧 EN doit être présent et fonctionnel sur **toutes les pages HTML publiques**, y compris les pages légales, la page de retour, la page 404 et chaque article.
+
+- Charger `script.js` sur chaque page HTML (sauf fichier de vérification technique).
+- Conserver les boutons `data-set-lang="fr"` et `data-set-lang="en"` dans l'en-tête. Si une page n'a pas encore de sélecteur, le script global doit l'ajouter.
+- Toute page doit conserver son choix de langue entre les navigations grâce à la préférence `zeoxone-lang`.
+- Traduire le titre du document, le H1, la navigation, le fil d'Ariane, les boutons, les libellés, les messages d'état, les paragraphes, les tableaux, les légendes d'images, les sources et le pied de page.
+- Pour un texte simple, utiliser `data-locale-fr` et `data-locale-en`. Pour du contenu contenant du HTML (liens, emphase, retours à la ligne), utiliser `data-locale-html-fr` et `data-locale-html-en`.
+- Ne jamais imbriquer un attribut de traduction dans la valeur d'un autre attribut. Chaque élément ne doit avoir qu'une paire d'attributs FR/EN valide.
+- Ne pas laisser un mélange de français et d'anglais après changement de langue. Si une traduction n'est pas prête, ne pas présenter la page comme entièrement bilingue : terminer et vérifier la traduction avant publication.
+- Vérifier le changement FR → EN → FR sur ordinateur et mobile, puis recharger une page pour confirmer que la langue reste mémorisée.
+
+## Règles obligatoires pour les images d'articles
+
+Chaque article doit avoir un visuel éditorial propre, pertinent pour son sujet et distinct des visuels des autres articles.
+
+- Ne jamais réutiliser la même image de couverture pour deux articles différents.
+- Choisir une image nette, lisible en petit format, avec un sujet identifiable et un cadrage adapté à une carte d'article.
+- Éviter les photos génériques sans rapport avec le sujet, les logos tiers utilisés comme illustration, les visuels trompeurs et les images qui donnent l'impression d'un test réellement effectué par ZeoxOne.
+- Renseigner une description `imageAlt` précise et utile dans `articles.json`.
+- Garder cohérents le visuel de la carte dans `articles.json`, l'image principale de l'article, les métadonnées Open Graph / Twitter et l'image du balisage JSON-LD.
+- Avant publication, vérifier que chaque URL d'image répond correctement, que l'image s'affiche sur mobile et qu'aucune image d'un autre article n'est reprise par erreur.
+- Si aucune image pertinente et vérifiable n'est disponible, créer une illustration originale ou utiliser le visuel graphique de secours du site plutôt qu'une photo sans rapport.
+
+## Contrôle avant publication — bilingue et visuels
+
+- [ ] Le sélecteur FR/EN fonctionne sur chaque page HTML.
+- [ ] Tous les textes visibles sont traduits dans les deux langues, y compris les articles complets et les messages du formulaire.
+- [ ] Le choix de langue reste mémorisé après navigation et rechargement.
+- [ ] Aucun attribut `data-locale-*` n'est mal formé ou dupliqué.
+- [ ] Chaque article utilise une image de couverture différente et pertinente.
+- [ ] Les images, textes alternatifs, cartes, métadonnées et JSON-LD sont cohérents.
+- [ ] Le site a été contrôlé en français et en anglais sur mobile et ordinateur.
