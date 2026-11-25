@@ -24,7 +24,7 @@
 <select id="feedbackRating" name="Note"><option value="">Ne pas noter</option><option value="1/5">1/5</option><option value="2/5">2/5</option><option value="3/5">3/5</option><option value="4/5">4/5</option><option value="5/5">5/5</option></select>
 <label for="feedbackMessage" data-locale-html-fr="Votre message" data-locale-html-en="Your message">Votre message</label>
 <textarea id="feedbackMessage" name="Message" rows="7" maxlength="4000" required data-placeholder-fr="Décrivez votre remarque ou votre suggestion…" data-placeholder-en="Describe your comment or suggestion… " placeholder="Décrivez votre remarque ou votre suggestion…"></textarea>
-<label class="feedback-consent"><input type="checkbox" required> <span>J'ai lu la <a href="politique-confidentialite.html">politique de confidentialité</a> et je n'inclus pas de données personnelles sensibles.</span></label>
+<label class="feedback-consent"><input type="checkbox" required> <span data-locale-html-fr="J'ai lu la <a href='politique-confidentialite.html'>politique de confidentialité</a> et je n'inclus pas de données personnelles sensibles." data-locale-html-en="I have read the <a href='politique-confidentialite.html'>privacy policy</a> and I am not including sensitive personal data.">J'ai lu la <a href="politique-confidentialite.html">politique de confidentialité</a> et je n'inclus pas de données personnelles sensibles.</span></label>
 <button class="button button-primary" id="feedbackSubmit" type="submit" data-locale-fr="Envoyer le retour ↗" data-locale-en="Send feedback ↗">Envoyer le retour ↗</button>
 <p class="feedback-status" id="feedbackStatus" role="status" aria-live="polite"></p>
 </form>
@@ -40,8 +40,8 @@
     if(form.querySelector('[name="_honey"]').value) return;
     const original=button.textContent;
     button.disabled=true;
-    button.textContent="Envoi en cours…";
-    status.textContent="Transmission du message. Cela peut prendre quelques secondes.";
+    button.textContent=document.documentElement.lang==="en"?"Sending…":"Envoi en cours…";
+    status.textContent=document.documentElement.lang==="en"?"Sending your message. This may take a few seconds.":"Transmission du message. Cela peut prendre quelques secondes.";
     status.className="feedback-status is-pending";
     const controller=new AbortController();
     const timeout=setTimeout(()=>controller.abort(),15000);
@@ -55,8 +55,8 @@
       let data={};
       try{data=await response.json();}catch(_){}
       const accepted=data.success===true||data.success==="true"||data.ok===true;
-      if(!response.ok||!accepted) throw new Error(data.message||"Le service n'a pas confirmé la réception.");
-      status.textContent="Message transmis au service. Si c'est votre premier envoi, vérifiez la boîte de réception de ZeoxOne pour confirmer l'activation du formulaire.";
+      if(!response.ok||!accepted) throw new Error(data.message||(document.documentElement.lang==="en"?"The service did not confirm receipt.":"Le service n'a pas confirmé la réception."));
+      status.textContent=document.documentElement.lang==="en"?"Message sent to the service. If this is your first submission, check ZeoxOne's inbox to confirm that the form has been activated.":"Message transmis au service. Si c'est votre premier envoi, vérifiez la boîte de réception de ZeoxOne pour confirmer l'activation du formulaire.";
       status.className="feedback-status is-success";
       form.reset();
     }catch(error){
@@ -67,10 +67,10 @@
       const body=encodeURIComponent("Catégorie : "+category+"\nNote : "+(rating||"Non renseignée")+"\n\n"+message);
       const mailLink="mailto:Zeoxonesupport@gmail.com?subject="+subject+"&body="+body;
       status.className="feedback-status is-error";
-      status.textContent=error.name==="AbortError"?"Le service met trop de temps à répondre. Votre message n'a pas été confirmé. ":"L'envoi automatique a échoué. Votre message n'a pas été confirmé. ";
+      status.textContent=document.documentElement.lang==="en"?(error.name==="AbortError"?"The service is taking too long to respond. Your message was not confirmed. ":"Automatic sending failed. Your message was not confirmed. "):(error.name==="AbortError"?"Le service met trop de temps à répondre. Votre message n'a pas été confirmé. ":"L'envoi automatique a échoué. Votre message n'a pas été confirmé. ");
       const link=document.createElement("a");
       link.href=mailLink;
-      link.textContent="Ouvrir un e-mail pour envoyer votre retour";
+      link.textContent=document.documentElement.lang==="en"?"Open an email to send your feedback":"Ouvrir un e-mail pour envoyer votre retour";
       status.appendChild(link);
     }finally{
       clearTimeout(timeout);
@@ -81,9 +81,9 @@
 })();
 </script>
 <p class="feedback-note" data-locale-html-fr="Ce formulaire transmet votre retour à un service externe. L'adresse de réception est visible dans le code de cette page. Le premier envoi peut nécessiter une confirmation d'activation par e-mail. N'indiquez aucune information confidentielle." data-locale-html-en="This form sends your feedback through an external service. The receiving email address is visible in this page's source code. The first submission may require an activation confirmation by email. Do not include confidential information.">Ce formulaire transmet votre retour à un service externe. L'adresse de réception est visible dans le code de cette page. Le premier envoi peut nécessiter une confirmation d'activation par e-mail. N'indiquez aucune information confidentielle.</p>
-<p><a class="article-link" href="index.html">← Retour à l'accueil</a></p>
+<p><a class="article-link" href="index.html" data-locale-fr="← Retour à l'accueil" data-locale-en="← Back to home">← Retour à l'accueil</a></p>
 </main>
-<footer class="site-footer"><div class="wrap footer-bottom"><span>© ZeoxOne. Tous droits réservés.</span><span class="footer-links"><a href="mentions-legales.html">Mentions légales</a> · <a href="politique-confidentialite.html">Confidentialité</a></span></div></footer>
+<footer class="site-footer"><div class="wrap footer-bottom"><span data-locale-fr="© ZeoxOne. Tous droits réservés." data-locale-en="© ZeoxOne. All rights reserved.">© ZeoxOne. Tous droits réservés.</span><span class="footer-links"><a href="mentions-legales.html" data-locale-fr="Mentions légales" data-locale-en="Legal notice">Mentions légales</a> · <a href="politique-confidentialite.html" data-locale-fr="Confidentialité" data-locale-en="Privacy">Confidentialité</a></span></div></footer>
 <script>
 (function(){const r=document.documentElement,k='zeoxone-theme';let t='dark';try{t=localStorage.getItem(k)==='light'?'light':'dark'}catch(e){}r.dataset.theme=t;r.style.colorScheme=t;function paint(){document.querySelectorAll('[data-theme-toggle]').forEach(b=>{const l=r.dataset.theme==='light';b.setAttribute('aria-label',l?'Activer le thème sombre':'Activer le thème clair');b.setAttribute('aria-pressed',String(l));const i=b.querySelector('span:first-child'),s=b.querySelector('.theme-switch-label');if(i)i.textContent=l?'◐':'☼';if(s)s.textContent=l?'Sombre':'Clair'})}document.addEventListener('click',e=>{if(!e.target.closest('[data-theme-toggle]'))return;r.dataset.theme=r.dataset.theme==='light'?'dark':'light';r.style.colorScheme=r.dataset.theme;try{localStorage.setItem(k,r.dataset.theme)}catch(e){}paint()});paint()})();
 </script>
