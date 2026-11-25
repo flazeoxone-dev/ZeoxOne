@@ -350,9 +350,7 @@ html[data-theme="light"] .article-heading-visual .byline{color:#526477}
 .locale-switcher button span{font-size:15px;line-height:1}
 @media(max-width:620px){.header-actions{gap:8px}.locale-switcher{gap:3px}.locale-switcher button{min-width:43px;min-height:32px;padding:4px 6px;font-size:10px}}
 
-/* Mise en avant discrète des dossiers GTA 6 et Claude. */
-.feature-card.is-highlighted .feature-art{position:relative;}
-.feature-card.is-highlighted .feature-art::after{content:"À LA UNE";position:absolute;top:14px;left:14px;z-index:2;padding:6px 9px;border:1px solid rgba(255,255,255,.24);border-radius:4px;background:rgba(10,14,20,.82);color:#fff;font-size:10px;font-weight:700;letter-spacing:.12em;}
+/* Aucun badge éditorial automatique sur les cartes. */
 
 
 /* Responsive renforcé : adaptation continue aux dimensions disponibles */
