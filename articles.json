@@ -1,5 +1,19 @@
 [
   {
+    "title": "GTA VI : bien régler le jeu et son interface pour débuter",
+    "titleEn": "GTA VI: configure the game and interface before you start",
+    "description": "Un tutoriel sans spoiler pour découvrir les paramètres, améliorer la lisibilité, régler les sous-titres, l'audio et le confort de caméra.",
+    "descriptionEn": "A spoiler-free tutorial covering settings, readability, subtitles, audio and camera comfort.",
+    "category": "Tuto & Guide",
+    "type": "TUTO",
+    "minutes": 6,
+    "url": "articles/gta-vi-guide-debutant-reglages.html",
+    "date": "2026-11-25",
+    "visual": "gaming",
+    "image": "https://www.rockstargames.com/VI/_next/static/media/Vice_City_Postcard_landscape.0v2njmlk2n-qm.jpg?akim=1&imdensity=1&imwidth=3840",
+    "imageAlt": "Illustration officielle de Vice City publiée par Rockstar Games pour GTA VI"
+  },
+  {
     "title": "Comment choisir son écran PC : le guide simple pour ne pas se tromper",
     "description": "Taille, résolution, dalle IPS ou OLED, fréquence, VRR et connectique : les critères essentiels pour choisir un écran PC adapté à ton usage.",
     "category": "Matériel & PC",
@@ -22,24 +36,24 @@
     "url": "articles/anthropic-claude-entree-en-bourse.html",
     "date": "2026-11-24",
     "visual": "software",
-    "image": "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1800&q=90",
-    "imageAlt": "Graphique financier illustrant l'actualité boursière d'une entreprise technologique",
+    "image": "https://claude.ai/favicon.ico",
+    "imageAlt": "Icône officielle de Claude, assistant IA développé par Anthropic",
     "titleEn": "Claude and the stock market: why is AI company Anthropic making headlines?",
     "descriptionEn": "Anthropic, the company behind Claude, began trading on the Nasdaq in November 2026. Understand the IPO, ticker ANT, funds raised and early market movements."
   },
   {
-    "title": "GTA 6 : quelle console choisir entre PS5, PS5 Pro et Xbox Series X|S ?",
-    "description": "GTA 6 est disponible sur PS5 et Xbox Series X|S. Plateformes confirmées, premières impressions de performances et critères pour choisir sa console.",
+    "title": "GTA VI : records, rupture de PS5 et hausse des prix — Sony était-il prêt ?",
+    "description": "Records annoncés par Sony et Take-Two, pénuries chez les revendeurs et évolution des prix officiels de la PS5 depuis 2020 : ce que les chiffres révèlent.",
     "category": "Gaming",
     "type": "GUIDE",
-    "minutes": 7,
+    "minutes": 9,
     "url": "articles/gta-6-quelle-console-ps5-ps5-pro-xbox.html",
-    "date": "2026-11-22",
+    "date": "2026-11-25",
     "visual": "gaming",
-    "image": "https://images.unsplash.com/photo-1605901309584-818e25960a8f?auto=format&fit=crop&w=1200&q=85",
-    "imageAlt": "Manette et environnement de jeu vidéo",
-    "titleEn": "GTA 6: which console should you choose between PS5, PS5 Pro and Xbox Series X|S?",
-    "descriptionEn": "Confirmed platforms, early performance information and practical criteria to help you choose a console for GTA 6."
+    "image": "https://media-rockstargames-com.akamaized.net/tina-uploads/posts/3928aaa9471o3a/7ff0c4b640e5979c692e869a2c01781c596d30bd.png",
+    "imageAlt": "Logo officiel Grand Theft Auto VI publié par Rockstar Games",
+    "titleEn": "GTA VI: records, PS5 shortages and price rises — was Sony ready?",
+    "descriptionEn": "Records reported by Sony and Take-Two, retailer shortages and official PS5 price changes since 2020: what the figures really show."
   },
   {
     "title": "Comment choisir les composants de son premier PC ?",
