@@ -187,3 +187,142 @@ document.addEventListener("click",event=>{
  function paint(){document.querySelectorAll("[data-theme-toggle]").forEach(b=>{const light=root.dataset.theme==="light";b.setAttribute("aria-label",light?"Activer le thème sombre":"Activer le thème clair");b.setAttribute("aria-pressed",String(light));const i=b.querySelector("span:first-child"),l=b.querySelector(".theme-switch-label");if(i)i.textContent=light?"◐":"☼";if(l)l.textContent=light?"Sombre":"Clair"})}
  document.addEventListener("click",e=>{const b=e.target.closest("[data-theme-toggle]");if(!b)return;root.dataset.theme=root.dataset.theme==="light"?"dark":"light";root.style.colorScheme=root.dataset.theme;try{localStorage.setItem(key,root.dataset.theme)}catch(e){}paint()});paint();
 })();
+
+
+/* ===== Consentement aux statistiques et Google Analytics 4 =====
+   Aucun script Google n'est chargé avant un accord explicite.
+   GA4 est intégré directement ; le conteneur GTM fourni n'est pas utilisé.
+*/
+(function(){
+  const CONSENT_KEY = "zeoxone-analytics-consent";
+  const GA_ID = "G-8EDZFPP3WL";
+  let consent = null;
+  try { consent = localStorage.getItem(CONSENT_KEY); } catch(e) {}
+
+  function enableAnalytics(){
+    if(window.__zeoxoneAnalyticsLoaded) return;
+    window.__zeoxoneAnalyticsLoaded = true;
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
+    window.gtag("consent","default",{
+      analytics_storage:"denied",
+      ad_storage:"denied",
+      ad_user_data:"denied",
+      ad_personalization:"denied"
+    });
+    window.gtag("consent","update",{analytics_storage:"granted"});
+    window.gtag("js",new Date());
+    window.gtag("config",GA_ID,{
+      send_page_view:true,
+      allow_google_signals:false,
+      allow_ad_personalization_signals:false
+    });
+    const tag=document.createElement("script");
+    tag.async=true;
+    tag.src="https://www.googletagmanager.com/gtag/js?id="+encodeURIComponent(GA_ID);
+    tag.onload=function(){document.documentElement.dataset.analytics="active";};
+    document.head.appendChild(tag);
+  }
+
+  function revokeAnalytics(){
+    if(typeof window.gtag==="function"){
+      window.gtag("consent","update",{analytics_storage:"denied"});
+    }
+    document.cookie.split(";").forEach(function(part){
+      const name=part.trim().split("=")[0];
+      if(name==="_ga" || name.indexOf("_ga_")===0){
+        document.cookie=name+"=; Max-Age=0; path=/; SameSite=Lax";
+        document.cookie=name+"=; Max-Age=0; path=/ZeoxOne/; SameSite=Lax";
+        document.cookie=name+"=; Max-Age=0; path=/; domain="+location.hostname+"; SameSite=Lax";
+      }
+    });
+    delete document.documentElement.dataset.analytics;
+  }
+
+  function saveChoice(value){
+    consent=value;
+    try { localStorage.setItem(CONSENT_KEY,value); } catch(e) {}
+    if(value==="accepted") enableAnalytics();
+    else revokeAnalytics();
+    const panel=document.getElementById("zeoxone-consent");
+    if(panel) panel.hidden=true;
+  }
+
+  function copy(lang){
+    const en=lang==="en";
+    return {
+      title:en?"Your privacy matters":"Votre confidentialité compte",
+      body:en
+        ?"ZeoxOne uses Google Analytics to understand site traffic and improve its guides. Analytics is off unless you agree. You can change your choice at any time."
+        :"ZeoxOne utilise Google Analytics pour comprendre la fréquentation du site et améliorer ses guides. Les statistiques restent désactivées sans votre accord. Vous pouvez modifier votre choix à tout moment.",
+      policy:en?"Read the privacy policy":"Lire la politique de confidentialité",
+      accept:en?"Accept analytics":"Accepter les statistiques",
+      reject:en?"Reject":"Tout refuser",
+      settings:en?"Cookie settings":"Paramètres des cookies"
+    };
+  }
+
+  function renderPanel(){
+    let panel=document.getElementById("zeoxone-consent");
+    if(!panel){
+      panel=document.createElement("section");
+      panel.id="zeoxone-consent";
+      panel.className="consent-panel";
+      panel.setAttribute("role","region");
+      panel.setAttribute("aria-label","Cookie and analytics preferences");
+      panel.hidden=true;
+      document.body.appendChild(panel);
+    }
+    const t=copy(currentLang);
+    panel.innerHTML=
+      '<div class="consent-copy"><p class="consent-title">'+t.title+'</p>'+
+      '<p class="consent-description">'+t.body+'</p>'+
+      '<a class="consent-policy" href="'+(location.pathname.indexOf("/articles/")!==-1?"../":"")+'politique-confidentialite.html?lang='+currentLang+'">'+t.policy+'</a></div>'+
+      '<div class="consent-actions">'+
+      '<button type="button" class="consent-button consent-accept" data-consent-choice="accepted">'+t.accept+'</button>'+
+      '<button type="button" class="consent-button consent-reject" data-consent-choice="rejected">'+t.reject+'</button>'+
+      '</div>';
+  }
+
+  function showPanel(){
+    renderPanel();
+    const panel=document.getElementById("zeoxone-consent");
+    panel.hidden=false;
+    const first=panel.querySelector("button");
+    if(first) first.focus();
+  }
+
+  renderPanel();
+  if(consent==="accepted") enableAnalytics();
+  else if(consent!=="rejected") showPanel();
+
+  document.addEventListener("click",function(event){
+    const choice=event.target.closest("[data-consent-choice]");
+    if(choice){saveChoice(choice.dataset.consentChoice);return;}
+    if(event.target.closest("[data-analytics-settings]")){event.preventDefault();showPanel();}
+  });
+
+  document.addEventListener("click",function(event){
+    if(event.target.closest("[data-set-lang]") && !document.getElementById("zeoxone-consent").hidden){
+      renderPanel();
+    }
+  });
+
+  const footer=document.querySelector(".site-footer");
+  if(footer){
+    let links=footer.querySelector(".footer-links");
+    if(!links){
+      links=document.createElement("div");
+      links.className="footer-links";
+      const bottom=footer.querySelector(".footer-bottom");
+      (bottom||footer).appendChild(links);
+    }
+    if(!links.querySelector("[data-analytics-settings]")){
+      const link=document.createElement("a");
+      link.href="#analytics-settings";
+      link.setAttribute("data-analytics-settings","");
+      link.textContent=currentLang==="en"?"Cookie settings":"Paramètres des cookies";
+      links.appendChild(link);
+    }
+  }
+})();
