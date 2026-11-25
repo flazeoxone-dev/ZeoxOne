@@ -12,7 +12,7 @@
 <header class="site-header"><a class="brand" href="index.html"><img src="assets/favicon.svg" alt="Logo ZeoxOne" class="site-logo" width="34" height="34"><span>ZeoxOne<span class="brand-dot">.</span></span></a><div class="header-actions"><button type="button" class="theme-switch" data-theme-toggle aria-label="Activer le thème clair"><span aria-hidden="true">☼</span><span class="theme-switch-label">Clair</span></button></div></header>
 <main class="wrap feedback-page">
 <div class="eyebrow"><span class="eyebrow-line"></span>VOTRE RETOUR COMPTE</div>
-<h1 data-locale-html-fr="Donner un <span>avis.</span>" data-locale-html-en="Send <span>feedback.</span>">Donner un <span>avis.</span></h1>
+<h1 data-locale-html-fr="Donner un <span data-locale-html-fr="Donner un <span>avis.</span>" data-locale-html-en="Send <span>feedback.</span>">Donner un <span>avis.</span></h1>
 <p class="hero-intro">Une remarque, une erreur à corriger ou une idée d'article ? Ce formulaire permet de transmettre un message à ZeoxOne.</p>
 <form class="feedback-form" id="feedbackForm" action="https://formsubmit.co/ajax/Zeoxonesupport@gmail.com" method="POST">
 <input type="hidden" name="_subject" value="Nouveau retour — ZeoxOne"><input type="hidden" name="_template" value="table">
@@ -87,5 +87,6 @@
 <script>
 (function(){const r=document.documentElement,k='zeoxone-theme';let t='dark';try{t=localStorage.getItem(k)==='light'?'light':'dark'}catch(e){}r.dataset.theme=t;r.style.colorScheme=t;function paint(){document.querySelectorAll('[data-theme-toggle]').forEach(b=>{const l=r.dataset.theme==='light';b.setAttribute('aria-label',l?'Activer le thème sombre':'Activer le thème clair');b.setAttribute('aria-pressed',String(l));const i=b.querySelector('span:first-child'),s=b.querySelector('.theme-switch-label');if(i)i.textContent=l?'◐':'☼';if(s)s.textContent=l?'Sombre':'Clair'})}document.addEventListener('click',e=>{if(!e.target.closest('[data-theme-toggle]'))return;r.dataset.theme=r.dataset.theme==='light'?'dark':'light';r.style.colorScheme=r.dataset.theme;try{localStorage.setItem(k,r.dataset.theme)}catch(e){}paint()});paint()})();
 </script>
+  <script src="script.js"></script>
   <script src="script.js"></script>
 </body></html>
