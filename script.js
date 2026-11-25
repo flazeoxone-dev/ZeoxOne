@@ -15,10 +15,10 @@ article1Title:"How to choose components for your first PC",article1Text:"CPU, gr
 topicsEyebrow:"OUR UNIVERSES",topicsTitle:'Technology, from <span>every angle.</span>',topic1:"Computing",topic1Text:"PCs, components, systems and software.",topic2:"Gaming",topic2Text:"Games, trends, industry and culture.",topic3:"Hardware",topic3Text:"Peripherals, tests and comparisons.",topic4:"Innovation",topic4Text:"AI, emerging technology and tomorrow.",
 reviewsEyebrow:"MAKE THE RIGHT CHOICE",reviewsTitle:'Less noise.<br><span>More clarity.</span>',reviewsText:"Buying hardware or choosing software shouldn't be complicated. Our goal: explain what matters, compare with care and make technology more accessible.",reviewsButton:"View recommendations ↗",newsletterEyebrow:"STAY CONNECTED",newsletterTitle:'The signal, not the <span>noise.</span>',newsletterText:"The ZeoxOne newsletter is not available yet. No form collects your email address at this time.",newsletterButton:"Coming soon",footerLine:"Explore. Understand. Move forward.",contact:"GitHub project",legal:"Legal notice",privacy:"Privacy policy",rights:"All rights reserved.",recEyebrow:"ZEOXONE PICKS",recTitle:'Useful tools.<br><span>Better choices.</span>',recIntro:"Explore hardware, software and services worth considering for computing and gaming.",recTransparencyTitle:"Transparency first",recTransparencyText:"The links currently shown lead to official websites and are not affiliate links. If ZeoxOne adds compensated links in the future, they will be clearly labelled nearby. Any potential commission does not change the reader's price.",recHardwareEyebrow:"EQUIPMENT",recHardwareTitle:'Computer <span>hardware.</span>',recHardwareTag:"PC COMPONENTS",recCpuTitle:"Processors",recCpuText:"Understand product ranges and check specifications directly with the manufacturer.",recGpuTitle:"Graphics cards",recGpuText:"Compare graphics card families and consult the manufacturer's information.",recGamingTag:"GAMING PERIPHERALS",recMouseTitle:"Gaming mice",recMouseText:"Explore shapes, features and mouse ranges from the manufacturer.",recOfficialLink:"Visit the official website ↗",recSoftwareEyebrow:"DIGITAL TOOLS",recSoftwareTitle:'Software <span>and services.</span>',recSoftwareTag:"DIGITAL TOOLS",recObsText:"Free, open-source software for screen recording and live streaming.",recVlcText:"A free, open-source multimedia player available for multiple systems.",recFirefoxText:"A web browser with privacy and customization features to explore.",recMethodEyebrow:"OUR APPROACH",recMethodTitle:"Informed choices, never pressured purchases.",recMethodText:"This section will grow alongside our articles and comparisons. Before adding a recommendation, ZeoxOne should check its usefulness, specifications, publisher or manufacturer, and any service conditions. Compare prices and your needs before making a purchase.",recArticlesButton:"Read ZeoxOne articles ↗"
 }};
-const localeMatch = window.location.pathname.match(/^\/ZeoxOne\/(fr|en)(?:\/|$)/);
+const localeMatch = new URLSearchParams(window.location.search).get("lang") || null;
 
-let currentLang = localeMatch ? localeMatch[1] : "fr";
-try{if(!localeMatch && localStorage.getItem("zeoxone-preferences-consent")==="yes" && ["fr","en"].includes(localStorage.getItem("zeoxone-lang"))) currentLang=localStorage.getItem("zeoxone-lang");}catch(e){}
+let currentLang = ["fr","en"].includes(localeMatch) ? localeMatch : "fr";
+try{if(!localeMatch && ["fr","en"].includes(localStorage.getItem("zeoxone-lang"))) currentLang=localStorage.getItem("zeoxone-lang");}catch(e){}
 function applyLanguage(lang){
   if(!translations[lang]) return;
   currentLang=lang;
@@ -38,9 +38,7 @@ function applyLanguage(lang){
     button.setAttribute("aria-pressed",String(active));
     button.classList.toggle("is-active",active);
   });
-  try{
-    if(localStorage.getItem("zeoxone-preferences-consent")==="yes") localStorage.setItem("zeoxone-lang",lang);
-  }catch(e){}
+  try{localStorage.setItem("zeoxone-lang",lang);}catch(e){}
   if(typeof renderArticleCards==="function") renderArticleCards();
   const feedback=document.querySelector(".feedback-float");
   if(feedback){feedback.textContent=lang==="en"?"Send feedback":"Donner un avis";feedback.setAttribute("aria-label",feedback.textContent+" ZeoxOne");}
@@ -50,6 +48,18 @@ document.addEventListener("click",event=>{
   if(!button)return;
   applyLanguage(button.dataset.setLang);
 });
+function ensureLanguageSwitcher(){
+  const header=document.querySelector(".header-actions") || document.querySelector(".site-header");
+  if(!header || document.querySelector(".locale-switcher")) return;
+  const wrap=document.createElement("div");
+  wrap.className="locale-switcher";
+  wrap.setAttribute("role","group");
+  wrap.setAttribute("aria-label","Choose language / Choisir la langue");
+  wrap.innerHTML='<button type="button" data-set-lang="fr" aria-label="Français"><span aria-hidden="true">🇫🇷</span> FR</button><button type="button" data-set-lang="en" aria-label="English"><span aria-hidden="true">🇬🇧</span> EN</button>';
+  const theme=header.querySelector("[data-theme-toggle]");
+  header.insertBefore(wrap,theme || null);
+}
+ensureLanguageSwitcher();
 applyLanguage(currentLang);
 
 
@@ -143,22 +153,20 @@ renderArticleCards();
   if(document.querySelector(".feedback-float") || location.pathname.endsWith("/feedback.html")) return;
   const link=document.createElement("a");
   link.className="feedback-float";
-  link.href="/ZeoxOne/"+currentLang+"/feedback.html";
+  link.href="/ZeoxOne/feedback.html?lang="+currentLang;
   link.textContent=({fr:"Donner un avis",en:"Send feedback"}[currentLang]||"Donner un avis");
   link.setAttribute("aria-label",link.textContent+" ZeoxOne");
   document.body.appendChild(link);
 })();
 
 
-/* Ne mémoriser la langue choisie que si le consentement a été donné. */
+/* La langue choisie est mémorisée localement pour rester cohérente entre les pages. */
 document.addEventListener("click",event=>{
   const link=event.target.closest(".locale-switcher a");
   if(!link)return;
   try{
-    if(localStorage.getItem("zeoxone-preferences-consent")==="yes"){
-      const selected=(link.textContent||"").trim().toLowerCase();
-      if(["fr","en"].includes(selected))localStorage.setItem("zeoxone-lang",selected);
-    }
+    const selected=(link.textContent||"").trim().toLowerCase();
+    if(["fr","en"].includes(selected))localStorage.setItem("zeoxone-lang",selected);
   }catch(e){}
 });
 
@@ -169,49 +177,4 @@ document.addEventListener("click",event=>{
  root.dataset.theme=theme;root.style.colorScheme=theme;
  function paint(){document.querySelectorAll("[data-theme-toggle]").forEach(b=>{const light=root.dataset.theme==="light";b.setAttribute("aria-label",light?"Activer le thème sombre":"Activer le thème clair");b.setAttribute("aria-pressed",String(light));const i=b.querySelector("span:first-child"),l=b.querySelector(".theme-switch-label");if(i)i.textContent=light?"◐":"☼";if(l)l.textContent=light?"Sombre":"Clair"})}
  document.addEventListener("click",e=>{const b=e.target.closest("[data-theme-toggle]");if(!b)return;root.dataset.theme=root.dataset.theme==="light"?"dark":"light";root.style.colorScheme=root.dataset.theme;try{localStorage.setItem(key,root.dataset.theme)}catch(e){}paint()});paint();
-})();
-
-
-/* Accessibilité : curseur de contraste avec mémorisation sur consentement explicite. */
-(function initContrastControl(){
-  if(document.querySelector(".contrast-control")) return;
-  const header=document.querySelector(".header-actions") || document.querySelector(".site-header");
-  if(!header) return;
-  const key="zeoxone-contrast", consentKey="zeoxone-preferences-consent";
-  let level=0, consent=null;
-  try{consent=localStorage.getItem(consentKey);if(consent==="yes")level=Number(localStorage.getItem(key)||0)}catch(e){}
-  const wrap=document.createElement("label");
-  wrap.className="contrast-control";
-  const contrastLabel={fr:"Contraste",en:"Contrast"}[currentLang]||"Contraste";
-  wrap.innerHTML='<span>'+contrastLabel+'</span><input type="range" min="0" max="3" step="1" value="'+(Number.isFinite(level)?level:0)+'" aria-label="'+contrastLabel+'" title="'+contrastLabel+'">';
-  const range=wrap.querySelector("input");
-  function apply(value){
-    const n=Math.max(0,Math.min(3,Number(value)||0));
-    document.documentElement.dataset.contrast=String(n);
-    range.value=String(n);
-    if(consent==="yes"){try{localStorage.setItem(key,String(n))}catch(e){}}
-  }
-  range.addEventListener("input",()=>apply(range.value));
-  header.appendChild(wrap);
-  apply(level);
-  if(consent===null && !document.querySelector(".preference-consent")){
-    const note=document.createElement("div");
-    note.className="preference-consent";
-    note.setAttribute("role","group");
-    const consentCopy={
-      fr:["Mémoriser tes réglages de contraste et de langue sur cet appareil ?","Accepter","Refuser"],
-      en:["Remember your contrast and language settings on this device?","Accept","Decline"],
-    }[currentLang]||["Mémoriser tes réglages de contraste sur cet appareil ?","Accepter","Refuser"];
-    note.setAttribute("aria-label",consentCopy[0]);
-    note.innerHTML='<span>'+consentCopy[0]+'</span><button type="button" data-consent="yes">'+consentCopy[1]+'</button><button type="button" data-consent="no">'+consentCopy[2]+'</button>';
-    document.body.appendChild(note);
-    note.addEventListener("click",event=>{
-      const button=event.target.closest("[data-consent]");
-      if(!button)return;
-      consent=button.dataset.consent;
-      try{localStorage.setItem(consentKey,consent)}catch(e){}
-      if(consent==="yes"){try{localStorage.setItem(key,range.value)}catch(e){}}
-      note.remove();
-    });
-  }
 })();
