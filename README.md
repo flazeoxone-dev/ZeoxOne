@@ -42,7 +42,9 @@ Chaque article doit avoir les champs suivants :
 ```json
 {
   "title": "Titre clair de l'article",
+  "titleEn": "Clear English article title",
   "description": "Résumé précis en une phrase.",
+  "descriptionEn": "Accurate one-sentence summary in English.",
   "category": "Matériel",
   "type": "GUIDE",
   "minutes": 7,
@@ -52,8 +54,8 @@ Chaque article doit avoir les champs suivants :
 }
 ```
 
-- `title` : titre visible.
-- `description` : résumé fidèle, sans promesse exagérée.
+- `title` / `description` : titre et résumé français.
+- `titleEn` / `descriptionEn` : traduction anglaise complète du titre et du résumé ; ces champs alimentent les cartes en anglais.
 - `category` : utiliser l'une des catégories du site : `IA & Actualité`, `Gaming`, `Matériel & PC`, `Informatique` ou `Tuto & Guide`.
 - `type` : `GUIDE`, `DOSSIER` ou un type déjà pris en charge par le site.
 - `minutes` : estimation raisonnable du temps de lecture.
