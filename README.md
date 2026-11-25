@@ -177,8 +177,7 @@ Les changements poussés sur la branche `main` sont publiés par GitHub Pages se
 
 ## Réglages d'accessibilité et contrôle qualité
 
-- Le curseur « Contraste » propose quatre niveaux. Le réglage reste temporaire par défaut.
-- Une demande discrète permet d'accepter ou de refuser la mémorisation du contraste sur l'appareil. Aucun réglage n'est mémorisé avant acceptation.
+- Aucun curseur de contraste dédié n'est présent sur le site. Le thème clair / sombre reste disponible.
 - Les animations sont réduites lorsque le système signale `prefers-reduced-motion`.
 - Le workflow GitHub Actions `.github/workflows/quality.yml` contrôle la syntaxe JavaScript, le catalogue JSON, le sitemap XML, les métadonnées HTML minimales et les liens locaux avant intégration.
 - Le validateur est un contrôle statique : il ne remplace pas les tests visuels sur mobile, les tests clavier/lecteur d'écran, ni une vérification humaine des traductions.
@@ -239,3 +238,23 @@ Chaque article doit avoir un visuel éditorial propre, pertinent pour son sujet 
 - [ ] Chaque article utilise une image de couverture différente et pertinente.
 - [ ] Les images, textes alternatifs, cartes, métadonnées et JSON-LD sont cohérents.
 - [ ] Le site a été contrôlé en français et en anglais sur mobile et ordinateur.
+
+
+## Règles visuelles des articles et sujets tendance
+
+- Chaque article doit utiliser une image de couverture distincte, pertinente et vérifiée. Éviter les images génériques de banque d'images lorsqu'un sujet identifiable possède une identité visuelle officielle.
+- Pour les sujets d'actualité liés à un jeu, un logiciel ou une marque, privilégier un logo officiel ou un visuel de campagne officiel reconnaissable (ex. logo GTA VI de Rockstar Games, icône officielle Claude d'Anthropic).
+- Pour les produits matériels, utiliser si possible une photo produit provenant du fabricant ou d'une source clairement identifiée.
+- Ne jamais présenter une illustration générique comme un logo officiel. Le texte alternatif doit décrire exactement l'image affichée.
+- Respecter les consignes de marque et ne pas modifier les logos. Un visuel de marque ne doit jamais laisser croire à un partenariat ou à une validation commerciale de ZeoxOne.
+- Quand un visuel officiel est utilisé, conserver un lien vers la page média ou la documentation du propriétaire dans les sources de l'article.
+- Vérifier l'affichage de la couverture, de l'image dans l'article, de la carte dans le catalogue et des métadonnées Open Graph / Twitter. Garder une image cohérente entre le HTML, `articles.json` et les métadonnées.
+- Ne pas réutiliser la même image de couverture pour plusieurs articles différents, même lorsqu'ils traitent du même jeu : choisir des visuels officiels distincts adaptés à chaque angle.
+
+## Mise à jour éditoriale du 25 novembre 2026
+
+- L'article GTA VI / PS5 / Sony doit distinguer les records annoncés par Take-Two, les statistiques de joueurs communiquées par Sony, les prix de vente conseillés et les prix d'annonces sur le marché de l'occasion.
+- Ne jamais assimiler 39 millions de joueurs uniques à 39 millions de consoles vendues ou à des copies vendues.
+- Présenter les ruptures comme des tensions observées chez certains revendeurs, et non comme une rupture universelle de toutes les PS5.
+- Expliquer précisément que l'approvisionnement en mémoire annoncé par Sony ne garantit pas à lui seul les stocks finis de chaque magasin.
+- Un tutoriel GTA VI doit rester sans spoiler, s'appuyer sur la documentation officielle et privilégier les paramètres d'interface, de lisibilité, de sous-titres, d'audio et de confort. Ne pas inventer de commandes ni de fonctions.
