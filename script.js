@@ -28,6 +28,7 @@ function applyLanguage(lang){
     if(value!==undefined) node.textContent=value;
   });
   document.querySelectorAll("[data-locale-fr][data-locale-en]").forEach(node=>{node.textContent=node.getAttribute("data-locale-"+lang);});
+  document.querySelectorAll("[data-locale-html-fr][data-locale-html-en]").forEach(node=>{node.innerHTML=node.getAttribute("data-locale-html-"+lang);});
   document.querySelectorAll("[data-placeholder-fr][data-placeholder-en]").forEach(node=>{node.placeholder=node.getAttribute("data-placeholder-"+lang);});
   document.querySelectorAll("[data-i18n-html]").forEach(node=>{
     const value=translations[lang][node.dataset.i18nHtml];
