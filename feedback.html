@@ -13,19 +13,19 @@
 <main class="wrap feedback-page">
 <div class="eyebrow"><span class="eyebrow-line"></span>VOTRE RETOUR COMPTE</div>
 <h1 data-locale-html-fr="Donner un &lt;span>avis.&lt;/span>" data-locale-html-en="Send &lt;span>feedback.&lt;/span>">Donner un <span>avis.</span></h1>
-<p class="hero-intro">Une remarque, une erreur à corriger ou une idée d'article ? Ce formulaire permet de transmettre un message à ZeoxOne.</p>
+<p class="hero-intro" data-locale-html-fr="Une remarque, une erreur à corriger ou une idée d'article ? Ce formulaire permet de transmettre un message à ZeoxOne." data-locale-html-en="Have a comment, a correction or an article idea? Use this form to send a message to ZeoxOne.">Une remarque, une erreur à corriger ou une idée d'article ? Ce formulaire permet de transmettre un message à ZeoxOne.</p>
 <form class="feedback-form" id="feedbackForm" action="https://formsubmit.co/ajax/Zeoxonesupport@gmail.com" method="POST">
 <input type="hidden" name="_subject" value="Nouveau retour — ZeoxOne"><input type="hidden" name="_template" value="table">
 <input type="hidden" name="_url" value="https://flazeoxone-dev.github.io/ZeoxOne/feedback.html">
 <input type="text" name="_honey" class="form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
-<label for="feedbackType">Type de retour</label>
-<select id="feedbackType" name="Catégorie" required><option value="">Choisir une catégorie</option><option>Suggestion générale</option><option>Idée d'article</option><option>Correction / information inexacte</option><option>Lien cassé</option><option>Problème d'affichage</option><option>Autre</option></select>
-<label for="feedbackRating">Note du site (facultatif)</label>
+<label for="feedbackType" data-locale-html-fr="Type de retour" data-locale-html-en="Feedback type">Type de retour</label>
+<select id="feedbackType" name="Catégorie" required><option value="" data-locale-fr="Choisir une catégorie" data-locale-en="Choose a category">Choisir une catégorie</option><option data-locale-fr="Suggestion générale" data-locale-en="General suggestion">Suggestion générale</option><option data-locale-fr="Idée d'article" data-locale-en="Article idea">Idée d'article</option><option data-locale-fr="Correction / information inexacte" data-locale-en="Correction / inaccurate information">Correction / information inexacte</option><option data-locale-fr="Lien cassé" data-locale-en="Broken link">Lien cassé</option><option data-locale-fr="Problème d'affichage" data-locale-en="Display issue">Problème d'affichage</option><option data-locale-fr="Autre" data-locale-en="Other">Autre</option></select>
+<label for="feedbackRating" data-locale-html-fr="Note du site (facultatif)" data-locale-html-en="Site rating (optional)">Note du site (facultatif)</label>
 <select id="feedbackRating" name="Note"><option value="">Ne pas noter</option><option value="1/5">1/5</option><option value="2/5">2/5</option><option value="3/5">3/5</option><option value="4/5">4/5</option><option value="5/5">5/5</option></select>
-<label for="feedbackMessage">Votre message</label>
-<textarea id="feedbackMessage" name="Message" rows="7" maxlength="4000" required placeholder="Décrivez votre remarque ou votre suggestion…"></textarea>
+<label for="feedbackMessage" data-locale-html-fr="Votre message" data-locale-html-en="Your message">Votre message</label>
+<textarea id="feedbackMessage" name="Message" rows="7" maxlength="4000" required data-placeholder-fr="Décrivez votre remarque ou votre suggestion…" data-placeholder-en="Describe your comment or suggestion… " placeholder="Décrivez votre remarque ou votre suggestion…"></textarea>
 <label class="feedback-consent"><input type="checkbox" required> <span>J'ai lu la <a href="politique-confidentialite.html">politique de confidentialité</a> et je n'inclus pas de données personnelles sensibles.</span></label>
-<button class="button button-primary" id="feedbackSubmit" type="submit">Envoyer le retour ↗</button>
+<button class="button button-primary" id="feedbackSubmit" type="submit" data-locale-fr="Envoyer le retour ↗" data-locale-en="Send feedback ↗">Envoyer le retour ↗</button>
 <p class="feedback-status" id="feedbackStatus" role="status" aria-live="polite"></p>
 </form>
 <script>
@@ -80,7 +80,7 @@
   });
 })();
 </script>
-<p class="feedback-note">Ce formulaire transmet votre retour à un service externe. L'adresse de réception est visible dans le code de cette page. Le premier envoi peut nécessiter une confirmation d'activation par e-mail. N'indiquez aucune information confidentielle.</p>
+<p class="feedback-note" data-locale-html-fr="Ce formulaire transmet votre retour à un service externe. L'adresse de réception est visible dans le code de cette page. Le premier envoi peut nécessiter une confirmation d'activation par e-mail. N'indiquez aucune information confidentielle." data-locale-html-en="This form sends your feedback through an external service. The receiving email address is visible in this page's source code. The first submission may require an activation confirmation by email. Do not include confidential information.">Ce formulaire transmet votre retour à un service externe. L'adresse de réception est visible dans le code de cette page. Le premier envoi peut nécessiter une confirmation d'activation par e-mail. N'indiquez aucune information confidentielle.</p>
 <p><a class="article-link" href="index.html">← Retour à l'accueil</a></p>
 </main>
 <footer class="site-footer"><div class="wrap footer-bottom"><span>© ZeoxOne. Tous droits réservés.</span><span class="footer-links"><a href="mentions-legales.html">Mentions légales</a> · <a href="politique-confidentialite.html">Confidentialité</a></span></div></footer>
