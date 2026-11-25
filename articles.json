@@ -9,7 +9,9 @@
     "date": "2026-11-24",
     "visual": "hardware",
     "image": "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=1200&q=85",
-    "imageAlt": "Écran PC ultralarge dans un espace de travail épuré"
+    "imageAlt": "Écran PC ultralarge dans un espace de travail épuré",
+    "titleEn": "How to choose a PC monitor: a straightforward guide",
+    "descriptionEn": "Size, resolution, IPS or OLED panels, refresh rate, VRR and connectivity: the key criteria for choosing a monitor that fits your needs."
   },
   {
     "title": "Claude en Bourse : pourquoi l'entreprise derrière l'IA Anthropic fait autant parler d'elle ?",
@@ -21,7 +23,9 @@
     "date": "2026-11-24",
     "visual": "software",
     "image": "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1800&q=90",
-    "imageAlt": "Logo Claude d’Anthropic sur une composition financière"
+    "imageAlt": "Logo Claude d’Anthropic sur une composition financière",
+    "titleEn": "Claude and the stock market: why is AI company Anthropic making headlines?",
+    "descriptionEn": "Anthropic, the company behind Claude, began trading on the Nasdaq in November 2026. Understand the IPO, ticker ANT, funds raised and early market movements."
   },
   {
     "title": "GTA 6 : quelle console choisir entre PS5, PS5 Pro et Xbox Series X|S ?",
@@ -33,7 +37,9 @@
     "date": "2026-11-22",
     "visual": "gaming",
     "image": "https://images.unsplash.com/photo-1605901309584-818e25960a8f?auto=format&fit=crop&w=1200&q=85",
-    "imageAlt": "Manette et environnement de jeu vidéo"
+    "imageAlt": "Manette et environnement de jeu vidéo",
+    "titleEn": "GTA 6: which console should you choose between PS5, PS5 Pro and Xbox Series X|S?",
+    "descriptionEn": "Confirmed platforms, early performance information and practical criteria to help you choose a console for GTA 6."
   },
   {
     "title": "Comment choisir les composants de son premier PC ?",
@@ -45,7 +51,9 @@
     "date": "2026-11-22",
     "visual": "hardware",
     "image": "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?auto=format&fit=crop&w=1200&q=85",
-    "imageAlt": "Composants internes d'un PC de bureau"
+    "imageAlt": "Composants internes d'un PC de bureau",
+    "titleEn": "How to choose the components for your first PC",
+    "descriptionEn": "Processor, motherboard, RAM, graphics card and power supply: the basics for choosing the parts for your first PC."
   },
   {
     "title": "Les outils gratuits à connaître sur Windows",
@@ -57,7 +65,9 @@
     "date": "2026-11-22",
     "visual": "software",
     "image": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=85",
-    "imageAlt": "Espace de travail numérique avec ordinateur portable"
+    "imageAlt": "Espace de travail numérique avec ordinateur portable",
+    "titleEn": "Free Windows tools worth knowing",
+    "descriptionEn": "A selection of useful free tools for improving your Windows workflow."
   },
   {
     "title": "Comment évoluent les performances des jeux PC ?",
@@ -69,6 +79,8 @@
     "date": "2026-11-22",
     "visual": "gaming",
     "image": "https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=1200&q=85",
-    "imageAlt": "Configuration gaming sur PC avec éclairage RGB"
+    "imageAlt": "Configuration gaming sur PC avec éclairage RGB",
+    "titleEn": "How are PC gaming performance technologies evolving?",
+    "descriptionEn": "FPS, resolution and upscaling technologies: understand what really changes the gaming experience."
   }
 ]
