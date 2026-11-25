@@ -68,6 +68,7 @@ applyLanguage(currentLang);
 const menuToggle = document.getElementById("menuToggle");
 const nav = document.getElementById("mainNav");
 function setMenu(open){
+  if(!nav || !menuToggle) return;
   nav.classList.toggle("open", open);
   menuToggle.setAttribute("aria-expanded", String(open));
   menuToggle.textContent = open ? "✕" : "☰";
