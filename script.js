@@ -107,7 +107,7 @@ async function renderArticleCards(){
       const query = searchInput ? searchInput.value.trim().toLocaleLowerCase(currentLang) : "";
        const params = new URLSearchParams(window.location.search);
        const categoryFilter = (params.get("categorie") || "").toLocaleLowerCase("fr");
-      const filtered = articles.filter(article => (!categoryFilter || article.category.toLocaleLowerCase("fr") === categoryFilter) && [article.title, article.description, article.category, article.type].join(" ").toLocaleLowerCase(currentLang).includes(query));
+      const filtered = articles.filter(article => (!categoryFilter || article.category.toLocaleLowerCase("fr") === categoryFilter) && [article.title, article.titleEn, article.description, article.descriptionEn, article.category, article.type].join(" ").toLocaleLowerCase(currentLang).includes(query));
       const isHome = container.hasAttribute("data-articles-home");
       const limit = Number(container.dataset.articlesLimit || 0);
       let visible = filtered;
@@ -134,7 +134,7 @@ async function renderArticleCards(){
         const categoryLabel=(categoryLabels[currentLang]||categoryLabels.fr)[article.category]||article.category;
         const visual = article.image ? '<img class="article-cover" src="'+article.image+'" alt="'+(article.imageAlt || article.title)+'" loading="lazy">'+'<span class="art-label">'+categoryLabel+' / '+article.type+'</span>' : artwork+'<span class="art-label">'+categoryLabel+' / '+article.type+'</span>';
          const highlightClass=(href.includes('gta-6-quelle-console')||href.includes('anthropic-claude'))?' is-highlighted':'';
-        return '<article class="feature-card'+highlightClass+'"><a class="article-card-link" href="'+href+'"><div class="feature-art '+visualClass+'">'+visual+'</div><div class="article-info"><div class="article-meta"><span>'+categoryLabel+'</span><span>•</span><span>'+article.minutes+' MIN</span></div><h3>'+article.title+'</h3><p>'+article.description+'</p><span class="article-link">'+(currentLang==="en"?"Read article":"Lire l’article")+' ↗</span></div></a></article>';
+        return '<article class="feature-card'+highlightClass+'"><a class="article-card-link" href="'+href+'"><div class="feature-art '+visualClass+'">'+visual+'</div><div class="article-info"><div class="article-meta"><span>'+categoryLabel+'</span><span>•</span><span>'+article.minutes+' MIN</span></div><h3>'+(currentLang==="en"&&article.titleEn?article.titleEn:article.title)+'</h3><p>'+(currentLang==="en"&&article.descriptionEn?article.descriptionEn:article.description)+'</p><span class="article-link">'+(currentLang==="en"?"Read article":"Lire l’article")+' ↗</span></div></a></article>';
       }).join("") : '<p class="catalogue-error">'+({fr:"Aucun article ne correspond à cette recherche. Essaie un autre mot-clé.",en:"No articles match this search. Try another keyword.",es:"Ningún artículo coincide con esta búsqueda. Prueba otra palabra clave.",de:"Keine Artikel entsprechen dieser Suche. Versuche ein anderes Stichwort."}[currentLang]||"Aucun article ne correspond à cette recherche.")+'</p>';
     });
     const searchInput = document.getElementById("articleSearch");
